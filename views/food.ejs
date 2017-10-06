@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data %></title>
+        <link rel='stylesheet' href='/stylesheets/reset.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='/stylesheets/nav.css' />
+    </head>
+    <body>
+        <% include partials/nav.ejs %>
+        <br />
+        
+        <div class="info-list">
+            <ul>
+            <% if (data && data.report) { %>
+                <li><h2><%= data.report.food.name %></h2></li>
+                <%  for (var i = 0; i < data.report.food.nutrients.length && i < 5; i++) { %>
+                <li><%=  data.report.food.nutrients[i].name %>: <%=  data.report.food.nutrients[i].value %><%= data.report.food.nutrients[i].unit %></li>
+                <% } %>
+            <% } %>
+            </ul>
+        </div>
+        
+  </body>
+</html>
+

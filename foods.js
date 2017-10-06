@@ -14,7 +14,23 @@ var food = {
                 resolve(res);
             });
             
-        })
+        });
+    },
+    
+    search: function(query, max, offset) {
+        return new Promise(function(resolve, reject) {
+            food.nd.search({
+                q: query,
+                max: max,
+                offset: offset,
+            }, (err, res) => {
+                if (err) {
+                    console.log(err);
+                }  else {
+                    resolve(res);
+                }
+            }); 
+        });
     }
     
 }

@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= data %></title>
+        <link rel='stylesheet' href='/stylesheets/reset.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='/stylesheets/nav.css' />
+        <link rel='stylesheet' href='/stylesheets/search.css' />
+    </head>
+    <body>
+        <% include ../partials/nav.ejs %>
+        <br />
+        
+        <div class="no">
+            <% if (data && data.list.item) { %>
+                <h2>Search Results</h2>
+            
+                <%  for (var i = 0; i < data.list.item.length && i < 15; i++) { %>
+            
+                    <div class="search-result">
+                        <div class="result-header">
+                            <a class='food-link' href="/food/item/<%=data.list.item[i].ndbno%>">
+                                <%= data.list.item[i].name.substr(0, 45) %>
+                            </a>
+                        </div>
+                        <div class="result-body">
+                            <% for (var j = 0; j < infos[i].length; j++) { %>
+                                <div class="food-detail">
+                                    <span class="detail-label"> <%= infos[i][j].name %> </span>
+                                    <span class="detail-value"> <%= infos[i][j].value + infos[i][j].unit %> </span>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+            
+                    <% } %>
+            <% } %>
+            
+            
+        </div>
+        
+  </body>
+</html>
+

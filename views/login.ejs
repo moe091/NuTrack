@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title></title>
+        <link rel='stylesheet' href='/stylesheets/reset.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <div class="center-block">
+            <h2>Log In:</h2>
+            <% if (user) { %>
+                you are logged in as: <%= user.username %>
+            <% } else { %>
+                you are not logged in.
+            <% } %>
+            <form action='/users/login' method='post'>
+                <label for="username" class="loginLbl">username:</label>
+                <input type="text" id="usernameTxt" name="username" class="loginTxt"><br />
+                <label for="password" class="loginLbl">password:</label>
+                <input type="text" id="passwordTxt" name="password" class="loginTxt"><br />
+                <button type="submit">Login</button>
+            </form>
+        
+        </div>
+        
+        
+    </body>
+
+</html>

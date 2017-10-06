@@ -1,0 +1,19 @@
+<nav>
+    <div class='leftnav'>
+        <a href='/' id='home-navlink' class='navlink'>NuTrack</a>
+        <% if (user) { %>
+            <a href='/users/profile' class='navlink user-navlink'><%= user.username %></a>
+            <a href='/users/logout' class='navlink user-navlink'>Logout</a>
+        <% } else { %>
+            <a href='/users/login' class='navlink user-navlink'>Login</a>
+            <a href='/users/register' class='navlink user-navlink'>Register</a>
+        <% } %>
+    </div>
+    
+    <div class='rightnav'>
+        <a href='#' class='navlink'>Meals</a>
+        <a href='#' class='navlink'>Tracker</a>
+        <a href='#' class='navlink'>Planner</a>
+        <a href='#' class='navlink'>Insights</a>
+    </div>
+</nav>

@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= data %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= data %></h1>
-      <ul>
-        <li><h2><%= data.report.food.name %></h2></li>
-        <% for (var i = 0; i < data.report.food.nutrients.length; i++) { %>
-          <li><%= data.report.food.nutrients[i].name %>: <%= data.report.food.nutrients[i].value %><%= data.report.food.nutrients[i].unit %></li>
+    <head>
+        <title><%= data %></title>
+        <link rel='stylesheet' href='/stylesheets/reset.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='/stylesheets/nav.css' />
+    </head>
+    <body>
+        <% include partials/nav.ejs %>
+        <br />
+        <% if (user) { %>
+            you are logged in as: <%= user.username %>
+        <% } else { %>
+            you are not logged in.
         <% } %>
-      </ul>
+        
+        <div class="center-block">
+          
+            <img class="center-img" src="/images/carrot.png">
+          
+            <div class="center-div">
+                <span class="header-label">Find any food or product</span>
+                <span class="searchbox">
+                  
+                    <form action="/food/search/" method="get">
+                        <input type='text' name='query' value="stouffer's mac and cheese" id='foodsearch'>
+                        <input type='submit' value='Search' id='searchBtn'>
+                    </form>
+                  
+                </span>
+            </div>
+          
+        </div>
+      
+      <!--
+      <div class="info-list">
+          <ul>
+            <li><h2><%= // data.report.food.name %></h2></li>
+            <% // for (var i = 0; i < data.report.food.nutrients.length && i < 5; i++) { %>
+              <li><%= // data.report.food.nutrients[i].name %>: <%= // data.report.food.nutrients[i].value %><%= // data.report.food.nutrients[i].unit %></li>
+            <% // } %>
+          </ul>
+      </div>
+      -->
   </body>
 </html>

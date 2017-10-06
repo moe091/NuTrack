@@ -1,0 +1,36 @@
+nav {
+    background-color: #444a51;
+    margin: 0;
+    padding: 6px 60px 6px 40px;
+    border-bottom: 1px #777 solid;
+    overflow: auto;
+}
+
+#home-navlink {
+    border-right: 1px solid #dfe3ea;
+    margin: 0;
+    padding: 0;
+    padding-right: 15px;
+    margin-right: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.leftnav, .rightnav {
+    display: inline-block;
+}
+.rightnav {
+    float: right;
+}
+.leftnav {
+    float: left;
+}
+
+.navlink {
+    color: #dfe3ea;
+    text-decoration: none;
+    margin: 1px 5px;
+    font-size: 1em;
+}
+.navlink:hover {
+    text-decoration: underline;
+}
