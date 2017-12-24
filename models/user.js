@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose');  
 var pplMongoose = require('passport-local-mongoose');
 var tracker = require('./tracker.js');
 
