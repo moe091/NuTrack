@@ -1,0 +1,18 @@
+Homepage:
+	-Main feature: food search
+	-Right side: not logged in=[Sign up/log in] - logged in=[Meal Tracker/Planner info(cals this week/cals till goal progress bar, upcoming meals) - 
+		create meal button, add meal button]
+	-Top: Nav links[search, planner, tracker, meals,  right side=log in/out, register/profile]
+	-Bottom: App info/features. 3-4 columns with photo at top and short text description. Click to expand column/shrink others and 'read more']
+	-Footer
+
+Search: 
+	-Display search results, name and 4-5 'importantNutrients'(an array field in User model, where they can select which properties to display for food items, e.g sugar, carbs, cals,
+		protein, vitamin C. Has a default setting including cals, carbs, protein, sugar). Can click on any stat at the top of table to sort by property.
+	-Links: click name to view page for item. also has links for add To Meal, add to Tracker, add to Planner('add to' pages).
+	-Each item has + button/checkbox that adds them to your 'current items'. current items are displayed on side of screen in a div, and have buttons for compare, add to meal/planner/	
+		tracker, save to my items.
+	-User model has a 'myItems' array, items in this will show up highlighted in green or blue or something on search page and be put at the top of the list.
+	-
+
+

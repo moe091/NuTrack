@@ -1,0 +1,12 @@
+html, body {
+  height: 100%;
+  background-color: #dcd1c6; }
+
+.masthead {
+  height: 70%;
+  overflow: hidden;
+  background-image: url(../images/header-bg.jpg); }
+
+.nav-opaque {
+  background-color: #fbfbfb;
+  border-bottom: 1px #ddd solid; }
