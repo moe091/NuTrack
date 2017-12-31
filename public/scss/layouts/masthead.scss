@@ -1,0 +1,50 @@
+.masthead {
+	height: 70%;
+	overflow: hidden;
+	background-image: url(../images/header-bg.jpg);
+}
+
+#home-searchdiv {
+	width: 50%;
+	min-width: 480px;
+	max-width: 680px;
+	background-color: $col-dark;
+	border-radius: 6px;
+	border: 4px $col-lightest solid;
+	
+	.searchbox {
+		width: 100%;
+		text-align: center;
+		
+		input[type='text'] {
+			width: 60%;
+			min-width: 200px;
+			display: inline-block;
+		}
+		
+		button {
+			vertical-align: baseline;
+			background-color: $col-darkest;
+			color: $col-lightest;
+			border: 1px solid $col-light;
+		}
+	}
+	
+	
+	.title {
+		color: $col-light;
+		font-size: 2em;
+		font-weight: bold;
+	}
+	.tagline {
+		color: $col-lightest;
+		font-size: 1.5em;
+		font-style: italic;
+	}
+}
+
+@media (max-width:576px){
+    .hide-img, .hide-img img {
+        display: none;
+    }
+}

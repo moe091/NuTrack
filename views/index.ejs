@@ -4,6 +4,7 @@
         <title><%= data %></title>
 				<link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
 				<link rel='stylesheet' href='/stylesheets/global.css' />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 			
 				<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
@@ -23,23 +24,36 @@
         <% } %>
 				<div class="d-flex align-items-center justify-content-center my-5">
 						
-						<div class="center-block d-flex justify-content-center flex-column align-self-center">
+						<div class="center-block d-flex justify-content-center flex-column align-self-center p-2" id="home-searchdiv">
           
-						  <img class="center-img align-self-center" src="/images/carrot.png">
+          	<div class="container">
+          		<div class="row">
+          			<div class="col-sm-9">
+          				<div class="title mt-3">NuTrack</div>
+          				<div class="tagline mb-3">Organize your nutrition</div>
+          			</div>
+          			<div class="col-sm-2 hide-img">
+						  		<img class="img-fluid" src="/images/carrot.png">
+          			</div>
+          		</div>
+          		<div class="row">
+          			<span class="searchbox mt-3">
 
-							<div class="center-div">
-							  <span class="header-label">Find any food or product</span>
-								  <span class="searchbox">
+											<form action="/food/search/" method="get">
+												<span class="input-group-btn">
+													<input type="text" name="query" class="form-control" placeholder="digiorno pizza" id="foodsearch">
+													<button class="btn btn-default" type="submit" value="Search" id="searchBtn">Go!</button>
+												</span>
+												
+											</form>
 
-									  <form action="/food/search/" method="get">
-										  <input type='text' name='query' value="stouffer's mac and cheese" id='foodsearch'>
-											<input type='submit' value='Search' id='searchBtn'>
-										</form>
+									</span>
+          		</div>
+          	</div>
 
-								</span>
-							</div>
 
-						</div> <!-- center-block -->
+						</div> <!-- home-searchdiv -->
+					
 							
 				</div>
 			</section>

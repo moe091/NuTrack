@@ -5,7 +5,8 @@
         <title><%= data %></title>
         
 				<link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
-				<link rel='stylesheet' href='/stylesheets/nav.css' />
+				<link rel='stylesheet' href='/stylesheets/global.css' />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 			
 				<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
@@ -20,6 +21,31 @@
         <div class="no">
             <% if (data && data.list.item) { %>
                 <h2>Search Results</h2>
+                <table class="table">
+                	<thead class="thead-inverse">
+                		<tr>
+                			<th>#</th>
+                			<th>Product</th>
+                			<th>Calories</th><!-- replace the following with user.trackedNutrient[0-5] -->
+                			<th>Protien</th>
+                			<th>Carbs</th>
+                			<th>Sugar</th>
+                			<th>Serving Size</th>
+                		</tr>
+                	</thead>
+                	<tbody>
+                		<tr>
+                			<th scope="row"></th>
+                			<td></td>
+                			<td></td>
+                			<td></td>
+                			<td></td>
+                			<td></td>
+                			<td></td>
+                		</tr>
+                	</tbody>
+                	
+                </table>
             
                 <%  for (var i = 0; i < data.list.item.length && i < 15; i++) { %>
             

@@ -1,0 +1,21 @@
+.nav-opaque {
+	background-color: $col-dark;
+	color: $col-lightest;
+	border-bottom: 1px #ddd solid;
+}
+
+nav {
+	background-color: $col-darkest !important;
+	border-bottom: 1px #ddd solid;
+	
+	a {
+		color: $col-light !important;
+		&:hover {
+			color: $col-lightest !important;
+		}
+	}
+}
+
+.nav-toggle-icon {
+	color: $col-lightest;
+}
