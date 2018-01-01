@@ -12,10 +12,11 @@ var session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var food = require('./routes/food');
+var user = require('./routes/user')
   
 
 
-var app = express();
+let app = express();
 
 //setup mongoose/db
 var mongoose = require('mongoose');
@@ -50,6 +51,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use('/', index);
 app.use('/users', users);
 app.use('/food', food);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

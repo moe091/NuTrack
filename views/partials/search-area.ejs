@@ -1,0 +1,59 @@
+
+        			<div class="search-area">
+                <h2><%= message %></h2>
+								<% if (nutList) { %>
+								
+									<table class="table">
+										<thead class="thead-inverse">
+											<tr>
+												<th>Product</th>
+												<th>Product</th>
+												<th>Calories</th><!-- replace the following with user.trackedNutrient[0-5] -->
+												<th>Protien</th>
+												<th>Carbs</th>
+												<th>Sugar</th>
+												<th>Serving Size</th>
+											</tr>
+										</thead>
+										
+										<tbody>
+										
+											<% for (var n in nutList) { %>
+												<tr>
+													<td><%= (Number(n)+1) + " - " + nutList[n].name.substr(0, 40) %></td>
+													<% for (var nut in nutList[n].nutrients) { %>
+														<td><%= nutList[n].nutrients[nut].name + " - " + nutList[n].nutrients[nut].value + nutList[n].nutrients[nut].unit %> </td>
+													<% } %> <!-- end for (nutList.nutrients) -->
+												</tr>
+											<% } %> <!-- end for (nutList) -->
+											
+										</tbody>
+									</table>
+
+								<% } %> <!-- end if (list) -->
+
+
+							</div><!-- search-area -->
+        		
+<!--
+_Functionality_
+User can click sidebar links to navigate to tracker/planner/meals/specificmeals/comparisons/etc
+if any items in search area are checked off when they click an item, it takes them to a page to add those items to the tracker/meal/whatever instead of the main page
+	(when 1 or more items are checked, the icons change color to show that clicking will have a different effect)
+
+
+
+_Steps_
+Implement functionality for tracker + planner(because they are easiest)
+create tracker/planner pages
+create pages to add items to tracker/planner
+
+
+_Tracker_
+Add items(or meals), each added item will have a time, each item will have a # of servings(for meal, it will be percentage of total meal), ndbno
+tracker will calculate calories and other nutrients based on data from ndbno and # of servings
+tracker will organize items into days/weeks
+
+
+
+-->
