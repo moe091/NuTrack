@@ -7,7 +7,7 @@ var food = require('../foods');
 router.get('/', function(req, res, next) {
     //var f = food.report('01009', 'b');
     var e = food.getReport('01009', 'f').then(function(val) {
-        console.log(val);
+        console.log('get-report');
         res.render('index', { data: val, user: req.user });
     }).catch(function(err) {
         console.log('ERROR:', err);

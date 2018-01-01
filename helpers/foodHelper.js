@@ -1,3 +1,14 @@
+var nutrientMap = new Map();
+
+
+nutrientMap.set(203, {name: 'Protein', abbr: 'Protein'});
+nutrientMap.set(204, {name: 'Total Fat', abbr: 'Fat'});
+nutrientMap.set(205, {name: 'Carbohydrates', abbr: 'Carbs'});
+nutrientMap.set(208, {name: 'Calories', abbr: 'Cals'});
+nutrientMap.set(269, {name: 'Sugar', abbr: 'Sug'});
+nutrientMap.set(307, {name: 'Sodium', abbr: 'Sodium'});
+
+
 var fHelper = function() {
     this.nutrientList = [];
     this.nutrientList.push({name: 'Calories', id: '208', abr: 'Cal', default: true});
@@ -33,6 +44,8 @@ var fHelper = function() {
             }
         }  
     };
+	
+
     
 }
 
@@ -62,7 +75,7 @@ var foodHelper = {
                 unit: ''
             }
         } 
-        console.log("id: " + id + ", nutrient: " + nutrient.name);
+        //console.log("id: " + id + ", nutrient: " + nutrient.name);
         return {name: n, value: nutrient.value, unit: nutrient.unit};
         
     },
@@ -70,12 +83,44 @@ var foodHelper = {
         
         for (var i = 0; i < this.nutrientList.length; i++) {
             var item = this.getNutrient(this.nutrientList[i].name, list);
-            if (item != null) {
-                console.log('item: ', item);
+            if (item != null) { 
                 obj.push(item);
             }
         }
-    }
+    },
+	
+			//list contains each item, and for each item contains 
+		createNutrientObj: function(foodObj, nutList) {
+			console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			console.log("foodObj:", foodObj);
+			console.log("nutList", nutList);
+			var obj = {
+				manu: foodObj.manu,
+				name: foodObj.name,
+				ru: foodObj.ru
+			}
+			
+			obj.nutrients = [];
+			
+			for (nutrient in foodObj.nutrients) {
+				for (id in nutList) {
+					//console.log("checking id " + nutList[id]);
+					if (nutList[id] == foodObj.nutrients[nutrient].nutrient_id) {
+						console.log("adding nutrient " + foodObj.nutrients[nutrient].name + " for food " + foodObj.name);
+						var nutObj = {
+							name: nutrientMap.get(nutList[id]).name,
+							abbr: nutrientMap.get(nutList[id]).abbr,
+							unit: foodObj.nutrients[nutrient].unit,
+							value: foodObj.nutrients[nutrient].value
+						}
+						obj.nutrients.push(nutObj);
+						console.log("=\n=\n=\n=\n=\n=\n=\n=\nDone adding ", nutObj);
+					}
+				}
+			}
+			return obj;
+		}
+	
 }
 
 /** Planning. ignore me.

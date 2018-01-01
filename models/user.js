@@ -10,7 +10,8 @@ var userSchema = new mongoose.Schema({
     password: String,
     email: String,
     tracker: tracker.schema,
-    planner: tracker.schema
+    planner: tracker.schema,
+		watchedNutrients: [Number]
 });
 
 userSchema.plugin(pplMongoose);

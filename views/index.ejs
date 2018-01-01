@@ -14,7 +14,7 @@
     <body>
         
         
-			<section class="masthead">
+			<section class="bottom-slant masthead">
 				<% include partials/nav.ejs %>
         <br />
         <% if (user) { %>
@@ -24,16 +24,16 @@
         <% } %>
 				<div class="d-flex align-items-center justify-content-center my-5">
 						
-						<div class="center-block d-flex justify-content-center flex-column align-self-center p-2" id="home-searchdiv">
+						<div class="center-block d-flex justify-content-center flex-column align-self-center pb-3" id="home-searchdiv">
           
           	<div class="container">
           		<div class="row">
-          			<div class="col-sm-9">
-          				<div class="title mt-3">NuTrack</div>
+          			<div class="col-sm-8 mt-3 ml-3">
+          				<div class="title">NuTrack</div>
           				<div class="tagline mb-3">Organize your nutrition</div>
           			</div>
-          			<div class="col-sm-2 hide-img">
-						  		<img class="img-fluid" src="/images/carrot.png">
+          			<div class="col-sm-2 py-2 hide-img">
+						  		<img class="img-fluid" src="/images/carrot.png" width='70%'>
           			</div>
           		</div>
           		<div class="row">
@@ -57,17 +57,9 @@
 							
 				</div>
 			</section>
+     
+     	<div class="div-tall">dsd</div>
       
-      <!--
-      <div class="info-list">
-          <ul>
-            <li><h2><%= // data.report.food.name %></h2></li>
-            <% // for (var i = 0; i < data.report.food.nutrients.length && i < 5; i++) { %>
-              <li><%= // data.report.food.nutrients[i].name %>: <%= // data.report.food.nutrients[i].value %><%= // data.report.food.nutrients[i].unit %></li>
-            <% // } %>
-          </ul>
-      </div>
-      -->
 			
 			
   </body>

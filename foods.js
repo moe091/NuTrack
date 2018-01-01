@@ -25,7 +25,7 @@ var food = {
                 offset: offset,
             }, (err, res) => {
                 if (err) {
-                    console.log(err);
+                    console.log("ERROR" + err);
                 }  else {
                     resolve(res);
                 }

@@ -19,7 +19,7 @@
 </nav>
 -->
 
-<nav class="navbar navbar-expand-lg sticky-top navbar-light">
+<nav class="navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span>
 			<i class="fa fa-list nav-toggle-icon"></i>
@@ -30,28 +30,34 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav mr-auto mt-2 mt-md-0">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link disabled" href="#">
+        <% if (user) { %>
+        	<%= user.username %>
+        <% } else { %>
+        	 not logged in
+        <% } %>
+        </a>
       </li>
     </ul>
 		
 		<ul class="navbar-nav pull-right">
 			
 		  <li class="nav-item">
-				<a class="nav-link mx-sm-2" href="#">Login</a>
+				<a class="nav-link mx-2" href="/users/login">Login</a>
 			</li>
 			<li class="nav-item">	
-				<a class="nav-link mx-sm-2" href="#">Register</a>
+				<a class="nav-link mx-2" href="#">Register</a>
 			</li>
 			
 		</ul>
 		
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0" id="nav-search-form">
 			
       <input class="form-control mx-sm-2" type="text" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

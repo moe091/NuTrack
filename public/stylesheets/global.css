@@ -1,15 +1,17 @@
 .masthead {
   height: 70%;
+  min-height: 55vh;
   overflow: hidden;
-  background-image: url(../images/header-bg.jpg); }
+  background-image: url(../images/header-bg.jpg);
+  background-attachment: fixed; }
 
 #home-searchdiv {
   width: 50%;
   min-width: 480px;
   max-width: 680px;
-  background-color: #4A4E69;
-  border-radius: 6px;
-  border: 4px #F2E9E4 solid; }
+  background-color: rgba(34, 34, 60, 0.75);
+  border-radius: 2px;
+  border: 1px #9A8C98 solid; }
   #home-searchdiv .searchbox {
     width: 100%;
     text-align: center; }
@@ -19,7 +21,7 @@
       display: inline-block; }
     #home-searchdiv .searchbox button {
       vertical-align: baseline;
-      background-color: #22223B;
+      background-color: #4A4E69;
       color: #F2E9E4;
       border: 1px solid #C9ADA7; }
   #home-searchdiv .title {
@@ -31,26 +33,80 @@
     font-size: 1.5em;
     font-style: italic; }
 
+.bottom-slant {
+  -webkit-clip-path: polygon(0 0, 2600px 0, 2600px 92%, 0 100%);
+  clip-path: polygon(0 0, 2600px 0, 2600px 92%, 0 100%); }
+
 @media (max-width: 576px) {
   .hide-img, .hide-img img {
     display: none; } }
 
 .nav-opaque {
   background-color: #4A4E69;
-  color: #F2E9E4;
-  border-bottom: 1px #ddd solid; }
+  color: #F2E9E4; }
 
 nav {
-  background-color: #22223B !important;
-  border-bottom: 1px #ddd solid; }
+  background-color: #22223B !important; }
   nav a {
-    color: #C9ADA7 !important; }
+    color: #F2E9E4 !important; }
     nav a:hover {
-      color: #F2E9E4 !important; }
+      color: #C9ADA7 !important; }
 
 .nav-toggle-icon {
   color: #F2E9E4; }
 
-html, body {
+.sidebar {
+  background-color: #181834;
   height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 16%; }
+  .sidebar a:hover {
+    text-decoration: none;
+    color: #F2E9E4; }
+    .sidebar a:hover div {
+      background-color: #22223B; }
+
+.sidebar-segment {
+  width: 100%;
+  background-color: #181834;
+  color: #C9ADA7;
+  font-size: 1.2em;
+  padding: 6px 4px 6px 10%; }
+
+.segment-head {
+  color: #F2E9E4; }
+
+.sidebar-section {
+  margin-top: 8px; }
+  .sidebar-section .segment-item {
+    padding-left: 16%;
+    color: #9A8C98; }
+
+.sidebar-icon {
+  margin-right: 10px; }
+
+.sidebar-spacer {
+  height: 5%; }
+
+.sidebar-head {
+  background-color: #4A4E69;
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 1.6em; }
+
+.search-area {
+  padding: 16px;
+  margin: 2%; }
+
+html, body {
+  min-height: 100%;
   background-color: #FAF8F2; }
+
+.div-tall {
+  height: 1200px;
+  width: 100%; }
+
+.no-gap {
+  margin-top: 0;
+  margin-bottom: 0; }

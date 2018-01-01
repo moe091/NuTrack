@@ -16,60 +16,53 @@
     </head>
     <body>
         <% include ../partials/nav.ejs %>
-        <br />
+        <div class="container-fixed h-100 no-gap">
+        	<div class="row">
+        		<div class="col-sm-2">
+        			<!-- nav partial goes here -->
+        			<% include ../partials/sidebar.ejs %>
+        		</div>
+        		<div class="col-sm-9">
+        			<div class="search-area">
+                <h2><%= message %></h2>
+								<% if (nutList) { %>
+								
+									<table class="table">
+										<thead class="thead-inverse">
+											<tr>
+												<th>Product</th>
+												<th>Product</th>
+												<th>Calories</th><!-- replace the following with user.trackedNutrient[0-5] -->
+												<th>Protien</th>
+												<th>Carbs</th>
+												<th>Sugar</th>
+												<th>Serving Size</th>
+											</tr>
+										</thead>
+										
+										<tbody>
+										
+											<% for (var n in nutList) { %>
+												<tr>
+													<td><%= (Number(n)+1) + " - " + nutList[n].name.substr(0, 40) %></td>
+													<% for (var nut in nutList[n].nutrients) { %>
+														<td><%= nutList[n].nutrients[nut].name + " - " + nutList[n].nutrients[nut].value + nutList[n].nutrients[nut].unit %> </td>
+													<% } %> <!-- end for (nutList.nutrients) -->
+												</tr>
+											<% } %> <!-- end for (nutList) -->
+											
+										</tbody>
+									</table>
+
+								<% } %> <!-- end if (list) -->
+
+
+							</div><!-- search-area -->
+        			
+						</div><!-- col-9 -->
+        	</div><!-- row -->
+        </div><!-- container -->
         
-        <div class="no">
-            <% if (data && data.list.item) { %>
-                <h2>Search Results</h2>
-                <table class="table">
-                	<thead class="thead-inverse">
-                		<tr>
-                			<th>#</th>
-                			<th>Product</th>
-                			<th>Calories</th><!-- replace the following with user.trackedNutrient[0-5] -->
-                			<th>Protien</th>
-                			<th>Carbs</th>
-                			<th>Sugar</th>
-                			<th>Serving Size</th>
-                		</tr>
-                	</thead>
-                	<tbody>
-                		<tr>
-                			<th scope="row"></th>
-                			<td></td>
-                			<td></td>
-                			<td></td>
-                			<td></td>
-                			<td></td>
-                			<td></td>
-                		</tr>
-                	</tbody>
-                	
-                </table>
-            
-                <%  for (var i = 0; i < data.list.item.length && i < 15; i++) { %>
-            
-                    <div class="search-result">
-                        <div class="result-header">
-                            <a class='food-link' href="/food/item/<%=data.list.item[i].ndbno%>">
-                                <%= data.list.item[i].name.substr(0, 45) %>
-                            </a>
-                        </div>
-                        <div class="result-body">
-                            <% for (var j = 0; j < infos[i].length; j++) { %>
-                                <div class="food-detail">
-                                    <span class="detail-label"> <%= infos[i][j].name %> </span>
-                                    <span class="detail-value"> <%= infos[i][j].value + infos[i][j].unit %> </span>
-                                </div>
-                            <% } %>
-                        </div>
-                    </div>
-            
-                    <% } %>
-            <% } %>
-            
-            
-        </div>
         
   </body>
 </html>
