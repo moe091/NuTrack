@@ -60,31 +60,67 @@ nav {
   height: 100%;
   min-height: 100vh;
   width: 100%;
-  padding-top: 16%; }
-  .sidebar a:hover {
+  min-width: 180px;
+  padding: 16% 0 10% 0; }
+  .sidebar .sidebar-link:hover {
     text-decoration: none;
     color: #F2E9E4; }
-    .sidebar a:hover div {
-      background-color: #22223B; }
+    .sidebar .sidebar-link:hover div {
+      background-color: #4A4E69; }
+  .sidebar .sidebar-link i {
+    color: #E2CAC5; }
+  .sidebar .sidebar-link .icon-disabled {
+    color: #4A4E69; }
 
 .sidebar-segment {
   width: 100%;
+  min-width: 106px;
   background-color: #181834;
-  color: #C9ADA7;
+  color: #E2CAC5;
   font-size: 1.2em;
-  padding: 6px 4px 6px 10%; }
+  padding: 6px 0 6px 2px; }
 
 .segment-head {
   color: #F2E9E4; }
+  .segment-head i {
+    color: #F2E9E4; }
 
 .sidebar-section {
-  margin-top: 8px; }
+  margin-top: 8px;
+  padding-left: 10%; }
   .sidebar-section .segment-item {
-    padding-left: 16%;
+    padding-left: 6%;
     color: #9A8C98; }
+  .sidebar-section a:hover {
+    text-decoration: none; }
+    .sidebar-section a:hover .sidebar-segment {
+      background-color: #4A4E69; }
 
 .sidebar-icon {
   margin-right: 10px; }
+
+.sidebar-rowGroup {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-left: 10%; }
+  .sidebar-rowGroup .sidebar-link {
+    display: inline-block;
+    height: 100%;
+    flex-grow: 1;
+    max-width: 70%; }
+  .sidebar-rowGroup .right-segment {
+    min-width: 0;
+    display: inline-block;
+    background-color: #22223B; }
+  .sidebar-rowGroup .right-link {
+    flex-grow: 1;
+    max-width: 25%;
+    text-align: center;
+    padding-right: 2px; }
+  .sidebar-rowGroup .right-icon {
+    margin-right: 0; }
 
 .sidebar-spacer {
   height: 5%; }
@@ -94,6 +130,9 @@ nav {
   padding: 10px 6px;
   text-align: center;
   font-size: 1.6em; }
+
+.icon-disabled {
+  color: #4A4E69; }
 
 .search-area {
   padding: 16px;
@@ -110,3 +149,7 @@ html, body {
 .no-gap {
   margin-top: 0;
   margin-bottom: 0; }
+
+.app-component {
+  background-color: #000;
+  color: #eef0f5; }

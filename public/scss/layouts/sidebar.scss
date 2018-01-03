@@ -3,44 +3,97 @@
 	height: 100%;
 	min-height: 100vh;
 	width: 100%; 
-	padding-top: 16%;
-	a {
+	min-width: 180px;
+	padding: 16% 0 10% 0;
+	.sidebar-link {
 		
 		&:hover {
 			text-decoration: none;
 			color: $col-lightest;
 			div {
-				background-color: $col-darkest;
+				background-color: $col-dark;
 			}
+}
+		
+		i {
+			color: $col-lighter;
+		}
+		.icon-disabled {
+			color: $col-dark;
 		}
 	}
 	
 }
 
 
+
 .sidebar-segment {
-	width: 100%;
+	width: 100%;   
+	min-width: 106px;
 	background-color: $col-sidebar;
-		color: $col-light;
+	color: $col-lighter;
 	font-size: 1.2em;
-	padding: 6px 4px 6px 10%;
+	padding: 6px 0 6px 2px;
 } 
 .segment-head {
 	color: $col-lightest;
+	i {
+		color: $col-lightest;
+	}
 }
 .sidebar-section {
 	margin-top: 8px;
+	padding-left: 10%;
 	.segment-item {
-		padding-left: 16%;
+		padding-left: 6%;
 		color: $col-mid;
+	} 
+	a {
+		&:hover {
+			text-decoration: none;
+			.sidebar-segment {
+				background-color: $col-dark;
+			}
+		}
 	}
 }
-
-
 
 .sidebar-icon {
 	margin-right: 10px;	
 }
+
+
+
+
+.sidebar-rowGroup {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%; 
+	padding-left: 10%;
+	.sidebar-link {
+		display: inline-block;
+		height: 100%;
+		flex-grow: 1;
+		max-width: 70%;
+	}
+	.right-segment { 
+		min-width: 0; 
+		display: inline-block;
+		background-color: $col-darkest;
+	}
+	.right-link { 
+		flex-grow: 1;
+		max-width: 25%;
+		text-align: center;
+		padding-right: 2px;
+	}
+	.right-icon {
+		margin-right: 0;
+	}
+}
+
+
 
 	
 
@@ -55,6 +108,12 @@
 	text-align: center;
 	font-size: 1.6em;
 }
+
+.icon-disabled {
+	color: $col-dark;
+}
+
+
 
 
 

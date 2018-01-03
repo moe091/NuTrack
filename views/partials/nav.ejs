@@ -1,23 +1,4 @@
-<!-- <nav>
-    <div class='leftnav'>
-        <a href='/' id='home-navlink' class='navlink'>NuTrack</a>
-        <% if (user) { %>
-            <a href='/users/profile' class='navlink user-navlink'><%= user.username %></a>
-            <a href='/users/logout' class='navlink user-navlink'>Logout</a>
-        <% } else { %>
-            <a href='/users/login' class='navlink user-navlink'>Login</a>
-            <a href='/users/register' class='navlink user-navlink'>Register</a>
-        <% } %>
-    </div>
-    
-    <div class='rightnav'>
-        <a href='#' class='navlink'>Meals</a>
-        <a href='#' class='navlink'>Tracker</a>
-        <a href='#' class='navlink'>Planner</a>
-        <a href='#' class='navlink'>Insights</a>
-    </div>
-</nav>
--->
+
 
 <nav class="navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,16 +13,23 @@
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
+      
+      <% if (typeof user != "undefined") { %>
+        <li class="nav-item">
+					<a class="nav-link" href="/user/tracker">Tracker</a>
+				</li>
+       <% } %>
+      
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">
-        <% if (user) { %>
+        
+        <% if (typeof user != "undefined") { %>
+        	<a class="nav-link" href="/user/home">
         	<%= user.username %>
         <% } else { %>
-        	 not logged in
+       		<a class="nav-link disabled" href="#">
+        	not logged in
         <% } %>
+        
         </a>
       </li>
     </ul>

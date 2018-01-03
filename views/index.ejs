@@ -6,22 +6,32 @@
 				<link rel='stylesheet' href='/stylesheets/global.css' />
 				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 			
-				<script src='/react/react.development.js' /></script>
+			
 				<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+				
+				
+				<!--
+				
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
 			
+				-->
     </head>
     <body>
         
-        
+
+		
 			<section class="bottom-slant masthead">
 				<% include partials/nav.ejs %>
         <br />
         <% if (user) { %>
+           <% var username = user.username; %>
             you are logged in as: <%= user.username %>
         <% } else { %>
-			
+						<% var username = "joejon"; %>
         <% } %>
 				<div class="d-flex align-items-center justify-content-center my-5">
 						
@@ -30,8 +40,8 @@
           	<div class="container">
           		<div class="row">
           			<div class="col-sm-8 mt-3 ml-3">
-          				<div class="title">NuTrack</div>
-          				<div class="tagline mb-3">Organize your nutrition</div>
+          				<div class="title" id="greeting">NuTrack</div>
+          				<div class="tagline mb-3" data-binding="text: firstName">Organize your nutrition</div>
           			</div>
           			<div class="col-sm-2 py-2 hide-img">
 						  		<img class="img-fluid" src="/images/carrot.png" width='70%'>
@@ -58,10 +68,19 @@
 							
 				</div>
 			</section>
+    
+    	<section class="content-section w-100 h-50">
+    		<div class="decription-area" id="App">
+    			alksdjf
+    		</div>
+    		
+    		
+    	</section>
      
      	<div class="div-tall">dsd</div>
       
 			
 			
+				<script src="/js/bundle.js"></script>
   </body>
 </html>

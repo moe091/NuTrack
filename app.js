@@ -69,7 +69,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-console.log('Port = ' + app.get('port'));
-console.log(app);
+console.log(process.env.PORT);
 module.exports = app;

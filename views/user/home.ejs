@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>App | NuTrack</title>
+        
+				<link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
+				<link rel='stylesheet' href='/stylesheets/global.css' />
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			
+				<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+			
+
+    </head>
+    <body>
+        <% include ../partials/nav.ejs %>
+        <div class="container-fixed h-100 no-gap">
+        	<div class="row">
+        		<div class="col-sm-2">
+        			<!-- nav partial goes here -->
+        			<% include ../partials/sidebar.ejs %>
+        		</div>
+        		<div class="col-sm-9">
+        			<div class="h-100 w-100 app-main" id="App">
+        				
+        				
+        			</div>
+						</div><!-- col-9 -->
+        	</div><!-- row -->
+        </div><!-- container -->
+        
+        
+        
+				<script src="/js/bundle.js"></script>
+  </body>
+</html>
+
+<!--
+_Functionality_
+User can click sidebar links to navigate to tracker/planner/meals/specificmeals/comparisons/etc
+if any items in search area are checked off when they click an item, it takes them to a page to add those items to the tracker/meal/whatever instead of the main page
+	(when 1 or more items are checked, the icons change color to show that clicking will have a different effect)
+
+
+
+_Steps_
+Implement functionality for tracker + planner(because they are easiest)
+create tracker/planner pages
+create pages to add items to tracker/planner
+
+
+_Tracker_
+Add items(or meals), each added item will have a time, each item will have a # of servings(for meal, it will be percentage of total meal), ndbno
+tracker will calculate calories and other nutrients based on data from ndbno and # of servings
+tracker will organize items into days/weeks
+
+
+
+-->

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><%= data %></title>
+        <title>Tracker</title>
         
 				<link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.css' />
 				<link rel='stylesheet' href='/stylesheets/global.css' />
@@ -33,6 +33,14 @@
 </html>
 
 <!--
+First, create tracker model and allow users to add items from search to tracker
+	create page to add item(include abilit to set time, and portion/percentage - only single items at first, meals later)
+Allow users to view tracker in a basic way
+	tracker will go from the day user register(have to store this in model) to the current day
+	at first, just view the tracker as a list of items being tracked to make sure basic functionality is working
+
+
+
 _Functionality_
 User can click sidebar links to navigate to tracker/planner/meals/specificmeals/comparisons/etc
 if any items in search area are checked off when they click an item, it takes them to a page to add those items to the tracker/meal/whatever instead of the main page

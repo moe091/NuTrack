@@ -8,14 +8,22 @@ var User = require('../models/user');
 
 
 
-router.get('/item/:no', function(req, res, next) {
+router.get('/tracker', function(req, res, next) {
       //var f = food.report('01009', 'b');
-    var e = food.getReport(req.params.no, 's').then(function(val) {
-        res.render('food', { data: val, user: req.user });
-    }).catch(function(err) {
-        console.log('ERROR:', err);
-        res.render('index', {title: err}); 
-    });
+	console.log("tracker - user: " + req.user);
+	console.log("tracker - user: " + req.user);
+	console.log("tracker - user: " + req.user);
+	console.log("tracker - user: " + req.user);
+	console.log("tracker - user: " + req.user);
+	res.render('user/tracker', {data: null, user: req.user});
+});
+
+router.get('/home', function(req, res, next) {
+	if (req.isAuthenticated()) {
+		res.render('user/home');
+	} else {
+		res.json({response:"NOT LOGGED IN FUCKING NIGGER WHAT THE SHIT"});
+	}
 });
 
 
