@@ -22,7 +22,8 @@ router.get('/home', function(req, res, next) {
 	if (req.isAuthenticated()) {
 		res.render('user/home');
 	} else {
-		res.json({response:"NOT LOGGED IN FUCKING NIGGER WHAT THE SHIT"});
+		
+		res.render('user/home');
 	}
 });
 

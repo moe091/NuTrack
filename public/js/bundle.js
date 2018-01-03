@@ -972,29 +972,85 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var App = function (_React$Component) {
-		_inherits(App, _React$Component);
+	_inherits(App, _React$Component);
 
-		function App() {
-				_classCallCheck(this, App);
+	function App(props) {
+		_classCallCheck(this, App);
 
-				return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+		_this.state = {
+			date: new Date()
+		};
+
+		return _this;
+	}
+
+	_createClass(App, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'h-100 w-100' },
+				this.createRow((this.state.date.getHours() - 4) % 12 + ':' + this.state.date.getMinutes() + ':' + this.state.date.getSeconds())
+			);
 		}
+	}, {
+		key: 'createRow',
+		value: function createRow(id) {
+			return _react2.default.createElement(Row, { value: id });
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
 
-		_createClass(App, [{
-				key: 'render',
-				value: function render() {
-						return _react2.default.createElement(
-								'div',
-								{ className: 'app-component w-100 h-100' },
-								'Hello'
-						);
-				}
-		}]);
+			this.timerID = setInterval(function () {
+				return _this2.tick();
+			}, 1000);
+		}
+	}, {
+		key: 'tick',
+		value: function tick() {
+			this.setState({
+				date: new Date()
+			});
+		}
+	}]);
 
-		return App;
+	return App;
 }(_react2.default.Component);
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('App'));
+var Row = function (_React$Component2) {
+	_inherits(Row, _React$Component2);
+
+	function Row(props) {
+		_classCallCheck(this, Row);
+
+		var _this3 = _possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).call(this, props));
+
+		_this3.state = {
+			value: null
+		};
+		return _this3;
+	}
+
+	_createClass(Row, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'span',
+				{ className: 'block w-25 h-25' },
+				'Time = ',
+				this.props.value
+			);
+		}
+	}]);
+
+	return Row;
+}(_react2.default.Component);
+
+_reactDom2.default.render(_react2.default.createElement(App, { message: 'THIS IS HALLOWEEN. <br> Does br work here? <br><br><br><br>HMMMM.<h1>HEADER</h1>' }), document.getElementById('app-section'));
 
 /***/ }),
 /* 16 */
