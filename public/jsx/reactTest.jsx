@@ -1,24 +1,38 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {SearchArea, SearchTable} from './searchArea.jsx';
   
-class App extends React.Component {
+class TimeApp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			date: new Date()
+			date: new Date(),
+			screen: "none"
 		}
 		
 	}
 	
 	render() {
-		return(
-			<div className="h-100 w-100">
-				{this.createRow(((this.state.date.getHours() - 4) % 12) + ':' + this.state.date.getMinutes() + ':' + this.state.date.getSeconds())}
-			</div>
-		)
+		if (this.state.screen == "time") {
+			return(
+				<div className="h-100 w-100">
+					{this.createRow(((this.state.date.getHours() - 4) % 12) + ':' + this.state.date.getMinutes() + ':' + this.state.date.getSeconds())}
+					<button className="btn" onClick={this.showSearch}>Render Search</button>
+				</div>
+			);
+		} else {
+			return(
+				<SearchArea />
+			);
+		}
 	}
 	
+	showSearch() {
+		this.setState({
+			screen: "search"
+		});
+	}
 	createRow(id) {
 		return(
 				<Row value={id} />
@@ -57,7 +71,10 @@ class Row extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	<App message="THIS IS HALLOWEEN. <br> Does br work here? <br><br><br><br>HMMMM.<h1>HEADER</h1>"/>,
-		document.getElementById('app-section')
-);
+
+
+
+export {TimeApp, Row};
+
+
+

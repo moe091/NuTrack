@@ -3,20 +3,13 @@ var router = express.Router();
 
 
 var User = require('../models/user');
+var trackerRoute = require('./user/trackerRoute');
 
 /* GET users listing. */
 
 
 
-router.get('/tracker', function(req, res, next) {
-      //var f = food.report('01009', 'b');
-	console.log("tracker - user: " + req.user);
-	console.log("tracker - user: " + req.user);
-	console.log("tracker - user: " + req.user);
-	console.log("tracker - user: " + req.user);
-	console.log("tracker - user: " + req.user);
-	res.render('user/tracker', {data: null, user: req.user});
-});
+router.use('/tracker', trackerRoute);
 
 router.get('/home', function(req, res, next) {
 	if (req.isAuthenticated()) {

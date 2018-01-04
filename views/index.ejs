@@ -17,6 +17,11 @@
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+				
+				TODO:
+				turn whole home page into a react component. Create an App component that handles
+				the whole page. When a search is made, or nav link is clicked, it renders the 
+				component for that page. At first the App Component renders the home page.
 			
 				-->
     </head>
@@ -24,7 +29,7 @@
         
 
 		
-			<section class="bottom-slant masthead">
+			<section class="bottom-slant masthead" id="App">
 				<% include partials/nav.ejs %>
         <br />
         <% if (user) { %>
@@ -33,51 +38,18 @@
         <% } else { %>
 						<% var username = "joejon"; %>
         <% } %>
-				<div class="d-flex align-items-center justify-content-center my-5">
-						
-						<div class="center-block d-flex justify-content-center flex-column align-self-center pb-3" id="home-searchdiv">
-          
-          	<div class="container">
-          		<div class="row">
-          			<div class="col-sm-8 mt-3 ml-3">
-          				<div class="title" id="greeting">NuTrack</div>
-          				<div class="tagline mb-3" data-binding="text: firstName">Organize your nutrition</div>
-          			</div>
-          			<div class="col-sm-2 py-2 hide-img">
-						  		<img class="img-fluid" src="/images/carrot.png" width='70%'>
-          			</div>
-          		</div>
-          		<div class="row">
-          			<span class="searchbox mt-3">
-
-											<form action="/food/search/" method="get">
-												<span class="input-group-btn">
-													<input type="text" name="query" class="form-control" placeholder="digiorno pizza" id="foodsearch">
-													<button class="btn btn-default" type="submit" value="Search" id="searchBtn">Go!</button>
-												</span>
-												
-											</form>
-
-									</span>
-          		</div>
-          	</div>
-
-
-						</div> <!-- home-searchdiv -->
-					
-							
-				</div>
+				
 			</section>
     
     	
-        			<section id="app-section" class="w-100 h-100">
-        				
-        			</section>
+			<section id="app-section" class="w-100 h-100">
+
+			</section>
      
      	<div class="div-tall">dsd</div>
       
 			
 			
-				<script src="/js/bundle.js"></script>
+			<script src="/js/bundle.js"></script>
   </body>
 </html>

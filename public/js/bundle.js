@@ -940,11 +940,57 @@ module.exports = focusNode;
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _reactTest = __webpack_require__(15);
 
 var _reactTest2 = _interopRequireDefault(_reactTest);
 
+var _HomePage = __webpack_require__(29);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//can get rid of react imports in other imports, they'll all be combined into one file anyway
+
+
+var App = function (_React$Component) {
+	_inherits(App, _React$Component);
+
+	function App(props) {
+		_classCallCheck(this, App);
+
+		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+		_this.state = {
+			page: "home"
+		};
+		return _this;
+	}
+
+	_createClass(App, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(_HomePage.HomePage, null);
+		}
+	}]);
+
+	return App;
+}(_react2.default.Component);
+
+_reactDom2.default.render(_react2.default.createElement(App, { page: 'home' }), document.getElementById('App'));
 
 /***/ }),
 /* 15 */
@@ -952,6 +998,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.Row = exports.TimeApp = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -963,6 +1014,8 @@ var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _searchArea = __webpack_require__(28);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -971,29 +1024,46 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var App = function (_React$Component) {
-	_inherits(App, _React$Component);
+var TimeApp = function (_React$Component) {
+	_inherits(TimeApp, _React$Component);
 
-	function App(props) {
-		_classCallCheck(this, App);
+	function TimeApp(props) {
+		_classCallCheck(this, TimeApp);
 
-		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (TimeApp.__proto__ || Object.getPrototypeOf(TimeApp)).call(this, props));
 
 		_this.state = {
-			date: new Date()
+			date: new Date(),
+			screen: "none"
 		};
 
 		return _this;
 	}
 
-	_createClass(App, [{
+	_createClass(TimeApp, [{
 		key: 'render',
 		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'h-100 w-100' },
-				this.createRow((this.state.date.getHours() - 4) % 12 + ':' + this.state.date.getMinutes() + ':' + this.state.date.getSeconds())
-			);
+			if (this.state.screen == "time") {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'h-100 w-100' },
+					this.createRow((this.state.date.getHours() - 4) % 12 + ':' + this.state.date.getMinutes() + ':' + this.state.date.getSeconds()),
+					_react2.default.createElement(
+						'button',
+						{ className: 'btn', onClick: this.showSearch },
+						'Render Search'
+					)
+				);
+			} else {
+				return _react2.default.createElement(_searchArea.SearchArea, null);
+			}
+		}
+	}, {
+		key: 'showSearch',
+		value: function showSearch() {
+			this.setState({
+				screen: "search"
+			});
 		}
 	}, {
 		key: 'createRow',
@@ -1018,7 +1088,7 @@ var App = function (_React$Component) {
 		}
 	}]);
 
-	return App;
+	return TimeApp;
 }(_react2.default.Component);
 
 var Row = function (_React$Component2) {
@@ -1050,7 +1120,8 @@ var Row = function (_React$Component2) {
 	return Row;
 }(_react2.default.Component);
 
-_reactDom2.default.render(_react2.default.createElement(App, { message: 'THIS IS HALLOWEEN. <br> Does br work here? <br><br><br><br>HMMMM.<h1>HEADER</h1>' }), document.getElementById('app-section'));
+exports.TimeApp = TimeApp;
+exports.Row = Row;
 
 /***/ }),
 /* 16 */
@@ -18359,6 +18430,320 @@ function camelize(string) {
 }
 
 module.exports = camelize;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.SearchTable = exports.SearchArea = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SearchArea = function (_React$Component) {
+	_inherits(SearchArea, _React$Component);
+
+	function SearchArea(props) {
+		_classCallCheck(this, SearchArea);
+
+		var _this = _possibleConstructorReturn(this, (SearchArea.__proto__ || Object.getPrototypeOf(SearchArea)).call(this, props));
+
+		_this.state = {
+			query: null,
+			message: "Search Results"
+		};
+		return _this;
+	}
+
+	_createClass(SearchArea, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'search-area' },
+				_react2.default.createElement(
+					'h2',
+					null,
+					this.state.message
+				),
+				_react2.default.createElement(SearchTable, null)
+			);
+		}
+	}]);
+
+	return SearchArea;
+}(_react2.default.Component);
+
+//Table will render the actual table. It will handle the headers itself and have data
+//from server for the watchedNutrients so it can render the header cells
+//Each row will be a component. All row components will be held by a parent class that
+//handles ajax calls(is given array of ndbno's, and uses each element to create a row)
+
+//Search Area handles the initial call that queries the API with the search string
+//SearchTable renders table, uses data from SearchArea's ajax call to name headers
+//TableData component is created by SearchTable and given list of ndbno's
+//TableData requests nutrientData for each ndbno and uses it to create a TableRow
+
+
+var SearchTable = function (_React$Component2) {
+	_inherits(SearchTable, _React$Component2);
+
+	function SearchTable(props) {
+		_classCallCheck(this, SearchTable);
+
+		var _this2 = _possibleConstructorReturn(this, (SearchTable.__proto__ || Object.getPrototypeOf(SearchTable)).call(this, props));
+
+		_this2.state = {
+			nutNames: ["a", "b", "c", "d", "e"]
+		};
+		return _this2;
+	}
+
+	_createClass(SearchTable, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'table',
+				{ className: 'table' },
+				_react2.default.createElement(
+					'thead',
+					{ className: 'thead-inverse' },
+					_react2.default.createElement(
+						'tr',
+						null,
+						_react2.default.createElement(
+							'th',
+							null,
+							this.state.nutNames[0]
+						),
+						_react2.default.createElement(
+							'th',
+							null,
+							this.state.nutNames[1]
+						),
+						_react2.default.createElement(
+							'th',
+							null,
+							this.state.nutNames[2]
+						),
+						_react2.default.createElement(
+							'th',
+							null,
+							this.state.nutNames[3]
+						),
+						_react2.default.createElement(
+							'th',
+							null,
+							this.state.nutNames[4]
+						)
+					)
+				),
+				_react2.default.createElement('tbody', null)
+			);
+		}
+	}]);
+
+	return SearchTable;
+}(_react2.default.Component);
+
+exports.SearchArea = SearchArea;
+exports.SearchTable = SearchTable;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.SearchBox = exports.HomePage = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //homepage only has to render the page and nav component. 
+//other components will have to render a sidebar/nav component as well as themselves
+
+
+var HomePage = function (_React$Component) {
+	_inherits(HomePage, _React$Component);
+
+	function HomePage(props) {
+		_classCallCheck(this, HomePage);
+
+		var _this = _possibleConstructorReturn(this, (HomePage.__proto__ || Object.getPrototypeOf(HomePage)).call(this, props));
+
+		_this.state = {
+			//figure out what this needs later. User?
+		};
+		return _this;
+	}
+
+	_createClass(HomePage, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'd-flex align-items-center justify-content-center my-5' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'center-block d-flex justify-content-center flex-column align-self-center pb-3', id: 'home-searchdiv' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-8 mt-3 ml-3' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'title', id: 'greeting' },
+									'NuTrack'
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'tagline mb-3' },
+									'Organize Your Nutrition'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-2 py-2 hide-img' },
+								_react2.default.createElement('img', { className: 'img-fluid', src: '/images/carrot.png', width: '70%' })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'span',
+								{ className: 'searchbox mt-3' },
+								_react2.default.createElement(SearchBox, null)
+							)
+						)
+					)
+				)
+			);
+		}
+	}]);
+
+	return HomePage;
+}(_react2.default.Component);
+
+var SearchBox = function (_React$Component2) {
+	_inherits(SearchBox, _React$Component2);
+
+	function SearchBox() {
+		_classCallCheck(this, SearchBox);
+
+		return _possibleConstructorReturn(this, (SearchBox.__proto__ || Object.getPrototypeOf(SearchBox)).apply(this, arguments));
+	}
+
+	_createClass(SearchBox, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'form',
+				{ action: '/food/search/', method: 'get' },
+				_react2.default.createElement(
+					'span',
+					{ className: 'input-group-btn' },
+					_react2.default.createElement('input', { type: 'text', name: 'query', className: 'form-control', placeholder: 'Hot Pocket', id: 'foodsearch' }),
+					_react2.default.createElement(
+						'button',
+						{ className: 'btn btn-default', type: 'submit', value: 'search', id: 'searchBtn' },
+						'Go!'
+					)
+				)
+			);
+		}
+	}]);
+
+	return SearchBox;
+}(_react2.default.Component);
+
+exports.HomePage = HomePage;
+exports.SearchBox = SearchBox;
+
+/**
+
+	render() {
+		//render section as main element
+		//render nav
+		//render this all under nav:
+		return
+		(
+		<div className="d-flex align-items-center justify-content-center my-5">
+			<div className="center-block d-flex justify-content-center flex-column align-self-center pb-3" id="home-searchdiv">
+				<div className="container">
+					<div className="row">
+
+						<div className="col-sm-8 mt-3 ml-3">
+							<div className="title" id="greeting">NuTrack</div>
+							<div className="tagline mb-3">Organize Your Nutrition</div>
+						</div>
+
+						<div className="col-sm-2 py-2 hide-img">
+							<img className="img-fluid" src="/images/carrot.png" width='70%'>
+							</img>
+						</div>
+
+
+					</div>
+					<div className="row">
+
+						<span className="searchbox mt-3">
+							<SearchBox />	
+						</span>
+
+					</div> 
+				</div>
+
+			</div>
+		</div>
+		)
+	}
+	
+	**/
 
 /***/ })
 /******/ ]);
