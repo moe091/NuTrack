@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {$,jQuery} from 'jquery';
 
 
 
@@ -9,7 +10,7 @@ class SearchArea extends React.Component {
 		super(props);
 		this.state = {
 			query: null,
-			message: "Search Results"
+			message: "Search Resdfawefults"
 		}
 	}
 	
@@ -17,10 +18,21 @@ class SearchArea extends React.Component {
 	render() {
 		return(
 			<div className="search-area">
-				<h2>{this.state.message}</h2>
+				<h2>{this.props.message}</h2>
 				<SearchTable />
 			</div>
 		)
+	}
+	
+	componentDidMount() {
+	
+	
+		fetch('/food/search/results/' + this.props.query)
+		.then((resp) => resp.json())
+		.then(function(data) {
+			console.log("data = ", data);
+		});
+		
 	}
 	
 	

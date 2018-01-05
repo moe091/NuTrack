@@ -1,7 +1,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {SearchArea, SearchTable} from './searchArea.jsx';
   
 class TimeApp extends React.Component {
 	constructor(props) {

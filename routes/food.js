@@ -106,6 +106,17 @@ router.get('/search/', function(req, res, next) {
 		});
 });
 
+router.get('/search/:q', function(req, res, next) {  
+ 	console.log("search food route");
+	res.render('index', {title: req.params.q, data: req.params.q}); 
+});
+
+router.get('/search/results/:q', (req, res, next) => {
+	console.log("search results route. query=" + req.params.q);
+	console.log("user = ", req.user);
+	res.send({name: "json respond", purpose: "test out ajax", howMany: 9001, user: req.user}); 
+});
+
 router.get('/:no', function(req, res, next) {
       //var f = food.report('01009', 'b');
      console.log("GET FOOD ROUTE");

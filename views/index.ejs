@@ -26,26 +26,19 @@
 				-->
     </head>
     <body>
-        
+      <script>
+				
+					window.user = <%- (user) ? JSON.stringify(user) : JSON.stringify(null) %>
+			</script>
 
 		
-			<section class="bottom-slant masthead" id="App">
-				<% include partials/nav.ejs %>
-        <br />
-        <% if (user) { %>
-           <% var username = user.username; %>
-            you are logged in as: <%= user.username %>
-        <% } else { %>
-						<% var username = "joejon"; %>
-        <% } %>
-				
-			</section>
-    
-    	
-			<section id="app-section" class="w-100 h-100">
-
-			</section>
-     
+			<div id="App">
+				<!-- render components here -->
+			</div>
+    <% if (typeof user != "undefined") { %>
+    <h1><%= user.username %></h1>
+     <p><%= user != null %></p>
+     <% } %>
      	<div class="div-tall">dsd</div>
       
 			
