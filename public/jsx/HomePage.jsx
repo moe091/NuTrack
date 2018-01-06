@@ -81,12 +81,10 @@ class SearchBox extends React.Component {
 	
 	render() {
 			return (
-				<form action="/food/search/" method="get">
 					<span className="input-group-btn">
 						<input type="text" name="query" className="form-control" placeholder="Hot Pocket" id="foodsearch" onChange={evt => this.updateQueryString(evt)}></input>
 						<button className="btn btn-default" type="button" value="search" id="searchBtn" onClick={this.search.bind(this)}>Go!</button>
 					</span>
-				</form>
 			)
 	}
 }

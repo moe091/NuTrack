@@ -17,7 +17,7 @@
 										
 											<% for (var n in nutList) { %>
 												<tr>
-													<td><%= (Number(n)+1) + " - " + nutList[n].name.substr(0, 40) %></td>
+													<td><a href="#" class="food-item-link" id="item-link-<%=n%>"><%= (Number(n)+1) + " - " + nutList[n].name.substr(0, 40) %></a></td>
 													<% for (var nut in nutList[n].nutrients) { %>
 														<td><%= nutList[n].nutrients[nut].value + nutList[n].nutrients[nut].unit %> </td>
 													<% } %> <!-- end for (nutList.nutrients) -->

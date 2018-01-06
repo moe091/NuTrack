@@ -28,7 +28,7 @@
     <body>
       <script>
 				
-					window.user = <%- (user) ? JSON.stringify(user) : JSON.stringify(null) %>
+					window.user = <%- (typeof user != 'undefined') ? JSON.stringify(user) : JSON.stringify(null) %>
 			</script>
 
 		

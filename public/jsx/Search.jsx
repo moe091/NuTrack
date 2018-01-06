@@ -21,13 +21,12 @@ class Search extends React.Component {
 				<div className="container-fixed h-100 no-gap">
 					<div className="row">
 
-						<div className="col-sm-2">
+						<div className="col-sm-2 p-0">
 							<SideBar />
 						</div>
 
-						<div className="col-sm-9">
-							<SearchArea query={this.state.query[this.state.query.length - 1]} message={this.props.location.pathname}/>
-						</div>
+						
+							<SearchArea query={this.state.query[this.state.query.length - 1]} message={this.props.location.pathname}/> 
 
 					</div>
 				</div>

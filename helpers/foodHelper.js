@@ -1,3 +1,5 @@
+var User = require('../models/user');
+var food = require('../foods');
 var nutrientMap = new Map();
 
 
@@ -50,76 +52,166 @@ var fHelper = function() {
 }
 
 var foodHelper = {
-    nutrientList: [
-        {name: 'Calories', id: '208'},
-        {name: 'Cholesterol', id: '601'},
-        {name: 'Sodium', id: '307'},
-        {name: 'Sugar', id: '269'},
-        {name: 'Protien', id: '283'},
-        {name: 'Total Fat', id: '204'},
-        {name: 'Carbohydrates', id: '205'}
-    ],
-    getNutrient: function(n, list) {
-        var id = this.nutrientList.filter(function(obj) {
-            return n === obj.name;
-        })[0].id;
-        
-        var nutrient = list.filter(function(obj) {
-            return id === obj.nutrient_id;
-        })[0];
-        
-        if (nutrient == null) {
-            nutrient = {
-                name: n,
-                value: 0,
-                unit: ''
-            }
-        } 
-        //console.log("id: " + id + ", nutrient: " + nutrient.name);
-        return {name: n, value: nutrient.value, unit: nutrient.unit};
-        
-    },
-    populateNutrients: function(obj, list) {
-        
-        for (var i = 0; i < this.nutrientList.length; i++) {
-            var item = this.getNutrient(this.nutrientList[i].name, list);
-            if (item != null) { 
-                obj.push(item);
-            }
-        }
-    },
-	
-			//list contains each item, and for each item contains 
-		createNutrientObj: function(foodObj, nutList) {
-			console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			console.log("foodObj:", foodObj);
-			console.log("nutList", nutList);
-			var obj = {
-				manu: foodObj.manu,
-				name: foodObj.name,
-				ru: foodObj.ru
-			}
-			
-			obj.nutrients = [];
-			
-			for (nutrient in foodObj.nutrients) {
-				for (id in nutList) {
-					//console.log("checking id " + nutList[id]);
-					if (nutList[id] == foodObj.nutrients[nutrient].nutrient_id) {
-						console.log("adding nutrient " + foodObj.nutrients[nutrient].name + " for food " + foodObj.name);
-						var nutObj = {
-							name: nutrientMap.get(nutList[id]).name,
-							abbr: nutrientMap.get(nutList[id]).abbr,
-							unit: foodObj.nutrients[nutrient].unit,
-							value: foodObj.nutrients[nutrient].value
-						}
-						obj.nutrients.push(nutObj);
-						console.log("=\n=\n=\n=\n=\n=\n=\n=\nDone adding ", nutObj);
+	nutrientList: [
+			{name: 'Calories', id: '208'},
+			{name: 'Cholesterol', id: '601'},
+			{name: 'Sodium', id: '307'},
+			{name: 'Sugar', id: '269'},
+			{name: 'Protien', id: '203'},
+			{name: 'Total Fat', id: '204'},
+			{name: 'Carbohydrates', id: '205'}
+	],
+	getNutrient: function(n, list) {
+			var id = this.nutrientList.filter(function(obj) {
+					return n === obj.name;
+			})[0].id;
+
+			var nutrient = list.filter(function(obj) {
+					return id === obj.nutrient_id;
+			})[0];
+
+			if (nutrient == null) {
+					nutrient = {
+							name: n,
+							value: 0,
+							unit: ''
 					}
+			} 
+			//console.log("id: " + id + ", nutrient: " + nutrient.name);
+			return {name: n, value: nutrient.value, unit: nutrient.unit};
+
+	},
+	populateNutrients: function(obj, list) {
+
+			for (var i = 0; i < this.nutrientList.length; i++) {
+					var item = this.getNutrient(this.nutrientList[i].name, list);
+					if (item != null) { 
+							obj.push(item);
+					}
+			}
+	},
+
+		//list contains each item, and for each item contains 
+	createNutrientObj: function(foodObj, nutList) {
+		console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		console.log("foodObj:", foodObj);
+		console.log("nutList", nutList);
+		var obj = {
+			manu: foodObj.manu,
+			name: foodObj.name,
+			ru: foodObj.ru
+		}
+
+		obj.nutrients = [];
+
+		for (nutrient in foodObj.nutrients) {
+			for (id in nutList) {
+				//console.log("checking id " + nutList[id]);
+				if (nutList[id] == foodObj.nutrients[nutrient].nutrient_id) {
+					console.log("adding nutrient " + foodObj.nutrients[nutrient].name + " for food " + foodObj.name);
+					var nutObj = {
+						name: nutrientMap.get(nutList[id]).name,
+						abbr: nutrientMap.get(nutList[id]).abbr,
+						unit: foodObj.nutrients[nutrient].unit,
+						value: foodObj.nutrients[nutrient].value
+					}
+					obj.nutrients.push(nutObj);
+					console.log("=\n=\n=\n=\n=\n=\n=\n=\nDone adding ", nutObj);
 				}
 			}
-			return obj;
 		}
+		return obj;
+	},
+
+	mapNutrientIDs: function(nutIDs) {
+		let names = [];
+
+		for (var i in nutIDs) {
+			names.push(nutrientMap.get(nutIDs[i]).name);
+		}
+
+		return names;
+	},
+
+	updateWatchedNutrients: function(user) {
+		if (user) { //if logged in, update watchedNutrients if it is still null
+			if (user.watchedNutrients && user.watchedNutrients.length == 0) {
+				console.log("attempting update\nID = " + session.passport.user);
+				User.update({_id: user._id}, {watchedNutrients: [203, 204, 205, 208, 269, 307]}, function(err, num, rawRes) {
+					if (err) {
+						console.log("error updating user");
+					} else {
+						console.log("update successful. updated " + num + " users");
+						console.log("raw response:", rawRes);
+						console.log('nuts:', user.watchedNutrients);
+					}
+				})
+			}
+			//logged in, watchedNutrients is not null(unless error, handle above)
+			var watched = user.watchedNutrients;
+
+		}
+
+		return watched ? watched : [203, 204, 205, 208, 269, 307]
+
+	},
+	
+	
+	
+	
+	getNutrientInfos: function(user, ndbs) {
+		var itemInfos = [];
+		var nutLists = [];
+		console.log("Called getNutrientInfos()");
+		return new Promise(function(resolve, reject) {
+			console.log("in promise. ndbs = ", ndbs);
+			for (var i in ndbs) {
+				food.nd.foodReports({
+					ndbno: ndbs[i],
+					type: 'b'
+				}, function(err, res) {
+					if (err) {
+						console.log("ERROR: item=" + i + ":  ", err);
+					} else {
+						//TODO copy and paste below implementation into this block
+					}
+					console.log("foodReports response - " + i);
+					var info = []
+					if (res != null) {
+						foodHelper.populateNutrients(info, res.report.food.nutrients); //takes the report for a food item and uses foodHelper.nutrientList array to populate info with the data on each nutrient listed in the nutrientList array. Change this method to accept watchedNutrients array instead of using foodHelper.nutrientList
+					} else {
+						ndbs = []; //so length = 0, and promise can resolve(see if below with resolve() statement in it). Definitely gotta find a better resolve condition
+					}
+
+
+					var watched = foodHelper.updateWatchedNutrients(user);
+
+					if (watched && watched.length > 0) {
+						var fObj = foodHelper.createNutrientObj(res.report.food, watched);
+						console.log("returned fObj:", fObj);
+						nutLists.push(fObj);
+						console.log("__________________pushing fObj to nutLists. length=" + nutLists.length + "__________________________");
+					} else {
+						console.log("\n\n\n\n\nWatchedNutrients still empty!!");
+					}
+					//info.cals = res.report.food.nutrients.filter(function(obj) {
+							//return obj.nutrient_id === '208';
+					//});
+
+					//info.cals = info.cals[0].value;
+					itemInfos.push(info);
+					console.log("itemInfos.length=" + itemInfos.length);
+					console.log("ndbs.length=" + ndbs.length);
+					if (itemInfos.length == ndbs.length) {
+						resolve(nutLists);
+						console.log("RESOLVING");
+					}
+				});
+			}//end loop
+		});
+		
+	} // {=- End getNutrientInfos(user, ndbs) function -=}
+	
 	
 }
 

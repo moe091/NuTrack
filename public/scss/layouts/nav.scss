@@ -17,3 +17,10 @@ nav {
 .nav-toggle-icon {
 	color: $col-lightest;
 }
+
+.nav-corner {
+	background-color: $col-nav-title;
+	font-size: 1.6em;
+	line-height: 1em;
+	font-weight: bold;
+}

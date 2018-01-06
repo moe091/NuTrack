@@ -18620,19 +18620,15 @@ var SearchBox = function (_React$Component2) {
 			var _this3 = this;
 
 			return _react2.default.createElement(
-				'form',
-				{ action: '/food/search/', method: 'get' },
+				'span',
+				{ className: 'input-group-btn' },
+				_react2.default.createElement('input', { type: 'text', name: 'query', className: 'form-control', placeholder: 'Hot Pocket', id: 'foodsearch', onChange: function onChange(evt) {
+						return _this3.updateQueryString(evt);
+					} }),
 				_react2.default.createElement(
-					'span',
-					{ className: 'input-group-btn' },
-					_react2.default.createElement('input', { type: 'text', name: 'query', className: 'form-control', placeholder: 'Hot Pocket', id: 'foodsearch', onChange: function onChange(evt) {
-							return _this3.updateQueryString(evt);
-						} }),
-					_react2.default.createElement(
-						'button',
-						{ className: 'btn btn-default', type: 'button', value: 'search', id: 'searchBtn', onClick: this.search.bind(this) },
-						'Go!'
-					)
+					'button',
+					{ className: 'btn btn-default', type: 'button', value: 'search', id: 'searchBtn', onClick: this.search.bind(this) },
+					'Go!'
 				)
 			);
 		}
@@ -18730,91 +18726,112 @@ var Nav = function (_React$Component) {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
-				'nav',
-				{ className: 'navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap' },
-				_react2.default.createElement(
-					'button',
-					{ className: 'navbar-toggler navbar-toggler-right', type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbarTogglerDemo02', 'aria-controls': 'navbarTogglerDemo02', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' },
-					_react2.default.createElement(
-						'span',
-						null,
-						_react2.default.createElement('i', { className: 'fa fa-list nav-toggle-icon' })
-					)
-				),
-				_react2.default.createElement(
-					'a',
-					{ className: 'navbar-brand', href: '#' },
-					'NuTrack'
-				),
+				'div',
+				{ className: 'container-fixed h-100 no-gap' },
 				_react2.default.createElement(
 					'div',
-					{ className: 'collapse navbar-collapse', id: 'navbarTogglerDemo02' },
+					{ className: 'row' },
 					_react2.default.createElement(
-						'ul',
-						{ className: 'navbar-nav mr-auto mt-2 mt-md-0' },
+						'div',
+						{ className: 'col-sm-2 p-3 nav-corner d-flex align-content-center justify-content-center' },
 						_react2.default.createElement(
-							'li',
-							{ className: 'nav-item active' },
+							'span',
+							{ className: 'nav-title align-self-center justify-self-center' },
+							'NuTrack'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-sm-10 p-0' },
+						_react2.default.createElement(
+							'nav',
+							{ className: 'navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap' },
 							_react2.default.createElement(
-								'a',
-								{ className: 'nav-link', href: '/' },
-								'Home ',
+								'button',
+								{ className: 'navbar-toggler navbar-toggler-right', type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbarTogglerDemo02', 'aria-controls': 'navbarTogglerDemo02', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' },
 								_react2.default.createElement(
 									'span',
-									{ className: 'sr-only' },
-									'(current)'
+									null,
+									_react2.default.createElement('i', { className: 'fa fa-list nav-toggle-icon' })
+								)
+							),
+							_react2.default.createElement(
+								'a',
+								{ className: 'navbar-brand', href: '#' },
+								'NuTrack'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'collapse navbar-collapse', id: 'navbarTogglerDemo02' },
+								_react2.default.createElement(
+									'ul',
+									{ className: 'navbar-nav mr-auto mt-2 mt-md-0' },
+									_react2.default.createElement(
+										'li',
+										{ className: 'nav-item active' },
+										_react2.default.createElement(
+											'a',
+											{ className: 'nav-link', href: '/' },
+											'Home ',
+											_react2.default.createElement(
+												'span',
+												{ className: 'sr-only' },
+												'(current)'
+											)
+										)
+									),
+									_react2.default.createElement(
+										'li',
+										{ className: 'nav-item' },
+										_react2.default.createElement(
+											'a',
+											{ className: 'nav-link', href: '/user/tracker' },
+											'Tracker'
+										)
+									),
+									_react2.default.createElement(
+										'li',
+										{ className: 'nav-item' },
+										_react2.default.createElement(
+											'a',
+											{ className: 'nav-link', href: '/user/home' },
+											'not logged in'
+										)
+									)
+								),
+								_react2.default.createElement(
+									'ul',
+									{ className: 'navbar-nav pull-right' },
+									_react2.default.createElement(
+										'li',
+										{ className: 'nav-item' },
+										_react2.default.createElement(
+											'a',
+											{ className: 'nav-link mx-2', href: '/users/login' },
+											'Login'
+										)
+									),
+									_react2.default.createElement(
+										'li',
+										{ className: 'nav-item' },
+										_react2.default.createElement(
+											'a',
+											{ className: 'nav-link mx-2', href: '#' },
+											'Register'
+										)
+									)
+								),
+								_react2.default.createElement(
+									'form',
+									{ className: 'form-inline my-2 my-lg-0', id: 'nav-search-form' },
+									_react2.default.createElement('input', { className: 'form-control mx-sm-2', type: 'text', placeholder: 'Search' }),
+									_react2.default.createElement(
+										'button',
+										{ className: 'btn btn-outline-success my-2 my-sm-0', type: 'submit' },
+										'Search'
+									)
 								)
 							)
-						),
-						_react2.default.createElement(
-							'li',
-							{ className: 'nav-item' },
-							_react2.default.createElement(
-								'a',
-								{ className: 'nav-link', href: '/user/tracker' },
-								'Tracker'
-							)
-						),
-						_react2.default.createElement(
-							'li',
-							{ className: 'nav-item' },
-							_react2.default.createElement(
-								'a',
-								{ className: 'nav-link', href: '/user/home' },
-								'not logged in'
-							)
-						)
-					),
-					_react2.default.createElement(
-						'ul',
-						{ className: 'navbar-nav pull-right' },
-						_react2.default.createElement(
-							'li',
-							{ className: 'nav-item' },
-							_react2.default.createElement(
-								'a',
-								{ className: 'nav-link mx-2', href: '/users/login' },
-								'Login'
-							)
-						),
-						_react2.default.createElement(
-							'li',
-							{ className: 'nav-item' },
-							_react2.default.createElement(
-								'a',
-								{ className: 'nav-link mx-2', href: '#' },
-								'Register'
-							)
-						)
-					),
-					_react2.default.createElement(
-						'form',
-						{ className: 'form-inline my-2 my-lg-0', id: 'nav-search-form' },
-						_react2.default.createElement('input', { className: 'form-control mx-sm-2', type: 'text', placeholder: 'Search' }),
-						_react2.default.createElement(
-							'button',
-							{ className: 'btn btn-outline-success my-2 my-sm-0', type: 'submit' },
-							'Search'
 						)
 					)
 				)
@@ -18869,7 +18886,13 @@ var SearchArea = function (_React$Component) {
 
 		_this.state = {
 			query: null,
-			message: "Search Resdfawefults"
+			nutNames: ["a", "2", "III", "4th", "last"],
+			items: [],
+			nutrients: [{
+				manu: "Big Time Tea Company",
+				name: "Julia's Tropical Tea, Tea+Fruits+Veggies",
+				nutrients: [{ abbr: "Cals", name: "Calories", unit: "kcal", value: "15" }, { abbr: "Sugar", name: "Calories", unit: "kcal", value: "15" }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15" }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15" }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15" }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15" }]
+			}]
 		};
 		return _this;
 	}
@@ -18879,25 +18902,104 @@ var SearchArea = function (_React$Component) {
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
-				{ className: 'search-area' },
+				{ className: 'col-sm-10 p-0 search-col' },
 				_react2.default.createElement(
-					'h2',
-					null,
-					this.props.message
-				),
-				_react2.default.createElement(SearchTable, null)
+					'div',
+					{ className: 'search-area' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'search-head' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'input-group' },
+							_react2.default.createElement('input', { className: 'form-control search-input', placeholder: 'Search', name: 'srch-term', id: 'srch-term', type: 'text' }),
+							_react2.default.createElement(
+								'button',
+								{ className: 'btn btn-default', type: 'submit' },
+								_react2.default.createElement('i', { className: 'fa fa-search' })
+							)
+						)
+					),
+					_react2.default.createElement(SearchTable, { nutNames: this.state.nutNames, items: this.state.items, nutrients: this.state.nutrients })
+				)
 			);
 		}
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-
-			fetch('/food/search/results/' + this.props.query).then(function (resp) {
+			var that = this;
+			if (window.user == null) {
+				console.log("NULL USER");
+				window.user = { _id: 0, username: "empty" };
+			} else {
+				console.log(window.user);
+			}
+			console.log("AJAXING");
+			fetch('/food/search/results/' + this.props.query, {
+				method: 'GET',
+				credentials: 'include'
+			}).then(function (resp) {
 				return resp.json();
 			}).then(function (data) {
 				console.log("data = ", data);
+				that.setState({
+					nutNames: data.nutNames,
+					items: data.items.item
+				});
+				that.getItemInfos();
 			});
 		}
+	}, {
+		key: 'getItemInfos',
+		value: function getItemInfos() {
+			var _this2 = this;
+
+			console.log("getItemInfos() - this:", this);
+
+			fetch('../../food/item/list', {
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(this.state.items.map(function (item) {
+					return item.ndbno;
+				}))
+			}).then(function (resp) {
+				return resp.json();
+			}).then(function (res) {
+				console.log("getItemInfos response:", res);
+				_this2.setState({
+					nutrients: res,
+					sample: "sample string"
+				});
+			}).catch(function (err) {
+				console.log("catch error:", err);
+			});
+			console.log("after fetch");
+		}
+		//NEXT/TODO: AFTER receiving items from above ajax request, send another ajax request to get nutrient data on each item.ndbno, then after that fetch completes, render SearchTable again with data from the 2nd ajax request
+		/**
+  		fetch('/food/search/results/' + this.props.query, {
+  		method: 'POST',
+  		credentials: 'include',
+  		headers: {
+  			'Accept': 'application/json',
+  			'Content-Type': 'application/json'
+  		},
+  		body: JSON.stringify(this.state.items)
+  	})
+  	.then((resp) => resp.json())
+  	.then(function(data) {
+  		console.log("data = ", data);
+  		that.setState({
+  			nutNames: data.nutNames,
+  			items: data.items.item
+  		});
+  	});
+  	**/
+
 	}]);
 
 	return SearchArea;
@@ -18920,17 +19022,19 @@ var SearchTable = function (_React$Component2) {
 	function SearchTable(props) {
 		_classCallCheck(this, SearchTable);
 
-		var _this2 = _possibleConstructorReturn(this, (SearchTable.__proto__ || Object.getPrototypeOf(SearchTable)).call(this, props));
+		var _this3 = _possibleConstructorReturn(this, (SearchTable.__proto__ || Object.getPrototypeOf(SearchTable)).call(this, props));
 
-		_this2.state = {
-			nutNames: ["a", "b", "c", "d", "e"]
+		_this3.state = {
+			itemDatas: []
 		};
-		return _this2;
+		return _this3;
 	}
 
 	_createClass(SearchTable, [{
 		key: 'render',
 		value: function render() {
+			var _this4 = this;
+
 			return _react2.default.createElement(
 				'table',
 				{ className: 'table' },
@@ -18943,31 +19047,109 @@ var SearchTable = function (_React$Component2) {
 						_react2.default.createElement(
 							'th',
 							null,
-							this.state.nutNames[0]
+							'Name'
 						),
 						_react2.default.createElement(
 							'th',
 							null,
-							this.state.nutNames[1]
+							'Manufacturer'
 						),
 						_react2.default.createElement(
 							'th',
 							null,
-							this.state.nutNames[2]
+							this.props.nutrients[0].nutrients[0].name
 						),
 						_react2.default.createElement(
 							'th',
 							null,
-							this.state.nutNames[3]
+							this.props.nutrients[0].nutrients[1].name
 						),
 						_react2.default.createElement(
 							'th',
 							null,
-							this.state.nutNames[4]
+							this.props.nutrients[0].nutrients[2].name
+						),
+						_react2.default.createElement(
+							'th',
+							null,
+							this.props.nutrients[0].nutrients[3].name
+						),
+						_react2.default.createElement(
+							'th',
+							null,
+							this.props.nutrients[0].nutrients[4].name
+						),
+						_react2.default.createElement(
+							'th',
+							null,
+							'Select'
 						)
 					)
 				),
-				_react2.default.createElement('tbody', null)
+				_react2.default.createElement(
+					'tbody',
+					null,
+					this.props.nutrients.map(function (item) {
+						return _this4.createRow(item);
+					})
+				)
+			);
+		}
+	}, {
+		key: 'createRow',
+		value: function createRow(item) {
+			return _react2.default.createElement(
+				'tr',
+				null,
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement(
+						'a',
+						{ href: '#', className: 'food-item-link' },
+						item.name
+					)
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					item.manu
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					item.nutrients[0].value,
+					item.nutrients[0].unit
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					item.nutrients[1].value,
+					item.nutrients[1].unit
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					item.nutrients[2].value,
+					item.nutrients[2].unit
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					item.nutrients[3].value,
+					item.nutrients[3].unit
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					item.nutrients[4].value,
+					item.nutrients[4].unit
+				),
+				_react2.default.createElement(
+					'td',
+					null,
+					_react2.default.createElement('input', { type: 'checkbox', id: 'item-chk-{item.ndbno}', className: 'item-chk' })
+				)
 			);
 		}
 	}]);
@@ -24316,14 +24498,10 @@ var Search = function (_React$Component) {
 						{ className: 'row' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'col-sm-2' },
+							{ className: 'col-sm-2 p-0' },
 							_react2.default.createElement(_SideBar2.default, null)
 						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'col-sm-9' },
-							_react2.default.createElement(_SearchArea.SearchArea, { query: this.state.query[this.state.query.length - 1], message: this.props.location.pathname })
-						)
+						_react2.default.createElement(_SearchArea.SearchArea, { query: this.state.query[this.state.query.length - 1], message: this.props.location.pathname })
 					)
 				)
 			);

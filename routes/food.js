@@ -23,7 +23,9 @@ router.get('/item/:no', function(req, res, next) {
 
 router.get('/search/', function(req, res, next) {
       //var f = food.report('01009', 'b');
-    
+    console.log("plain search!!!!!!!!!!!!!!!!!!!");
+    console.log("plain search!!!!!!!!!!!!!!!!!!!");
+    console.log("plain search!!!!!!!!!!!!!!!!!!!");
     var e = food.search(req.query.query, 10, 0).then(function(val) {
         
         return new Promise(function(resolve, reject) {
@@ -95,6 +97,7 @@ router.get('/search/', function(req, res, next) {
             	res.render('food/search', {data: val, user: req.user, infos: infos });
 						});
 						**/
+							console.log("RESPONDING - this is the old route");
             	res.render('food/search', {data: val, user: req.user, message: "Search Results", nutList: nutrientList });
         });
             
@@ -108,14 +111,51 @@ router.get('/search/', function(req, res, next) {
 
 router.get('/search/:q', function(req, res, next) {  
  	console.log("search food route");
+	console.log("responding - New search route")
 	res.render('index', {title: req.params.q, data: req.params.q}); 
 });
 
+
+
+
 router.get('/search/results/:q', (req, res, next) => {
-	console.log("search results route. query=" + req.params.q);
-	console.log("user = ", req.user);
-	res.send({name: "json respond", purpose: "test out ajax", howMany: 9001, user: req.user}); 
+	console.log("sesion:", req.session);
+	console.log("user:", req.user);
+	console.log("search results route. query=" + req.params.q); 
+	console.log("testname: ", req.body);
+	var nutrientNames;
+		nutrientNames = ["Calories", "Fat", "Sugar", "Carbs", "Protein"];
+	
+	var e = food.search(req.params.q, 25, 0).then(function(val) {
+		res.send({nutNames: nutrientNames, items: val.list, query: req.params.q});
+	}).catch(function(err) {
+		res.send({nutNames: nutrientNames, items: null, query: req.params.q});
+	}); 
 });
+
+
+router.post('/item/list', (req, res, nex) => {
+	console.log("-\n-\n-\n-\n");
+	console.log("-\n-\n-\n-\n");
+	console.log("req body:", req.body);
+		foodHelper.getNutrientInfos(req.user, req.body).then((nutrientList) => {
+			console.log('nutrientList', nutrientList);
+    	res.setHeader('Content-Type', 'application/json');
+			res.send(nutrientList);
+		}).catch((err) => {
+			console.log("error:", err);
+    	res.setHeader('Content-Type', 'application/json');
+			res.send("just a string");
+		});
+	
+	console.log("-\n-\n-\n-\n");
+	console.log("-\n-\n-\n-\n");
+});
+
+
+
+
+
 
 router.get('/:no', function(req, res, next) {
       //var f = food.report('01009', 'b');

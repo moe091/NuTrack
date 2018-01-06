@@ -1,3 +1,13 @@
 .search-area {
   padding: 16px;
-  margin: 2%; }
+  margin: 2%;
+  font-size: 0.7em; }
+
+.table td, .table tr {
+  border-bottom: none;
+  border-top: none;
+  border-top-style: none;
+  border-bottom-style: none; }
+
+.table tr:nth-child(even) {
+  background-color: #777; }

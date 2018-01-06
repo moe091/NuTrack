@@ -10,31 +10,117 @@ class SearchArea extends React.Component {
 		super(props);
 		this.state = {
 			query: null,
-			message: "Search Resdfawefults"
+			nutNames: ["a", "2", "III", "4th", "last"],
+			items: [],
+			nutrients: [
+				{
+					manu: "Big Time Tea Company", 
+					name: "Julia's Tropical Tea, Tea+Fruits+Veggies", 
+					nutrients: [
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
+						{abbr: "Sugar", name: "Calories", unit: "kcal", value: "15"},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"}
+					]
+				}
+			]
 		}
 	}
 	
 	
 	render() {
 		return(
-			<div className="search-area">
-				<h2>{this.props.message}</h2>
-				<SearchTable />
+			<div className="col-sm-10 p-0 search-col">
+				<div className="search-area">
+					<div className="search-head">
+						<div className="input-group">
+							
+							<input className="form-control search-input" placeholder="Search" name="srch-term" id="srch-term" type="text"></input>
+							<button className="btn btn-default" type="submit"><i className="fa fa-search"></i></button>
+							
+						</div>
+					</div>
+					<SearchTable nutNames={this.state.nutNames} items={this.state.items} nutrients={this.state.nutrients}/>
+				</div>
 			</div>
 		)
 	}
 	
 	componentDidMount() {
-	
-	
-		fetch('/food/search/results/' + this.props.query)
+		let that = this; 
+		if (window.user == null) {
+			console.log("NULL USER");
+			window.user = {_id: 0, username: "empty"}
+		} else {
+			console.log(window.user);
+		}
+		console.log("AJAXING");
+		fetch('/food/search/results/' + this.props.query, {
+			method: 'GET',
+			credentials: 'include'
+		})
 		.then((resp) => resp.json())
 		.then(function(data) {
 			console.log("data = ", data);
+			that.setState({
+				nutNames: data.nutNames,
+				items: data.items.item
+			});
+			that.getItemInfos();
 		});
+		
 		
 	}
 	
+	
+	getItemInfos() {
+		console.log("getItemInfos() - this:", this);
+		
+		fetch('../../food/item/list', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+      },
+			body: JSON.stringify(this.state.items.map((item) => { 
+				return item.ndbno 
+			}))
+		})
+		.then((resp) => resp.json())
+		.then((res) => {
+			console.log("getItemInfos response:", res);
+			this.setState({
+				nutrients: res,
+				sample: "sample string"
+			});
+		}).catch((err) => {
+			console.log("catch error:", err);
+		});
+		console.log("after fetch");
+	}
+	//NEXT/TODO: AFTER receiving items from above ajax request, send another ajax request to get nutrient data on each item.ndbno, then after that fetch completes, render SearchTable again with data from the 2nd ajax request
+	/**
+			fetch('/food/search/results/' + this.props.query, {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(this.state.items)
+		})
+		.then((resp) => resp.json())
+		.then(function(data) {
+			console.log("data = ", data);
+			that.setState({
+				nutNames: data.nutNames,
+				items: data.items.item
+			});
+		});
+		**/
 	
 	
 }
@@ -52,7 +138,7 @@ class SearchTable extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			nutNames: ["a", "b", "c", "d", "e"]
+			itemDatas: []
 		}
 	}
 	
@@ -61,18 +147,46 @@ class SearchTable extends React.Component {
 			<table className="table">
 				<thead className="thead-inverse">
 					<tr>
-						<th>{this.state.nutNames[0]}</th>
-						<th>{this.state.nutNames[1]}</th>
-						<th>{this.state.nutNames[2]}</th>
-						<th>{this.state.nutNames[3]}</th>
-						<th>{this.state.nutNames[4]}</th>
+						<th>Name</th>
+						<th>Manufacturer</th>
+						<th>{this.props.nutrients[0].nutrients[0].name}</th>
+						<th>{this.props.nutrients[0].nutrients[1].name}</th>
+						<th>{this.props.nutrients[0].nutrients[2].name}</th>
+						<th>{this.props.nutrients[0].nutrients[3].name}</th>
+						<th>{this.props.nutrients[0].nutrients[4].name}</th>
+						<th>Select</th>
 					</tr>
 				</thead>
 				
 				<tbody>
-					
+					{
+							this.props.nutrients.map((item) => {
+								return this.createRow(item);
+							})
+					}
 				</tbody>			
 			</table>
+		)
+	}
+	
+	createRow(item) {
+		return (
+			<tr>
+			
+				<td>
+					<a href="#" className="food-item-link">
+						{item.name}
+					</a>
+				</td>
+				<td>{item.manu}</td>
+				<td>{item.nutrients[0].value}{item.nutrients[0].unit}</td> 
+				<td>{item.nutrients[1].value}{item.nutrients[1].unit}</td> 
+				<td>{item.nutrients[2].value}{item.nutrients[2].unit}</td> 
+				<td>{item.nutrients[3].value}{item.nutrients[3].unit}</td> 
+				<td>{item.nutrients[4].value}{item.nutrients[4].unit}</td>  
+				<td><input type="checkbox" id="item-chk-{item.ndbno}" className="item-chk"></input></td>
+			
+			</tr>
 		)
 	}
 }

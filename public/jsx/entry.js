@@ -24,10 +24,7 @@ class App extends React.Component {
 				<Router>
 						<div>
 							<Route exact path='/' component={HomePage} searchHandler={this.search.bind(this)}/>
-							<Route path='/food/search' component={Search} searchHandler={this.search.bind(this)} />
-							<a href="#" type="btn btn-primary">
-								ejs user: {if (window.user) window.user.username else "hello"}
-							</a>
+							<Route path='/food/search' component={Search} searchHandler={this.search.bind(this)} /> 
 						</div>
 				</Router>
 		);
