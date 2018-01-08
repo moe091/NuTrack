@@ -42,11 +42,11 @@
     display: none; } }
 
 .nav-opaque {
-  background-color: #4A4E69;
+  background-color: #002a47;
   color: #F2E9E4; }
 
 nav {
-  background-color: #22223B !important; }
+  background-color: #002a47 !important; }
   nav a {
     color: #F2E9E4 !important; }
     nav a:hover {
@@ -57,22 +57,23 @@ nav {
 
 .nav-corner {
   background-color: #3271AA;
-  font-size: 1.6em;
+  font-size: 1.5em;
   line-height: 1em;
   font-weight: bold; }
 
 .sidebar {
-  background-color: #4A4E69;
+  background-color: #002a47;
   height: 100%;
   min-height: 100vh;
   width: 100%;
   min-width: 180px;
-  padding: 16% 0 10% 0; }
+  padding: 16% 0 12% 0;
+  border-right: 2px #1f5a83 solid; }
   .sidebar .sidebar-link:hover {
     text-decoration: none;
     color: #F2E9E4; }
     .sidebar .sidebar-link:hover div {
-      background-color: #181834; }
+      background-color: #1f5a83; }
   .sidebar .sidebar-link i {
     color: #E2CAC5; }
   .sidebar .sidebar-link .icon-disabled {
@@ -81,26 +82,26 @@ nav {
 .sidebar-segment {
   width: 100%;
   min-width: 106px;
-  background-color: #181834;
-  color: #E2CAC5;
+  background-color: #002a47;
+  color: #F2E9E4;
   font-size: 1.2em;
-  padding: 6px 0 6px 2px; }
+  padding: 6px 0 6px 18%; }
 
 .segment-head {
-  color: #F2E9E4; }
+  padding-left: 12%;
+  color: #C9ADA7;
+  background-color: #00233E; }
   .segment-head i {
-    color: #F2E9E4; }
+    color: #C9ADA7; }
 
 .sidebar-section {
-  margin-top: 8px;
-  padding-left: 10%; }
+  margin-top: 8px; }
   .sidebar-section .segment-item {
-    padding-left: 6%;
-    color: #9A8C98; }
+    color: #F2E9E4; }
   .sidebar-section a:hover {
     text-decoration: none; }
     .sidebar-section a:hover .sidebar-segment {
-      background-color: #4A4E69; }
+      background-color: #1f5a83; }
 
 .sidebar-icon {
   margin-right: 10px; }
@@ -108,28 +109,31 @@ nav {
 .sidebar-rowGroup {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
   width: 100%;
-  padding-left: 10%; }
+  justify-content: flex-end; }
   .sidebar-rowGroup .sidebar-link {
     display: inline-block;
     height: 100%;
-    flex-grow: 1;
-    max-width: 70%; }
+    flex-grow: 4;
+    justify-self: flex-start; }
+    .sidebar-rowGroup .sidebar-link .sidebar-segment {
+      padding-left: 15%; }
   .sidebar-rowGroup .right-segment {
     min-width: 0;
     display: inline-block;
-    background-color: #22223B; }
+    background-color: #002a47;
+    padding-left: 0; }
   .sidebar-rowGroup .right-link {
     flex-grow: 1;
     max-width: 25%;
     text-align: center;
-    padding-right: 2px; }
+    padding-right: 0;
+    float: right; }
   .sidebar-rowGroup .right-icon {
     margin-right: 0; }
 
 .sidebar-spacer {
-  height: 5%; }
+  height: 2%; }
 
 .sidebar-head {
   background-color: #4A4E69;
@@ -155,11 +159,15 @@ nav {
   border-bottom: none;
   border-top: none;
   border-top-style: none;
-  border-bottom-style: none; }
+  border-bottom-style: none;
+  padding: 6px 12px; }
 
 .table tr {
   background-color: #fff;
   border-top: 4px #f1f1f1 solid; }
+
+td:first-child {
+  vertical-align: middle; }
 
 .table th {
   background-color: #fff;
@@ -168,17 +176,25 @@ nav {
   font-size: 1.3em; }
 
 .food-item-link {
-  color: #000;
+  color: #1f5a83;
   font-weight: 500; }
   .food-item-link:hover {
-    color: #181834;
+    color: #00233E;
     text-decoration: none; }
 
 .search-head {
   text-align: center;
-  margin: 20px 2px; }
+  margin: 25px 2px 4px 2px; }
+
+.search-query {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-right: 6%;
+  text-align: left;
+  margin-top: 8px; }
 
 .search-input {
+  padding-left: 4px;
   transition: 0.3s ease-in-out;
   font-size: 24px;
   display: inline-block;
@@ -190,10 +206,10 @@ nav {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   border: none;
-  color: #181834; }
+  color: #00233E; }
   .search-input:focus {
     border: none;
-    background-color: #181834;
+    background-color: #00233E;
     color: #fff;
     outline: none;
     box-shadow: none;
@@ -208,8 +224,8 @@ nav {
   display: inline-block;
   font-size: 24px;
   border-radius: 12px;
-  border: 2px solid #181834;
-  background-color: #181834; }
+  border: 2px solid #00233E;
+  background-color: #00233E; }
   .input-group .btn {
     font-size: 24px;
     min-width: 4em;
@@ -222,13 +238,38 @@ nav {
     border-bottom-left-radius: 0;
     background-color: #fff;
     color: #22223B;
-    border-left: 2px #181834 solid; }
+    border-left: 2px #00233E solid; }
     .input-group .btn:hover {
-      background-color: #22223B;
+      background-color: #003154;
       color: #fff; }
     .input-group .btn:focus {
-      background-color: #4A4E69;
+      background-color: #002a47;
       color: #fff; }
+
+.fancy-checkbox {
+  font-size: 32px;
+  line-height: 32px;
+  margin-bottom: 0; }
+  .fancy-checkbox i {
+    color: #002a47;
+    width: 30px; }
+
+.fancy-checkbox input[type="checkbox"],
+.fancy-checkbox .checked {
+  display: none; }
+
+.fancy-checkbox input[type="checkbox"]:checked ~ .checked {
+  display: inline-block; }
+
+.fancy-checkbox input[type="checkbox"]:checked ~ .unchecked {
+  display: none; }
+
+.newMeal-item {
+  display: inline-block;
+  padding: 10px; }
+  .newMeal-item .newMeal-item-name {
+    font-size: 1.2em;
+    color: #4797ce; }
 
 html, body {
   min-height: 100%;
@@ -252,3 +293,10 @@ html, body {
 
 .input-group-round {
   border-radius: 8px; }
+
+.link-div {
+  cursor: pointer; }
+
+.main-col {
+  padding-right: 5%;
+  padding-left: 2%; }

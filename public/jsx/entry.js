@@ -9,28 +9,42 @@ import Search from './Search.jsx';
 import Nav from './Nav.jsx';
 import SideBar from './SideBar.jsx';
 
+import UserApp from './user/UserApp.jsx';
+
+import NewMeal from './user/NewMeal.jsx';
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			view: "home",
-			query: null
+			query: null,
 		}
 	}
 	
-	render() {
+	
+	newMealHandler(e) {
+		console.log("new meal click"); 
+		console.log(e.target);
+		console.log("this = ", this);
 		
-		return (
-				<Router>
-						<div>
-							<Route exact path='/' component={HomePage} searchHandler={this.search.bind(this)}/>
-							<Route path='/food/search' component={Search} searchHandler={this.search.bind(this)} /> 
-						</div>
-				</Router>
-		);
-		
+		fetch('../../user/meals/new', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+      },
+			body: JSON.stringify({items: this.state.checkedItems})
+		})
+		.then((resp) => resp.json())
+		.then((res) => {
+			console.log("getItemInfos response:", res);
+		}).catch((err) => {
+			console.log("catch error:", err);
+		});
+		this.props.history.push("../../user/meals/new");
 	}
-
 	
 	search(query) {
 		this.setState({
@@ -41,8 +55,27 @@ class App extends React.Component {
 		console.log("THIS = ", this);
 		this.props.history.push("/search");
 	}
+	
+	
+	render() {
+		
+		return (
+				<Router>
+						<div>
+							<Route exact path='/' component={HomePage} searchHandler={this.search.bind(this)}/>
+							<Route path="/user" component={UserApp} />
+							<Route path='/food' component={UserApp} />
+						</div>
+				</Router>
+		);
+		
+	}
+
+	
+
 }
 	
+
 
 
 ReactDOM.render((

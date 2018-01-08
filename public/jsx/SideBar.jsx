@@ -24,10 +24,7 @@ class SideBar extends React.Component {
 
 				<div className="sidebar-section">
 					<a href="#"><div className="sidebar-segment segment-head"> <i className="fa fa-cutlery sidebar-icon" aria-hidden="true"></i> Meals</div></a>
-					<a href="#"><div className="sidebar-segment segment-item meal-item meal-item-0">Meal #1</div></a>
-					<a href="#"><div className="sidebar-segment segment-item meal-item meal-item-0">Meal #2</div></a>
-					<a href="#"><div className="sidebar-segment segment-item meal-item meal-item-0">Meal #3</div></a>
-					<a href="#"><div className="sidebar-segment segment-item meal-item meal-item-0">Meal #4</div></a>
+					<a disabled="disabled" onClick={this.props.newMealHandler}><div className="link-div sidebar-segment segment-item meal-item meal-item-0">Create Meal</div></a>
 				</div>
 
 				<div className="sidebar-section">

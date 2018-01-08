@@ -8,6 +8,7 @@ var fs = require('fs');
 var User = require('../models/user');
 
 /* GET users listing. */
+//​ saving this
 
 
 
@@ -121,7 +122,6 @@ router.get('/search/:q', function(req, res, next) {
 router.get('/search/results/:q', (req, res, next) => {
 	console.log("sesion:", req.session);
 	console.log("user:", req.user);
-	console.log("search results route. query=" + req.params.q); 
 	console.log("testname: ", req.body);
 	var nutrientNames;
 		nutrientNames = ["Calories", "Fat", "Sugar", "Carbs", "Protein"];
@@ -138,9 +138,8 @@ router.post('/item/list', (req, res, nex) => {
 	console.log("-\n-\n-\n-\n");
 	console.log("-\n-\n-\n-\n");
 	console.log("req body:", req.body);
-		foodHelper.getNutrientInfos(req.user, req.body).then((nutrientList) => {
-			console.log('nutrientList', nutrientList);
-    	res.setHeader('Content-Type', 'application/json');
+		foodHelper.getNutrientInfos(req.user, req.body.ndbs, req.body.type).then((nutrientList) => {
+			res.setHeader('Content-Type', 'application/json');
 			res.send(nutrientList);
 		}).catch((err) => {
 			console.log("error:", err);

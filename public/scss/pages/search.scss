@@ -20,12 +20,17 @@
 	border-top: none;
 	border-top-style: none;
 	border-bottom-style: none;
+	padding: 6px 12px;
 }
 
 
 .table tr {
 	background-color: #fff;
 	border-top: 4px #f1f1f1 solid;
+}
+
+td:first-child {
+	vertical-align: middle;
 }
 
 .table th {
@@ -36,10 +41,10 @@
 }
 
 .food-item-link {
-	color: #000;
+	color: $sidebar-hover-col;
 	font-weight: 500;
 	&:hover {
-		color: $col-sidebar;
+		color: $sidebar-header-col;
 		text-decoration: none;
 	}
 }
@@ -47,11 +52,20 @@
 
 .search-head {
 	text-align: center;
-	margin: 20px 2px;
+	margin: 25px 2px 4px 2px;
+}
+
+.search-query {
+	font-size: 1.8em;
+	font-weight: bold;
+	margin-right: 6%;
+	text-align: left;
+	margin-top: 8px;
 }
 
 //ADD breakpoints to change search area on small screens
 .search-input{ 
+	padding-left: 4px;
 	transition: 0.3s ease-in-out;
 	font-size: 24px;
 	display: inline-block;
@@ -63,10 +77,10 @@
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
 	border: none; 
-	color: $col-sidebar;
+	color: $sidebar-header-col;
 	&:focus {
 		border: none;
-		background-color: $col-sidebar;
+		background-color: $sidebar-header-col;
 		color: #fff;
 		outline: none;
 		box-shadow: none;
@@ -82,8 +96,8 @@
 	display: inline-block;
 	font-size: 24px;
 	border-radius: 12px;
-	border: 2px solid $col-sidebar;
-	background-color: $col-sidebar;
+	border: 2px solid $sidebar-header-col;
+	background-color: $sidebar-header-col;
 	.btn {
 		font-size: 24px;
 		min-width: 4em;
@@ -96,15 +110,41 @@
 		border-bottom-left-radius: 0;
 		background-color: #fff;
 		color: $col-darkest;
-		border-left: 2px $col-sidebar solid;
+		border-left: 2px $sidebar-header-col solid;
 		&:hover {
-			background-color: $col-darkest;
+			background-color: $sidebar-button-col;
 			color: #fff;
 		}
 		&:focus {
-			background-color: $col-dark;
+			background-color: $sidebar-dark-col;
 			color: #fff;
 		}
 	}
+}
+ 
+
+
+.fancy-checkbox{
+	font-size: 32px;
+	line-height: 32px;
+	margin-bottom: 0;
+	i {
+		color: $sidebar-dark-col;
+		width: 30px;
+	}
+}
+.fancy-checkbox input[type="checkbox"],
+.fancy-checkbox .checked {
+    display: none;
+}
+
+.fancy-checkbox input[type="checkbox"]:checked ~ .checked
+{
+    display: inline-block;
+}
+ 
+.fancy-checkbox input[type="checkbox"]:checked ~ .unchecked
+{
+    display: none;
 }
 

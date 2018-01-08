@@ -1,17 +1,20 @@
+
+
 .sidebar {
-	background-color: $col-dark;
+	background-color: $sidebar-dark-col;
 	height: 100%;
 	min-height: 100vh;
 	width: 100%; 
-	min-width: 180px;
-	padding: 16% 0 10% 0;
+	min-width: 180px; 
+	padding: 16% 0 12% 0;
+	border-right: 2px $sidebar-hover-col solid; 
 	.sidebar-link {
 		
 		&:hover {
 			text-decoration: none;
 			color: $col-lightest;
 			div {
-				background-color: $col-sidebar;
+				background-color: $sidebar-hover-col;
 			}
 }
 		
@@ -30,29 +33,29 @@
 .sidebar-segment {
 	width: 100%;   
 	min-width: 106px;
-	background-color: $col-sidebar;
-	color: $col-lighter;
+	background-color: $sidebar-dark-col;
+	color: $col-lightest;
 	font-size: 1.2em;
-	padding: 6px 0 6px 2px;
+	padding: 6px 0 6px 18%;
 } 
 .segment-head {
-	color: $col-lightest;
+	padding-left: 12%;
+	color: $col-light;
+	background-color: $sidebar-header-col; 
 	i {
-		color: $col-lightest;
+		color: $col-light;
 	}
 }
 .sidebar-section {
-	margin-top: 8px;
-	padding-left: 10%;
-	.segment-item {
-		padding-left: 6%;
-		color: $col-mid;
+	margin-top: 8px; 
+	.segment-item { 
+		color: $col-lightest;
 	} 
 	a {
 		&:hover {
 			text-decoration: none;
 			.sidebar-segment {
-				background-color: $col-dark;
+				background-color: $sidebar-hover-col;
 			}
 		}
 	}
@@ -67,27 +70,31 @@
 
 .sidebar-rowGroup {
 	position: relative;
-	display: flex;
-	flex-wrap: wrap;
+	display: flex; 
 	width: 100%; 
-	padding-left: 10%;
+	justify-content: flex-end;
 	.sidebar-link {
 		display: inline-block;
 		height: 100%;
-		flex-grow: 1;
-		max-width: 70%;
+		flex-grow: 4;
+		justify-self: flex-start;
+		.sidebar-segment {
+			padding-left: 15%;
+		}
 	}
 	.right-segment { 
 		min-width: 0; 
 		display: inline-block;
-		background-color: $col-darkest;
+		background-color: $sidebar-dark-col;
+		padding-left: 0;
 	}
 	.right-link { 
 		flex-grow: 1;
 		max-width: 25%;
 		text-align: center;
-		padding-right: 2px;
-	}
+		padding-right: 0;
+		float: right; 
+	}  
 	.right-icon {
 		margin-right: 0;
 	}
@@ -99,7 +106,7 @@
 
 
 .sidebar-spacer {
-	height: 5%;
+	height: 2%;
 }
 	
 .sidebar-head { 

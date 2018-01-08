@@ -1,10 +1,10 @@
 .nav-opaque {
-	background-color: $col-dark;
+	background-color: $sidebar-dark-col;
 	color: $col-lightest;
 }
 
 nav {
-	background-color: $col-darkest !important;
+	background-color: $sidebar-dark-col !important;
 	
 	a {
 		color: $col-lightest !important;
@@ -20,7 +20,7 @@ nav {
 
 .nav-corner {
 	background-color: $col-nav-title;
-	font-size: 1.6em;
+	font-size: 1.5em;
 	line-height: 1em;
 	font-weight: bold;
 }

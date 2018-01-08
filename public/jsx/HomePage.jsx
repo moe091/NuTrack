@@ -15,7 +15,7 @@ class HomePage extends React.Component {
 	searchHandler(query) {
 		console.log("Handle Search in homepage. THIS=", this);
 		console.log("Query = " + query);
-		this.props.history.push("/food/search/" + query);
+		this.props.history.push("/user/search/" + query);
 	}
 	
 	render() {

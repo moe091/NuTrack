@@ -92,14 +92,12 @@ var foodHelper = {
 	},
 
 		//list contains each item, and for each item contains 
-	createNutrientObj: function(foodObj, nutList) {
-		console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		console.log("foodObj:", foodObj);
-		console.log("nutList", nutList);
+	createNutrientObj: function(foodObj, nutList) {  
 		var obj = {
 			manu: foodObj.manu,
 			name: foodObj.name,
-			ru: foodObj.ru
+			ru: foodObj.ru,
+			ndb: foodObj.ndbno
 		}
 
 		obj.nutrients = [];
@@ -107,16 +105,15 @@ var foodHelper = {
 		for (nutrient in foodObj.nutrients) {
 			for (id in nutList) {
 				//console.log("checking id " + nutList[id]);
-				if (nutList[id] == foodObj.nutrients[nutrient].nutrient_id) {
-					console.log("adding nutrient " + foodObj.nutrients[nutrient].name + " for food " + foodObj.name);
+				if (nutList[id] == foodObj.nutrients[nutrient].nutrient_id) { 
 					var nutObj = {
 						name: nutrientMap.get(nutList[id]).name,
 						abbr: nutrientMap.get(nutList[id]).abbr,
 						unit: foodObj.nutrients[nutrient].unit,
-						value: foodObj.nutrients[nutrient].value
+						value: foodObj.nutrients[nutrient].value,
+						id: foodObj.nutrients[nutrient].nutrient_id
 					}
-					obj.nutrients.push(nutObj);
-					console.log("=\n=\n=\n=\n=\n=\n=\n=\nDone adding ", nutObj);
+					obj.nutrients.push(nutObj); 
 				}
 			}
 		}
@@ -159,55 +156,63 @@ var foodHelper = {
 	
 	
 	
-	getNutrientInfos: function(user, ndbs) {
+	getNutrientInfos: function(user, ndbs, type) {
 		var itemInfos = [];
 		var nutLists = [];
-		console.log("Called getNutrientInfos()");
+		
+		console.log("Called getNutrientInfos() - " + type);
 		return new Promise(function(resolve, reject) {
 			console.log("in promise. ndbs = ", ndbs);
 			for (var i in ndbs) {
-				food.nd.foodReports({
-					ndbno: ndbs[i],
-					type: 'b'
-				}, function(err, res) {
-					if (err) {
-						console.log("ERROR: item=" + i + ":  ", err);
-					} else {
-						//TODO copy and paste below implementation into this block
-					}
-					console.log("foodReports response - " + i);
-					var info = []
-					if (res != null) {
-						foodHelper.populateNutrients(info, res.report.food.nutrients); //takes the report for a food item and uses foodHelper.nutrientList array to populate info with the data on each nutrient listed in the nutrientList array. Change this method to accept watchedNutrients array instead of using foodHelper.nutrientList
-					} else {
-						ndbs = []; //so length = 0, and promise can resolve(see if below with resolve() statement in it). Definitely gotta find a better resolve condition
-					}
+				if (ndbs[i] != null) {
+					food.nd.foodReports({
+						ndbno: ndbs[i],
+						type: type
+					}, function(err, res) {
+						if (err) {
+							console.log("ERROR: item=" + i + ":  ", err);
+							resolve(err);
+						} else {
+							//TODO copy and paste below implementation into this block
+						}
+						console.log("RESPONSE:", res);
+
+						var info = []
+						if (res != null) {
+							console.log(res);
+							if (type == 'b')
+								foodHelper.populateNutrients(info, res.report.food.nutrients); //takes the report for a food item and uses foodHelper.nutrientList array to populate info with the data on each nutrient listed in the nutrientList array. Change this method to accept watchedNutrients array instead of using foodHelper.nutrientList
+						} else {
+							ndbs = []; //so length = 0, and promise can resolve(see if below with resolve() statement in it). Definitely gotta find a better resolve condition
+						}
 
 
-					var watched = foodHelper.updateWatchedNutrients(user);
+						var watched = foodHelper.updateWatchedNutrients(user);
 
-					if (watched && watched.length > 0) {
-						var fObj = foodHelper.createNutrientObj(res.report.food, watched);
-						console.log("returned fObj:", fObj);
-						nutLists.push(fObj);
-						console.log("__________________pushing fObj to nutLists. length=" + nutLists.length + "__________________________");
-					} else {
-						console.log("\n\n\n\n\nWatchedNutrients still empty!!");
-					}
-					//info.cals = res.report.food.nutrients.filter(function(obj) {
-							//return obj.nutrient_id === '208';
-					//});
+						if (watched && watched.length > 0) {
+							if (type == 'b') {
+								var fObj = foodHelper.createNutrientObj(res.report.food, watched);
+							} else {
+								var fObj = res;
+							}
+							nutLists.push(fObj); 
+						} else {
+							console.log("\n\n\n\n\nWatchedNutrients still empty!!");
+						}
+						//info.cals = res.report.food.nutrients.filter(function(obj) {
+								//return obj.nutrient_id === '208';
+						//});
 
-					//info.cals = info.cals[0].value;
-					itemInfos.push(info);
-					console.log("itemInfos.length=" + itemInfos.length);
-					console.log("ndbs.length=" + ndbs.length);
-					if (itemInfos.length == ndbs.length) {
-						resolve(nutLists);
-						console.log("RESOLVING");
-					}
-				});
-			}//end loop
+						//info.cals = info.cals[0].value;
+						itemInfos.push(info);
+						if (itemInfos.length == ndbs.length) {
+							resolve(nutLists); 
+						}
+					});
+				}//end loop
+				
+			}
+			
 		});
 		
 	} // {=- End getNutrientInfos(user, ndbs) function -=}

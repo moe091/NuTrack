@@ -35,20 +35,25 @@ class SearchArea extends React.Component {
 			<div className="col-sm-10 p-0 search-col">
 				<div className="search-area">
 					<div className="search-head">
+						
 						<div className="input-group">
 							
 							<input className="form-control search-input" placeholder="Search" name="srch-term" id="srch-term" type="text"></input>
 							<button className="btn btn-default" type="submit"><i className="fa fa-search"></i></button>
 							
 						</div>
+						<div className="search-query">
+							Results For "{this.props.query}"
+						</div>
 					</div>
-					<SearchTable nutNames={this.state.nutNames} items={this.state.items} nutrients={this.state.nutrients}/>
+					<SearchTable nutNames={this.state.nutNames} items={this.state.items} nutrients={this.state.nutrients} checkItemHandler={this.props.checkItemHandler}/>
 				</div>
 			</div>
 		)
 	}
 	
 	componentDidMount() {
+		console.log("SEARCH AREA MOUNTED");
 		let that = this; 
 		if (window.user == null) {
 			console.log("NULL USER");
@@ -77,6 +82,14 @@ class SearchArea extends React.Component {
 	
 	getItemInfos() {
 		console.log("getItemInfos() - this:", this);
+		var ndbArr = this.state.items.map((item) => { 
+				return item.ndbno 
+			});
+		var reqData = JSON.stringify({
+			ndbs: ndbArr,
+			type: 'b'
+		});
+		console.log("ndbArr: ", ndbArr);
 		
 		fetch('../../food/item/list', {
 			method: 'POST',
@@ -85,9 +98,7 @@ class SearchArea extends React.Component {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
       },
-			body: JSON.stringify(this.state.items.map((item) => { 
-				return item.ndbno 
-			}))
+			body: reqData
 		})
 		.then((resp) => resp.json())
 		.then((res) => {
@@ -147,20 +158,20 @@ class SearchTable extends React.Component {
 			<table className="table">
 				<thead className="thead-inverse">
 					<tr>
+						<th></th>
 						<th>Name</th>
 						<th>Manufacturer</th>
 						<th>{this.props.nutrients[0].nutrients[0].name}</th>
 						<th>{this.props.nutrients[0].nutrients[1].name}</th>
 						<th>{this.props.nutrients[0].nutrients[2].name}</th>
 						<th>{this.props.nutrients[0].nutrients[3].name}</th>
-						<th>{this.props.nutrients[0].nutrients[4].name}</th>
-						<th>Select</th>
+						<th>{this.props.nutrients[0].nutrients[4].name}</th> 
 					</tr>
 				</thead>
 				
 				<tbody>
 					{
-							this.props.nutrients.map((item) => {
+							this.props.nutrients.map((item) => { 
 								return this.createRow(item);
 							})
 					}
@@ -171,8 +182,14 @@ class SearchTable extends React.Component {
 	
 	createRow(item) {
 		return (
-			<tr>
-			
+			<tr key={item.ndb}>
+				<td>
+					<label className="fancy-checkbox">
+						<input type="checkbox" className="search-result-chk" id={"item-chk-" + item.ndb}  name="item-chk-1" onClick={this.props.checkItemHandler} num="1"></input>
+						<i aria-hidden="true" className="chk-icon fa fa-square-o unchecked"></i>
+						<i aria-hidden="true" className="chk-icon fa fa-check-square-o checked"></i>
+					</label>	
+				</td>
 				<td>
 					<a href="#" className="food-item-link">
 						{item.name}
@@ -184,10 +201,14 @@ class SearchTable extends React.Component {
 				<td>{item.nutrients[2].value}{item.nutrients[2].unit}</td> 
 				<td>{item.nutrients[3].value}{item.nutrients[3].unit}</td> 
 				<td>{item.nutrients[4].value}{item.nutrients[4].unit}</td>  
-				<td><input type="checkbox" id="item-chk-{item.ndbno}" className="item-chk"></input></td>
 			
 			</tr>
 		)
+	}
+	
+	itemCheck(e) {
+		console.log("check");
+		console.log(e.target.id.split("-")[2]);
 	}
 }
 

@@ -3,6 +3,7 @@
 @import "layouts/nav";
 @import "layouts/sidebar";
 @import "pages/search";
+@import "pages/newMeal";
  
 	
 
@@ -29,7 +30,7 @@ html, body {
 
 
 .app-component {
-	background-color: #000;
+	background-color: #000; 
 	color: #eef0f5;
 }
 
@@ -42,6 +43,14 @@ html, body {
 	border-radius: 8px;
 }
 
+.link-div {
+	cursor: pointer;
+}
+
+.main-col {
+	padding-right: 5%;
+	padding-left: 2%;
+}
 
 
 
