@@ -97,15 +97,7 @@ class UserApp extends React.Component {
 				checkedItems: newArr
 			})
 		}
-		var checked = [];
-		console.log("elements: ", document.getElementsByClassName("search-result-chk")[0]);
-		document.getElementsByClassName("search-result-chk").each((item) => {
-			if (item.checked) {
-				checked.push(item.id.split("-")[2]);
-			}
-		});
 		console.log("checked Items = ", this.state.checkedItems);
-		console.log("checked array = ", checked);
 	}
 }
 

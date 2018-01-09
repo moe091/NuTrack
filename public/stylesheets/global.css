@@ -66,7 +66,7 @@ nav {
   height: 100%;
   min-height: 100vh;
   width: 100%;
-  min-width: 180px;
+  min-width: 140px;
   padding: 16% 0 12% 0;
   border-right: 2px #1f5a83 solid; }
   .sidebar .sidebar-link:hover {
@@ -143,6 +143,11 @@ nav {
 
 .icon-disabled {
   color: #4A4E69; }
+
+@media (max-width: 768px) {
+  .sidebar {
+    font-size: 0.8em;
+    min-width: 110px; } }
 
 .search-col {
   align-text: center;
@@ -264,12 +269,162 @@ td:first-child {
 .fancy-checkbox input[type="checkbox"]:checked ~ .unchecked {
   display: none; }
 
+.newMeal-item-row {
+  margin: 10px 0;
+  min-height: 260px;
+  max-height: 300px;
+  text-align: center; }
+
+.newMeal-items {
+  padding: 10px;
+  height: 100%;
+  text-align: center;
+  display: inline-block !important;
+  background-color: #fafbfe;
+  border: 1px #aaa solid; }
+
 .newMeal-item {
+  min-height: 150px;
+  height: 100%;
+  max-height: 200px;
   display: inline-block;
-  padding: 10px; }
+  width: 30%;
+  min-width: 250px;
+  margin: 1.5%;
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px; }
   .newMeal-item .newMeal-item-name {
-    font-size: 1.2em;
-    color: #4797ce; }
+    width: 100%;
+    display: inline-block;
+    color: #fff;
+    background-color: #00233E;
+    font-size: 14px;
+    min-height: 42px;
+    max-height: 42px;
+    border-radius: 4px; }
+  .newMeal-item .newMeal-name-span {
+    min-height: 45px;
+    max-height: 45px; }
+  .newMeal-item .newMeal-item-amount {
+    margin: 0 auto;
+    width: 60%; }
+
+.serving-lbl {
+  font-size: 10px;
+  display: block;
+  font-style: italic; }
+
+.nutrient-table {
+  padding: 5px;
+  border-bottom: 1px #bbb solid; }
+
+.nutrient-table-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 0;
+  background-color: #dfe3e9; }
+  .nutrient-table-list li {
+    padding: 0;
+    flex-grow: 1;
+    background-color: #dfe3e9; }
+    .nutrient-table-list li .nutrient-table-item-name {
+      background-color: #b1bac4;
+      font-weight: bold; }
+
+@media (max-width: 768px) {
+  .newMeal-item-row {
+    padding-left: 10px; } }
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%; }
+
+input[type=range]:focus {
+  outline: none; }
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101; }
+
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px; }
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd; }
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101; }
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer; }
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent; }
+
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; }
+
+input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; }
+
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer; }
+
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9; }
+
+input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd; }
 
 html, body {
   min-height: 100%;
@@ -298,5 +453,5 @@ html, body {
   cursor: pointer; }
 
 .main-col {
-  padding-right: 5%;
-  padding-left: 2%; }
+  padding-right: 3%;
+  padding-left: 3%; }

@@ -62,7 +62,7 @@ class SearchArea extends React.Component {
 			console.log(window.user);
 		}
 		console.log("AJAXING");
-		fetch('/food/search/results/' + this.props.query, {
+		fetch('/user/search/results/' + this.props.query, {
 			method: 'GET',
 			credentials: 'include'
 		})
@@ -91,7 +91,7 @@ class SearchArea extends React.Component {
 		});
 		console.log("ndbArr: ", ndbArr);
 		
-		fetch('../../food/item/list', {
+		fetch('../../user/item/list', {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -104,7 +104,8 @@ class SearchArea extends React.Component {
 		.then((res) => {
 			console.log("getItemInfos response:", res);
 			this.setState({
-				nutrients: res,
+				nutrients: res.nutrients,
+				nutrientNames: res.nutrientNames,
 				sample: "sample string"
 			});
 		}).catch((err) => {
@@ -158,7 +159,7 @@ class SearchTable extends React.Component {
 			<table className="table">
 				<thead className="thead-inverse">
 					<tr>
-						<th></th>
+						<th>Select</th>
 						<th>Name</th>
 						<th>Manufacturer</th>
 						<th>{this.props.nutrients[0].nutrients[0].name}</th>
@@ -181,6 +182,9 @@ class SearchTable extends React.Component {
 	}
 	
 	createRow(item) {
+		if (item.nutrients.length > 5) {
+			item.nutrients = item.nutrients.slice(0, 5);
+		}
 		return (
 			<tr key={item.ndb}>
 				<td>
@@ -196,11 +200,11 @@ class SearchTable extends React.Component {
 					</a>
 				</td>
 				<td>{item.manu}</td>
-				<td>{item.nutrients[0].value}{item.nutrients[0].unit}</td> 
-				<td>{item.nutrients[1].value}{item.nutrients[1].unit}</td> 
-				<td>{item.nutrients[2].value}{item.nutrients[2].unit}</td> 
-				<td>{item.nutrients[3].value}{item.nutrients[3].unit}</td> 
-				<td>{item.nutrients[4].value}{item.nutrients[4].unit}</td>  
+				{
+					item.nutrients.map((n) => {
+						return <td>{n.value}{n.unit}</td>
+					})
+				}  
 			
 			</tr>
 		)

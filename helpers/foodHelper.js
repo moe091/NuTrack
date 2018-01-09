@@ -9,6 +9,7 @@ nutrientMap.set(205, {name: 'Carbohydrates', abbr: 'Carbs'});
 nutrientMap.set(208, {name: 'Calories', abbr: 'Cals'});
 nutrientMap.set(269, {name: 'Sugar', abbr: 'Sug'});
 nutrientMap.set(307, {name: 'Sodium', abbr: 'Sodium'});
+nutrientMap.set(601, {name: 'Cholesterol', abbr: 'Chol'});
 
 
 var fHelper = function() {

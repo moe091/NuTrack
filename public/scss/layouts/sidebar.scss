@@ -5,7 +5,7 @@
 	height: 100%;
 	min-height: 100vh;
 	width: 100%; 
-	min-width: 180px; 
+	min-width: 140px; 
 	padding: 16% 0 12% 0;
 	border-right: 2px $sidebar-hover-col solid; 
 	.sidebar-link {
@@ -120,6 +120,17 @@
 	color: $col-dark;
 }
 
+//NEED BREAKPOINT AT 576, switch to top-bar.
+@media (max-width:576px){
+
+}
+
+@media (max-width:768px){
+	.sidebar {
+		font-size: 0.8em;
+		min-width: 110px;
+	}
+}
 
 
 

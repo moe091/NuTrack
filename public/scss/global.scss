@@ -4,6 +4,7 @@
 @import "layouts/sidebar";
 @import "pages/search";
 @import "pages/newMeal";
+@import "components/slider";
  
 	
 
@@ -30,7 +31,7 @@ html, body {
 
 
 .app-component {
-	background-color: #000; 
+	background-color: #000;  
 	color: #eef0f5;
 }
 
@@ -48,8 +49,8 @@ html, body {
 }
 
 .main-col {
-	padding-right: 5%;
-	padding-left: 2%;
+	padding-right: 3%;
+	padding-left: 3%;
 }
 
 
