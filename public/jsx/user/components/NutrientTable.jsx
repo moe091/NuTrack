@@ -5,12 +5,12 @@ function NutrientTable(props) {
 	
 	function createNutrientItem(item) {
 		return (
-			<li className="list-inline-item">
+			<li className="list-inline-item" key={item.id}>
 				<div className="nutrient-table-item-name">
 					{item.abbr}
 				</div>
 				<div className="nutrient-table-item-total">
-					{item.total}
+					{item.total}{item.unit}
 				</div>
 			</li>
 		)
@@ -32,3 +32,5 @@ function NutrientTable(props) {
 }
 
 export default NutrientTable
+
+

@@ -1,0 +1,38 @@
+.meal-row {
+	padding: 10px 20px;
+	margin-right: 10px;
+}
+
+.show-meal {
+	//TODO: set a breakpoing to decrease padding on smaller screense
+	padding: 16px 20px !important;
+}
+
+
+.show-meal-meals {
+	border: 4px $sidebar-active-col solid !important;
+	background-color: $sidebar-header-col !important;
+	width: 100%;
+	
+	.nutrient-table-item-total {
+		color: #fff;
+	}
+	
+	.nutrient-table-item-name {
+		background-color: $sidebar-active-col !important;
+	}
+	
+	.block-header {
+		color: $sidebar-active-col !important;
+		background-color: #fbfaf9 !important; 
+		
+		-webkit-box-shadow: inset 0px 0px 5px 4px rgba(0,0,0,0.14);
+		-moz-box-shadow: inset 0px 0px 5px 4px rgba(0,0,0,0.14);
+		box-shadow: inset 0px 0px 5px 4px rgba(0,0,0,0.14);
+	}
+}
+
+.show-meal-portion-servings {
+	font-weight: bold;
+	font-color: $sidebar-header-col;
+}

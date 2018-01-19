@@ -16,13 +16,14 @@ class SearchArea extends React.Component {
 				{
 					manu: "Big Time Tea Company", 
 					name: "Julia's Tropical Tea, Tea+Fruits+Veggies", 
+					ndb: 0,
 					nutrients: [
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
-						{abbr: "Sugar", name: "Calories", unit: "kcal", value: "15"},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15"}
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 0},
+						{abbr: "Sugar", name: "Calories", unit: "kcal", value: "15", id: 1},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 2},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 3},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 4},
+						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 5}
 					]
 				}
 			]
@@ -202,7 +203,7 @@ class SearchTable extends React.Component {
 				<td>{item.manu}</td>
 				{
 					item.nutrients.map((n) => {
-						return <td>{n.value}{n.unit}</td>
+						return <td key={(item.ndb + '-' + n.id)}>{n.value}{n.unit}</td>
 					})
 				}  
 			

@@ -6,6 +6,7 @@ import {SearchArea, SearchBox} from './SearchArea.jsx';
 import Nav from './Nav.jsx';
 import SideBar from './SideBar.jsx';
 
+//CAN GET RID OF THIS, REPLACED WHOLE COPMONENT WITH A RENDER FUNCTION IN SEARCH ROUTE(IN USERAPP.JSX)
 class Search extends React.Component {
 	constructor(props) {
 		super(props);

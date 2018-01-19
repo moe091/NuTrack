@@ -6,11 +6,14 @@ var foodHelper = require('../helpers/foodhelper');
 var fs = require('fs');
 
 var User = require('../models/user');
+var meals = require('./user/meals');
+var tracker = require('./user/tracker');
 
 /* GET users listing. */
 //​ saving this
 
-
+router.use('/meals', meals);
+router.use('/tracker', tracker);
 
 router.get('/item/:no', function(req, res, next) {
       //var f = food.report('01009', 'b');
@@ -147,7 +150,7 @@ router.post('/item/list', (req, res, nex) => {
 		if (req.user) {
 			watched = req.user.watchedNutrients;
 		}
-		foodHelper.getNutrientInfos(req.user, req.body.ndbs, req.body.type).then((nutrientList) => {
+		foodHelper.getNutrientInfos(req.user, req.body.ndbs, req.body.type, req.session).then((nutrientList) => {
 			if (req.body.type == 'b') {
 				var index = -1;
 				for (var i = 0; i < nutrientList.length; i++) {

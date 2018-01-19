@@ -10,8 +10,7 @@ import Nav from './Nav.jsx';
 import SideBar from './SideBar.jsx';
 
 import UserApp from './user/UserApp.jsx';
-
-import NewMeal from './user/NewMeal.jsx';
+ 
 
 class App extends React.Component {
 	constructor(props) {

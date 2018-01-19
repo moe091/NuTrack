@@ -131,7 +131,7 @@ var foodHelper = {
 		return names;
 	},
 
-	updateWatchedNutrients: function(user) {
+	updateWatchedNutrients: function(user, session) {
 		if (user) { //if logged in, update watchedNutrients if it is still null
 			if (user.watchedNutrients && user.watchedNutrients.length == 0) {
 				console.log("attempting update\nID = " + session.passport.user);
@@ -157,7 +157,7 @@ var foodHelper = {
 	
 	
 	
-	getNutrientInfos: function(user, ndbs, type) {
+	getNutrientInfos: function(user, ndbs, type, session) {
 		var itemInfos = [];
 		var nutLists = [];
 		
@@ -188,7 +188,7 @@ var foodHelper = {
 						}
 
 
-						var watched = foodHelper.updateWatchedNutrients(user);
+						var watched = foodHelper.updateWatchedNutrients(user, session);
 
 						if (watched && watched.length > 0) {
 							if (type == 'b') {

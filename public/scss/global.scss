@@ -4,7 +4,10 @@
 @import "layouts/sidebar";
 @import "pages/search";
 @import "pages/newMeal";
-@import "components/slider";
+@import "pages/showMeal";
+@import "components/slider"; 
+@import "vendor/datetime";
+@import "elements";
  
 	
 
@@ -53,6 +56,55 @@ html, body {
 	padding-left: 3%;
 }
 
+.right {
+	float: right;
+}
+
+//fix for react-datetime 
+/**
+.rdt {
+	display: block;
+}
+.rdt td {
+	padding: 5px;
+}
+.rdtPicker {
+	margin-top: 8px;
+}
+.rdtPicker > div {
+	display: inline-block;
+}
+.rdtCounter {
+	display: inline-block;	
+	margin: auto 6px;
+}
+.rdtSwitch, .rdtTimeToggle {
+	color: #fff;
+	background-color: $sidebar-active-col;
+	border-radius: 8px;
+	cursor: pointer;
+}
+.rdtCounterSeparator {
+	display: none;
+}
+.rdtPrev, .rdtNext {
+	font-size: 1.5em;
+	cursor: pointer;
+}
+
+.rdtMonth, .rdtDay, .rdtYear, .rdtCount {
+	cursor: context-menu;
+}
+
+.rdtBtn {
+	cursor: pointer;
+}
+.rdtActive {
+	color: #fff;
+	background-color: $sidebar-active-col;
+	border-radius: 4px;
+}
+**/
 
 
 

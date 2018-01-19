@@ -1,14 +1,30 @@
 var mongoose = require('mongoose');
-var portion = require('./portion.js');
 
 
+
+var nutrientInfo = new mongoose.Schema({
+	name: String,
+	abbr: String,
+	id: Number,
+	total: Number,
+	unit: String
+});
+
+var portionSchema = new mongoose.Schema({
+	ndbno: Number,
+	servings: Number,
+	name: String,
+	nutrientTotals: [nutrientInfo]
+});
 
 
 var mealSchema = new mongoose.Schema({
 	name: String,
-  portions: [portion.schema], //each portion contains an ndbno, an amount(number for # of portions or percentage, and a name representing name of the item)
-  date: {type: Date, default: Date.now} //meal plans don't have date, meal items in tracker have date
+  date: {type: Date, default: Date.now}, //meal plans don't have date, meal items in tracker have date
+	nutrientTotals: [],
+	portions: [portionSchema]
 });
+
 
 
 

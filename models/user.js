@@ -13,7 +13,7 @@ var userSchema = new mongoose.Schema({
 		mealPlans: [meal.schema],
     tracker: tracker.schema,
     planner: tracker.schema,
-		watchedNutrients: [Number]
+		watchedNutrients: {type: Array, 'default': [203, 204, 205, 208, 269, 307]}
 });
 
 userSchema.plugin(pplMongoose);

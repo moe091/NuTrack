@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import RangeSlider from './RangeSlider.jsx';
-import NutrientTable from './NutrientTable.jsx';
-/** move this from components to user folder.
-	Components should be re-usable
-	**/
+import RangeSlider from '../components/RangeSlider.jsx';
+import NutrientTable from '../components/NutrientTable.jsx'; 
 
 
 class MealBuilder extends React.Component {
@@ -32,7 +29,6 @@ class MealBuilder extends React.Component {
 	
 	render() {
 		return (
-			<div className="col-sm-10 main-col">
 				<div className="row newMeal-item-row">
 					
 					{this.renderItems()}
@@ -40,7 +36,6 @@ class MealBuilder extends React.Component {
 				</div>
 				
 				
-			</div>
 		)
 	}
 	
@@ -55,7 +50,7 @@ class MealBuilder extends React.Component {
 			ndbs: this.props.checkedItems,
 			type: 'f'
 		}
-		fetch('../../food/item/list', {
+		fetch('../../user/item/list', {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -90,6 +85,16 @@ class MealBuilder extends React.Component {
 		
 		var itemTotal = 0;
 		nut.report.food.nutrients.forEach((n) => {
+			//if no measures exist, use the total nutrient val
+			if (n.measures.length < 1) {
+				n.measures.push({
+					value: n.value,
+					unit: n.unit,
+					qty: 1,
+					label: "serving"
+				});
+			}
+			
 			itemTotal = nut.amount * Number(n.measures[0].value); 
 			if (this.state.nutrientMap.has(Number(n.nutrient_id))) {
 				console.log("\n\nmap units = " + this.state.nutrientMap.get(Number(n.nutrient_id).unit));	
@@ -106,7 +111,9 @@ class MealBuilder extends React.Component {
 		});
 	}
 	
-	createNutrientDisplayObj(nutrientObj) { //creates variable to pass through to NutrientTable. leave nutrientObj null to include all vals in this.state.nutrientObj. pass a val to only include 1, won't work if nutrient isn't in this.state.nutrients
+	
+	//creates variable to pass through to NutrientTable. leave nutrientObj null to include all vals in this.state.nutrientObj. pass a val to only include 1, won't work if nutrient isn't in this.state.nutrients
+	createNutrientDisplayObj(nutrientObj) { 
 		var watched = (this.state.watched.length == 0) ? [203, 204, 205, 208, 269, 307] : this.state.watched;
 		var nutVals = {};
 		var watchedNuts = {};
@@ -115,11 +122,9 @@ class MealBuilder extends React.Component {
 			nutVals["nut_" + id] = 0;
 		});
 		
-		console.log('nutVals = ', nutVals);
-		console.log('205 = ' + nutVals.nut_205);
-		
 		for (var i = 0; i < this.state.nutrients.length; i++) {
-			if (nutrientObj == null || this.state.nutrients[i] == nutrientObj) { //if nutrientObj is null include all objs, if it's not null only include the value passed through
+			if (nutrientObj == null || this.state.nutrients[i] == nutrientObj) { //if nutrientObj is null include all objs, if it's not null only include the value passed through(kind of a quick hack, so that the function can be used to get info on individual items or for all items in state) 
+				//TODO: just switch nutrientObj to be an array(that is sometimes length 1)
 				this.addNutrientVals(this.state.nutrients[i], nutVals);
 			}
 		}
@@ -130,6 +135,7 @@ class MealBuilder extends React.Component {
 					id: w, 
 					name: this.state.nutrientMap.get(w).name,
 					abbr: this.state.nutrientMap.get(w).abbr,
+					unit: this.state.nutrientMap.get(w).unit,
 					total: nutVals["nut_" + w].toFixed(2)
 				}
 			}
@@ -140,16 +146,36 @@ class MealBuilder extends React.Component {
 		return watchedNuts;
 	}
 	
+	//updates when mealName text input is changed
+	changeName(e) {
+		this.setState({
+			mealName: e.target.value
+		})
+	}
+	
+	
+	createMealClick(e) {
+		console.log("CREATE MEAL! state:", this.state);
+		this.props.createMealHandler(this.state.nutrients, this.state.mealName, this.createNutrientDisplayObj());
+	}
 	
 	renderItems() {
 		return (
-			<div className="newMeal-items"> 
+			<div className="content-section h-100 w-100"> 
+				<div className="section-header">
+					
+					<label value="Name Meal">Meal Name</label>
+					<input type="text" onChange={this.changeName.bind(this)}></input>
+					<button type="button" className="btn btn-default" onClick={this.createMealClick.bind(this)}>Create Meal</button>
+				
+				</div>
+				<h4>Total Nutrient Values:</h4>
 				<NutrientTable nutrients={this.createNutrientDisplayObj()} />
 				{this.state.nutrients.map((item) => {
 					return (
-						<div className="newMeal-item">
-							<div className="newMeal-item-name">
-								<span className="newMeal-name-span">{item.report.food.name.substring(0, 60)}</span>
+						<div className="content-block block-third" key={item.report.food.ndbno}>
+							<div className="block-header">
+								{item.report.food.name.substring(0, 60)}
 							</div>
 								<label className="slider-lbl" id={'slider-lbl-' + item.report.food.ndbno}>
 									<b>{item.amount ? item.amount : 'N/A'}</b> Servings / 
@@ -161,7 +187,7 @@ class MealBuilder extends React.Component {
 												''
 									}
 								</label>
-								<label className="serving-lbl">
+								<label className="detail-label">
 									(1 serving = 
 									{
 										(item.report.food.nutrients.length > 0) 
@@ -175,6 +201,7 @@ class MealBuilder extends React.Component {
 								
 								<RangeSlider minRange='0' maxRange='5' defaultVal="1" sliderInput={this.createAmountUpdate(item)} sliderStep='0.25' wrapperClass='newMeal-item-amount' /> 
 								
+								<NutrientTable nutrients={this.createNutrientDisplayObj(item)} />
 						</div>
 					)
 				})}
