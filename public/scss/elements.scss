@@ -1,7 +1,25 @@
+.nutrient-table {
+	color: #fff;
+	margin-bottom: 16px;
+	border-bottom: none;
+	
+	background-color: rgba(22, 10, 2, 0.1);
+	border: 1px black solid;
+}
+
 .inset-container {
 	padding: 10px;
 	padding-right: 25px;
 	text-align: center;
+	content-section {
+		background-color: none;
+		border: none;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+		h1 {
+			color: #fff;
+		}
+	}
 }
 
 
@@ -10,12 +28,15 @@
 .content-section {
 	padding: 10px;
 	text-align: center;
-	display: inline-block;
-	background-color: #fbfaf9;
+	display: inline-block; 
 	
+	background-color: rgba(255, 255, 255, 0.2);
 	-webkit-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.14);
 	-moz-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.14);
 	box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.14);
+	h1 {
+		color: #f2f2f2;
+	}
 }
 
 
@@ -23,9 +44,9 @@
 .section-header {
 	text-align: center;
 	margin-bottom: 20px;
-	padding-bottom: 10px;
-	background-color: #fff;
+	padding-bottom: 10px; 
 	font-weight: bold;
+	color: #fff;
 	
 	-webkit-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.14);
 	-moz-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.14);
@@ -55,7 +76,7 @@
 		text-align: center;
 		font-size: 1.5em;
 		font-weight: bold;
-		color: #000;
+		color: #fff;
 	}
 
 	button {   
@@ -86,18 +107,18 @@
 	margin-top: 26px;
 	text-align: center;
 	padding: 4px;
-	border-radius: 4px;
-	background-color: #fff;
+	border-radius: 4px; 
 	
 	-webkit-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
 	-moz-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
 	box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
 	.block-header {
-		width: 100%; 
+		width: 100%;  
 		display: inline-block;
 		color: #fff;
-		background-color: $sidebar-header-col;
-		font-size: 20px; 
+		background-color: #013055;
+		font-size: 16px; 
+		line-height: 18px;
 		font-weight: bold;
 		text-transform: capitalize;
 		min-height: 42px;
@@ -108,9 +129,9 @@
 	}
 	
 	.block-detail {
-		background-color: #fff;
+		background-color: #013055;
 		border-radius: 6px;
-		color: #000;
+		color: #fff;
 		display: inline-block; 
 		font-size: 12px;
 		margin: 8px 0;
@@ -134,7 +155,7 @@
 	}
 	
 	.inner-block {
-		background-color: #fbfaf9;
+		color: #fff;
 		padding: 4px;
 		
 		-webkit-box-shadow: inset 0px 0px 5px 4px rgba(0,0,0,0.14);
@@ -152,22 +173,25 @@
 	
 	.nutrient-table {
 		font-size: 0.8em;
-		border-bottom: none;
+		color: #000; 
+		margin-bottom: 0;  
 	}	
 	
 }
 
+
+
 .block-third {
-	min-height: 150px;
-	height: 100%;
+	min-height: 150px; 
 	//max-height: 200px;
 	width: 30%;
 	min-width: 250px;
 	margin: 1.5%;
+	margin-top: 26px;
+	background-color: transparent;
 	//margin-top: 3.5px;
 	.nutrient-table {
-		font-size: 0.6em;
-		border-bottom: none;
+		font-size: 0.6em; 
 	}
 	
 }
@@ -187,8 +211,11 @@
 
 .link-span {
 	a {
-		color: $content-link-col;
+		color: $sidebar-header-col; 
 		margin: 2px 8px;
+		&:hover {
+			color: $sidebar-hover-col;
+		}
 	}
 }
 

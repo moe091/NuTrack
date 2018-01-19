@@ -29,7 +29,7 @@ class MealBuilder extends React.Component {
 	
 	render() {
 		return (
-				<div className="row newMeal-item-row">
+				<div className="row h-100 newMeal-item-row">
 					
 					{this.renderItems()}
 					

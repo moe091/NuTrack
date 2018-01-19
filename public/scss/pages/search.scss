@@ -1,6 +1,9 @@
 .search-col, .main-col {
 	align-text: center;
-	background-color: #d6d6d6;
+  background:linear-gradient(to bottom,#0a6395 ,#85d8ce);
+	th, tr, td {
+		border-width: 0 !important;
+	}
 }
 
 .search-area {
@@ -9,44 +12,42 @@
 	max-width: 86%;
 	min-width: 72%;
 	margin: 0 auto;
+	.table { 
+		border-collapse: separate;
+		border-spacing: 0 4px;
+	}
+
+	.table td, .table tr { 
+		padding: 6px 12px; 
+	}
+
+	td {
+		color: #fff;
+	}
+	.table tr {
+
+		background-color: rgba(155, 155, 155, 0.3); 
+	}
+
+	td:first-child {
+		vertical-align: middle;
+	}
+
+	.table th {
+		background-color: rgba(0, 0, 0, 0.15);
+		color: $col-darkest;
+		font-weight: bold;
+		font-size: 1.3em;
+	}
 } 
 
-.table {
-	-webkit-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
-	-moz-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
-	box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
-}
 
-.table td, .table tr {
-	border-bottom: none;
-	border-top: none;
-	border-top-style: none;
-	border-bottom-style: none;
-	padding: 6px 12px;
-}
-
-
-.table tr {
-	background-color: #fff;
-	border-top: 4px #f1f1f1 solid;
-}
-
-td:first-child {
-	vertical-align: middle;
-}
-
-.table th {
-	background-color: #fff;
-	color: $col-darkest;
-	font-weight: bold;
-	font-size: 1.3em;
-}
 
 .food-item-link {
-	color: $sidebar-hover-col;
+	color: $sidebar-header-col;
 	font-weight: 500;
 	&:hover {
-		color: $sidebar-header-col;
+		color: $sidebar-hover-col;
 		text-decoration: none;
 	}
 }
@@ -63,6 +64,7 @@ td:first-child {
 	margin-right: 6%;
 	text-align: left;
 	margin-top: 8px;
+	color: #fff;
 }
 
 //ADD breakpoints to change search area on small screens

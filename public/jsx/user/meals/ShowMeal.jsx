@@ -19,7 +19,7 @@ class ShowMeal extends React.Component {
 		return (
 			<div className="container-fixed inset-container">
 				
-				<div className="content-section">
+				<div className="content-section" id="show-meal-content">
 				
 					<h1> {this.state.message} </h1>
 					{this.state.meals.map((meal, index, arr) => {

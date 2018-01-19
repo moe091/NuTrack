@@ -8,14 +8,23 @@
 	padding: 16px 20px !important;
 }
 
-
+#show-meal-content {
+	background: none;
+	-webkit-box-shadow: none !important;
+	-mox-box-shadow: none !important;
+	box-shadow: none !important;
+}
 .show-meal-meals {
-	border: 4px $sidebar-active-col solid !important;
-	background-color: $sidebar-header-col !important;
 	width: 100%;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	
+	.nutrient-table {
+		border: none;
+	}
 	
 	.nutrient-table-item-total {
-		color: #fff;
+		color: #fff; 
 	}
 	
 	.nutrient-table-item-name {
@@ -23,12 +32,7 @@
 	}
 	
 	.block-header {
-		color: $sidebar-active-col !important;
-		background-color: #fbfaf9 !important; 
-		
-		-webkit-box-shadow: inset 0px 0px 5px 4px rgba(0,0,0,0.14);
-		-moz-box-shadow: inset 0px 0px 5px 4px rgba(0,0,0,0.14);
-		box-shadow: inset 0px 0px 5px 4px rgba(0,0,0,0.14);
+		background-color: none !important;
 	}
 }
 

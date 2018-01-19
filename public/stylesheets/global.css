@@ -151,7 +151,9 @@ nav {
 
 .search-col, .main-col {
   align-text: center;
-  background-color: #d6d6d6; }
+  background: linear-gradient(to bottom, #0a6395, #85d8ce); }
+  .search-col th, .search-col tr, .search-col td, .main-col th, .main-col tr, .main-col td {
+    border-width: 0 !important; }
 
 .search-area {
   padding: 2px;
@@ -159,37 +161,28 @@ nav {
   max-width: 86%;
   min-width: 72%;
   margin: 0 auto; }
-
-.table {
-  -webkit-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.12);
-  -moz-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.12);
-  box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.12); }
-
-.table td, .table tr {
-  border-bottom: none;
-  border-top: none;
-  border-top-style: none;
-  border-bottom-style: none;
-  padding: 6px 12px; }
-
-.table tr {
-  background-color: #fff;
-  border-top: 4px #f1f1f1 solid; }
-
-td:first-child {
-  vertical-align: middle; }
-
-.table th {
-  background-color: #fff;
-  color: #22223B;
-  font-weight: bold;
-  font-size: 1.3em; }
+  .search-area .table {
+    border-collapse: separate;
+    border-spacing: 0 4px; }
+  .search-area .table td, .search-area .table tr {
+    padding: 6px 12px; }
+  .search-area td {
+    color: #fff; }
+  .search-area .table tr {
+    background-color: rgba(155, 155, 155, 0.3); }
+  .search-area td:first-child {
+    vertical-align: middle; }
+  .search-area .table th {
+    background-color: rgba(0, 0, 0, 0.15);
+    color: #22223B;
+    font-weight: bold;
+    font-size: 1.3em; }
 
 .food-item-link {
-  color: #1f5a83;
+  color: #00233E;
   font-weight: 500; }
   .food-item-link:hover {
-    color: #00233E;
+    color: #1f5a83;
     text-decoration: none; }
 
 .search-head {
@@ -201,7 +194,8 @@ td:first-child {
   font-weight: bold;
   margin-right: 6%;
   text-align: left;
-  margin-top: 8px; }
+  margin-top: 8px;
+  color: #fff; }
 
 .search-input {
   padding-left: 4px;
@@ -276,8 +270,7 @@ td:first-child {
 
 .newMeal-item-row {
   margin: 0;
-  min-height: 260px;
-  max-height: 300px;
+  min-height: 460px;
   padding: 2%;
   text-align: center;
   justify-content: center;
@@ -419,20 +412,24 @@ td:first-child {
 .show-meal {
   padding: 16px 20px !important; }
 
+#show-meal-content {
+  background: none;
+  -webkit-box-shadow: none !important;
+  -mox-box-shadow: none !important;
+  box-shadow: none !important; }
+
 .show-meal-meals {
-  border: 4px #1b4868 solid !important;
-  background-color: #00233E !important;
-  width: 100%; }
+  width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important; }
+  .show-meal-meals .nutrient-table {
+    border: none; }
   .show-meal-meals .nutrient-table-item-total {
     color: #fff; }
   .show-meal-meals .nutrient-table-item-name {
     background-color: #1b4868 !important; }
   .show-meal-meals .block-header {
-    color: #1b4868 !important;
-    background-color: #fbfaf9 !important;
-    -webkit-box-shadow: inset 0px 0px 5px 4px rgba(0, 0, 0, 0.14);
-    -moz-box-shadow: inset 0px 0px 5px 4px rgba(0, 0, 0, 0.14);
-    box-shadow: inset 0px 0px 5px 4px rgba(0, 0, 0, 0.14); }
+    background-color: none !important; }
 
 .show-meal-portion-servings {
   font-weight: bold;
@@ -730,26 +727,42 @@ td.rdtYear:hover {
   font-size: 1.2em;
   margin-top: 37px; }
 
+.nutrient-table {
+  color: #fff;
+  margin-bottom: 16px;
+  border-bottom: none;
+  background-color: rgba(22, 10, 2, 0.1);
+  border: 1px black solid; }
+
 .inset-container {
   padding: 10px;
   padding-right: 25px;
   text-align: center; }
+  .inset-container content-section {
+    background-color: none;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none; }
+    .inset-container content-section h1 {
+      color: #fff; }
 
 .content-section {
   padding: 10px;
   text-align: center;
   display: inline-block;
-  background-color: #fbfaf9;
+  background-color: rgba(255, 255, 255, 0.2);
   -webkit-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14);
   -moz-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14);
   box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14); }
+  .content-section h1 {
+    color: #f2f2f2; }
 
 .section-header {
   text-align: center;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  background-color: #fff;
   font-weight: bold;
+  color: #fff;
   -webkit-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14);
   -moz-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14);
   box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14); }
@@ -774,7 +787,7 @@ td.rdtYear:hover {
     text-align: center;
     font-size: 1.5em;
     font-weight: bold;
-    color: #000; }
+    color: #fff; }
   .section-header button {
     vertical-align: baseline;
     background-color: #00233E;
@@ -799,7 +812,6 @@ td.rdtYear:hover {
   text-align: center;
   padding: 4px;
   border-radius: 4px;
-  background-color: #fff;
   -webkit-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.12);
   box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.12); }
@@ -807,8 +819,9 @@ td.rdtYear:hover {
     width: 100%;
     display: inline-block;
     color: #fff;
-    background-color: #00233E;
-    font-size: 20px;
+    background-color: #013055;
+    font-size: 16px;
+    line-height: 18px;
     font-weight: bold;
     text-transform: capitalize;
     min-height: 42px;
@@ -817,9 +830,9 @@ td.rdtYear:hover {
     margin-bottom: 4px;
     padding-top: 2px; }
   .content-block .block-detail {
-    background-color: #fff;
+    background-color: #013055;
     border-radius: 6px;
-    color: #000;
+    color: #fff;
     display: inline-block;
     font-size: 12px;
     margin: 8px 0;
@@ -836,7 +849,7 @@ td.rdtYear:hover {
     display: block;
     height: 10px; }
   .content-block .inner-block {
-    background-color: #fbfaf9;
+    color: #fff;
     padding: 4px;
     -webkit-box-shadow: inset 0px 0px 5px 4px rgba(0, 0, 0, 0.14);
     -moz-box-shadow: inset 0px 0px 5px 4px rgba(0, 0, 0, 0.14);
@@ -849,17 +862,18 @@ td.rdtYear:hover {
       color: #00233E; }
   .content-block .nutrient-table {
     font-size: 0.8em;
-    border-bottom: none; }
+    color: #000;
+    margin-bottom: 0; }
 
 .block-third {
   min-height: 150px;
-  height: 100%;
   width: 30%;
   min-width: 250px;
-  margin: 1.5%; }
+  margin: 1.5%;
+  margin-top: 26px;
+  background-color: transparent; }
   .block-third .nutrient-table {
-    font-size: 0.6em;
-    border-bottom: none; }
+    font-size: 0.6em; }
 
 .detail-label {
   font-size: 10px;
@@ -867,8 +881,10 @@ td.rdtYear:hover {
   font-style: italic; }
 
 .link-span a {
-  color: #92add6;
+  color: #00233E;
   margin: 2px 8px; }
+  .link-span a:hover {
+    color: #1f5a83; }
 
 .header-bg {
   background-color: #00233E !important;

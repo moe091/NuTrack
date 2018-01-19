@@ -35283,7 +35283,7 @@ var MealBuilder = function (_React$Component) {
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
-				{ className: 'row newMeal-item-row' },
+				{ className: 'row h-100 newMeal-item-row' },
 				this.renderItems()
 			);
 		}
@@ -35665,7 +35665,7 @@ var ShowMeal = function (_React$Component) {
 				{ className: 'container-fixed inset-container' },
 				_react2.default.createElement(
 					'div',
-					{ className: 'content-section' },
+					{ className: 'content-section', id: 'show-meal-content' },
 					_react2.default.createElement(
 						'h1',
 						null,
