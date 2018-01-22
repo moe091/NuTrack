@@ -5,6 +5,7 @@
 @import "pages/search";
 @import "pages/newMeal";
 @import "pages/showMeal";
+@import "pages/showTracker";
 @import "components/slider"; 
 @import "vendor/datetime";
 @import "elements";
@@ -47,7 +48,7 @@ html, body {
 	border-radius: 8px;
 }
 
-.link-div {
+.link-div, .sidebar-link {
 	cursor: pointer;
 }
 

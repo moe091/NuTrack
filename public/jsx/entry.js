@@ -22,46 +22,13 @@ class App extends React.Component {
 	}
 	
 	
-	newMealHandler(e) {
-		console.log("new meal click"); 
-		console.log(e.target);
-		console.log("this = ", this);
-		
-		fetch('../../user/meals/new', {
-			method: 'POST',
-			credentials: 'include',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-      },
-			body: JSON.stringify({items: this.state.checkedItems})
-		})
-		.then((resp) => resp.json())
-		.then((res) => {
-			console.log("getItemInfos response:", res);
-		}).catch((err) => {
-			console.log("catch error:", err);
-		});
-		this.props.history.push("../../user/meals/new");
-	}
-	
-	search(query) {
-		this.setState({
-			view: "search",
-			query: query
-		});
-		console.log("App.search called, query = " + this.state.query);
-		console.log("THIS = ", this);
-		this.props.history.push("/search");
-	}
-	
 	
 	render() {
 		
 		return (
 				<Router>
 						<div>
-							<Route exact path='/' component={HomePage} searchHandler={this.search.bind(this)}/>
+							<Route exact path='/' component={HomePage} />
 							<Route path="/user" component={UserApp} />
 							<Route path='/food' component={UserApp} />
 						</div>

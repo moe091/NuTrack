@@ -10,7 +10,7 @@ function NutrientTable(props) {
 					{item.abbr}
 				</div>
 				<div className="nutrient-table-item-total">
-					{item.total}{item.unit}
+					{Math.round(item.total)}{item.unit}
 				</div>
 			</li>
 		)

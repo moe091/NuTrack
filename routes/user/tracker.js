@@ -21,8 +21,12 @@ router.post('/create', (req, res, next) => {
 	if (req.user) {
 		User.findById(req.user.id, (err, user) => {
 			var trackerMeal = {
-				meal: req.body.meal,
-				date: req.body.date
+				meal: req.body.meal
+			}
+			for (var i = 0; i < user.tracker.meals.length; i++) {
+				if (user.tracker.meals[i].hasOwnProperty('date')) {
+					user.tracker.meals[i] = user.tracker.meals[i].meal;
+				}
 			}
 			user.tracker.meals.push(trackerMeal);
 			user.save((err) => {
@@ -35,6 +39,18 @@ router.post('/create', (req, res, next) => {
 			})
 		});
 	}
+});
+
+router.get('/showtracker', (req, res, next) => {
+	if (req.user) {
+		res.send({tracker: req.user.tracker, endDate: new Date(), term: 'week', watchedNutrients: req.user.watchedNutrients, message: "TRACKER(week):"});
+	} else {
+		res.send({endDate: new Date(), term: 'week', message: 'Unable to retrieve data from server'});
+	}
+});
+
+router.get('/show', (req, res, next) => {
+        res.render('index', { data: 'show', user: req.user });
 });
 
 module.exports = router;

@@ -1,0 +1,134 @@
+.tracker-content-section {
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	background: none;
+	text-align: center;
+}
+
+.tracker-display-section, .tracker-options-section {
+	display: inline-block;
+	width: 92%;
+	background-color: rgba(55, 75, 85, 0.1) !important;
+	text-align: center;
+}
+.tracker-display-section {
+	min-height: 60%;
+}
+
+.tracker-main-nutrient-total {
+	width: 90%;
+	display: inline-block;
+	padding: 2%;
+	color: #fff;
+	nutrient-table-item-total {
+		color: #fff !important;
+		margin-bottom: 2px;
+	}
+}
+
+.tracker-meal-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	padding: 0 4px;
+}
+
+.tracker-meal-container-week {
+	min-height: 120px;
+}
+
+.tracker-day {
+	padding: 4px 0 !important;
+	vertical-align: top;
+	background-color: rgba(0, 0, 0, 0.15);
+	h4 {
+		color: #fff;
+	}
+}
+.tracker-day-week {
+	width: 12%;
+	margin: 12px 1%;
+	margin-top: 6px !important;
+	min-height: 75%;
+	font-size: 0.8em !important;
+}
+
+
+.tracker-day-date-week {
+	width: 100%;
+	height: 1.6em;
+	font-size: 16px;
+	background-color: rgba(255, 255, 255, 0.35);
+	color: $darkish-blue;
+	margin: 0 0 12px 0;
+	padding: 0 !important;
+}
+  
+
+
+.tracker-meal {
+	background-color: $darkish-blue;
+	min-height: 1.6em !important;
+	height: auto !important;
+	max-height: 3.2em !important;
+	padding: 0 2px !important;
+	margin: 2px 0 !important;
+}
+.tracker-meal-mealname {
+	width: 68%;
+}
+
+.tracker-meal-date {
+	width: 30%;
+	text-align: right;
+}
+
+
+
+
+
+
+//OPTIONS
+.tracker-options-section {
+	background-color: transparent !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	-box-shadow: none !important;
+	margin-bottom: 12px; 
+	
+	label {
+		margin: 4px 6px;
+		display: block;
+		color: #fff;
+	}
+	
+	input[type='text'], .tracker-option-input {
+		background-color: $darkish-blue;
+		color: #fff;
+	}
+}
+
+.tracker-option-block {
+	margin: 6px 8px;
+	padding: 8px !important;
+	background-color: rgba(0, 0, 0, 0.15);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

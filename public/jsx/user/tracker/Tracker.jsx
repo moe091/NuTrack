@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import TrackerAdd from './TrackerAdd.jsx';
+import TrackerShow from './TrackerShow.jsx';
 
 
 class Tracker extends React.Component {
@@ -27,6 +28,12 @@ class Tracker extends React.Component {
 					}}
 				/>
 				
+				<Route path='/user/tracker/show' render={() => {
+						return (
+							<TrackerShow />
+						)	
+					}}
+				/>
 			</div>
 		)
 	}
@@ -50,6 +57,7 @@ class Tracker extends React.Component {
 		.then((response) => response.json())
 		.then((res) => {
 			console.log("tracker/create response:", res);
+			this.props.history.push("../../user/tracker/show");
 		}).catch((err) => {
 			console.log("error fetching tracker/create: ", err);
 		})

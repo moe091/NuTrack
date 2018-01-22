@@ -18,6 +18,7 @@ class HomePage extends React.Component {
 		this.props.history.push("/user/search/" + query);
 	}
 	
+	
 	render() {
 		return (
 		
@@ -43,7 +44,7 @@ class HomePage extends React.Component {
 							<div className="row">
 
 								<span className="searchbox mt-3">
-									<SearchBox  searchHandler={this.searchHandler.bind(this)}/>	
+									<SearchBox  searchHandler={this.searchHandler.bind(this)} />	
 								</span>
 
 							</div> 

@@ -1251,7 +1251,7 @@ var SideBar = function (_React$Component) {
 					{ className: 'sidebar-rowGroup' },
 					_react2.default.createElement(
 						'a',
-						{ href: '#', className: 'sidebar-link' },
+						{ onClick: this.props.trackerShowHandler, className: 'sidebar-link' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'sidebar-segment' },
@@ -1262,7 +1262,7 @@ var SideBar = function (_React$Component) {
 					),
 					_react2.default.createElement(
 						'a',
-						{ href: '#', onClick: this.props.trackerAddHandler, className: 'sidebar-link right-link' },
+						{ onClick: this.props.trackerAddHandler, className: 'sidebar-link right-link' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'sidebar-segment right-segment' },
@@ -3274,41 +3274,6 @@ var App = function (_React$Component) {
 	}
 
 	_createClass(App, [{
-		key: 'newMealHandler',
-		value: function newMealHandler(e) {
-			console.log("new meal click");
-			console.log(e.target);
-			console.log("this = ", this);
-
-			fetch('../../user/meals/new', {
-				method: 'POST',
-				credentials: 'include',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ items: this.state.checkedItems })
-			}).then(function (resp) {
-				return resp.json();
-			}).then(function (res) {
-				console.log("getItemInfos response:", res);
-			}).catch(function (err) {
-				console.log("catch error:", err);
-			});
-			this.props.history.push("../../user/meals/new");
-		}
-	}, {
-		key: 'search',
-		value: function search(query) {
-			this.setState({
-				view: "search",
-				query: query
-			});
-			console.log("App.search called, query = " + this.state.query);
-			console.log("THIS = ", this);
-			this.props.history.push("/search");
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 
@@ -3318,7 +3283,7 @@ var App = function (_React$Component) {
 				_react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _HomePage.HomePage, searchHandler: this.search.bind(this) }),
+					_react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _HomePage.HomePage }),
 					_react2.default.createElement(_reactRouterDom.Route, { path: '/user', component: _UserApp2.default }),
 					_react2.default.createElement(_reactRouterDom.Route, { path: '/food', component: _UserApp2.default })
 				)
@@ -34921,7 +34886,10 @@ var UserApp = function (_React$Component) {
 								newMealHandler: this.newMealHandler.bind(this),
 								checkedItems: this.state.checkedItems,
 								showMealHandler: this.showMealHandler.bind(this),
-								plusEnabled: this.state.checkedItems.length > 0, trackerAddHandler: this.trackerAddHandler.bind(this), plannerAddHandler: this.plannerAddHandler.bind(this)
+								plusEnabled: this.state.checkedItems.length > 0,
+								trackerShowHandler: this.trackerShowHandler.bind(this),
+								trackerAddHandler: this.trackerAddHandler.bind(this),
+								plannerAddHandler: this.plannerAddHandler.bind(this)
 							})
 						),
 						_react2.default.createElement(_reactRouterDom.Route, { path: '/user/meals', render: function render() {
@@ -34963,6 +34931,11 @@ var UserApp = function (_React$Component) {
 				});
 				this.props.history.push("../../user/tracker/add");
 			}
+		}
+	}, {
+		key: 'trackerShowHandler',
+		value: function trackerShowHandler() {
+			this.props.history.push("../../user/tracker/show");
 		}
 	}, {
 		key: 'plannerAddHandler',
@@ -35583,7 +35556,7 @@ function NutrientTable(props) {
 			_react2.default.createElement(
 				'div',
 				{ className: 'nutrient-table-item-total' },
-				item.total,
+				Math.round(item.total),
 				item.unit
 			)
 		);
@@ -35836,6 +35809,10 @@ var _TrackerAdd = __webpack_require__(90);
 
 var _TrackerAdd2 = _interopRequireDefault(_TrackerAdd);
 
+var _TrackerShow = __webpack_require__(223);
+
+var _TrackerShow2 = _interopRequireDefault(_TrackerShow);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35873,12 +35850,18 @@ var Tracker = function (_React$Component) {
 							trackMealHandler: _this2.trackMealHandler.bind(_this2)
 						});
 					}
+				}),
+				_react2.default.createElement(_reactRouterDom.Route, { path: '/user/tracker/show', render: function render() {
+						return _react2.default.createElement(_TrackerShow2.default, null);
+					}
 				})
 			);
 		}
 	}, {
 		key: 'trackMealHandler',
 		value: function trackMealHandler(meal, time) {
+			var _this3 = this;
+
 			console.log("track meal:", meal);
 			console.log("time: ", time);
 
@@ -35897,6 +35880,7 @@ var Tracker = function (_React$Component) {
 				return response.json();
 			}).then(function (res) {
 				console.log("tracker/create response:", res);
+				_this3.props.history.push("../../user/tracker/show");
 			}).catch(function (err) {
 				console.log("error fetching tracker/create: ", err);
 			});
@@ -54929,6 +54913,528 @@ var DateTimePickerTime = onClickOutside( createClass({
 
 module.exports = DateTimePickerTime;
 
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouterDom = __webpack_require__(9);
+
+var _TrackerDay = __webpack_require__(224);
+
+var _TrackerDay2 = _interopRequireDefault(_TrackerDay);
+
+var _NutrientTable = __webpack_require__(87);
+
+var _NutrientTable2 = _interopRequireDefault(_NutrientTable);
+
+var _reactDatetime = __webpack_require__(214);
+
+var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TrackerShow = function (_React$Component) {
+	_inherits(TrackerShow, _React$Component);
+
+	function TrackerShow(props) {
+		_classCallCheck(this, TrackerShow);
+
+		var _this = _possibleConstructorReturn(this, (TrackerShow.__proto__ || Object.getPrototypeOf(TrackerShow)).call(this, props));
+
+		var ed = new Date();
+		var sd = new Date(ed.getDate() - 7);
+		var opts = {
+			chosenDate: 'end',
+			endDate: ed,
+			timePeriod: 7,
+			startDate: sd
+		};
+
+		_this.state = {
+			meals: [],
+			endDate: new Date(),
+			term: 'week',
+			message: 'Your Tracker',
+			dates: [],
+			watchedNutrients: [203, 204, 205, 208, 269, 307],
+			sortedMeals: null,
+
+			//options will be passed to TrackerOptions component. TrackerOptions will update the options appropriately on any change, then call TrackerShow.updateOptions(which will also be passed to TrackerOptions as prop). TrackerShow will copy the object and use it to setState triggering a re-render, keeping everything looking and working correctly. This way the options are all in one place and TrackerShow only needs one callback function to pass on to TrackerOptions - TrackerShow is already getting pretty bloated.
+			options: opts
+		};
+
+		return _this;
+	}
+
+	_createClass(TrackerShow, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			fetch('../../user/tracker/showtracker', {
+				method: 'GET',
+				credentials: 'include',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				}
+			}).then(function (response) {
+				return response.json();
+			}).then(function (res) {
+				res.endDate = new Date(res.endDate);
+				console.log('fetch. this=', _this2);
+				console.log("tracker/show response: ", res);
+				_this2.setState({
+					meals: res.tracker.meals,
+					endDate: res.endDate,
+					term: res.term,
+					message: res.message,
+					dates: _this2.createDateArray(res.endDate, 'week'),
+					watchedNutrients: res.watchedNutrients,
+					sortedMeals: null //reset this when now info is retrieved, so that when createMealDates() is called it re-calculates the sortedMeals array
+				});
+			}).catch(function (err) {
+				return console.log("ERROR fetching show: ", err);
+			});
+		}
+	}, {
+		key: 'createDateArray',
+		value: function createDateArray(end, length) {
+			console.log('create date array, end:', end);
+			console.log('this:', this);
+			if (length == 'day') length = 1; //pointless. wait, actually not, now I can call createDateArray(end, term) instead of having to check if term='day' and only call this func if it's not == 'day'
+			if (length == 'week') length = 7;
+			if (length == 'month') length = 30;
+			var dates = [];
+
+			for (var i = 0; i < length; i++) {
+				var d = new Date();
+				d.setDate(end.getDate() - i);
+
+				dates.unshift(d);
+			}
+			return dates;
+		}
+	}, {
+		key: 'createMealDates',
+		value: function createMealDates() {
+			var _this3 = this;
+
+			if (this.state.sortedMeals == null) {
+
+				var sortedMeals = this.state.dates.map(function (date, index) {
+					var meals = [];
+					console.log("\n\n\n\n\n\nChecking against date:", date);
+
+					for (var i = 0; i < _this3.state.meals.length; i++) {
+						console.log("meal: ", _this3.state.meals[i]);
+
+						if (_this3.state.meals[i].hasOwnProperty('meal')) {
+
+							if (typeof _this3.state.meals[i].meal.date == 'string') {
+								console.log("date was string, newdate:", _this3.state.meals[i].meal.date.toDateString);
+								_this3.state.meals[i].meal.date = new Date(_this3.state.meals[i].meal.date);
+							}
+
+							if (date.toDateString() == _this3.state.meals[i].meal.date.toDateString()) {
+								meals.push(_this3.state.meals[i].meal);
+							}
+						}
+					}
+
+					console.log("premeals:", meals);
+					meals.sort(function (a, b) {
+						return a.date - b.date;
+					});
+					var mealsForDay = { meals: meals, date: date, key: index };
+					console.log("returning mealsForDay: ", mealsForDay);
+					return mealsForDay;
+				});
+
+				console.log("sortedMeals = ", sortedMeals);
+				return sortedMeals;
+			} else {
+				return this.state.sortedMeals;
+			}
+		}
+	}, {
+		key: 'renderDay',
+		value: function renderDay(mealsForDay) {
+			console.log("renderDay():", mealsForDay);
+			return _react2.default.createElement(_TrackerDay2.default, { meals: mealsForDay.meals, date: mealsForDay.date, styleType: 'week', key: mealsForDay.key });
+		}
+	}, {
+		key: 'optionUpdateHandler',
+		value: function optionUpdateHandler(options) {
+			console.log("UPDATE OPTIONS:", options);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _this4 = this;
+
+			return _react2.default.createElement(
+				'div',
+				{ className: 'content-section h-100 w-100 tracker-content-section' },
+				_react2.default.createElement(TrackerOptions, { optionUpdateHandler: this.optionUpdateHandler.bind(this), options: this.state.options }),
+				_react2.default.createElement(
+					'div',
+					{ className: 'content-section tracker-display-section' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'tracker-main-nutrient-total' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Nutrient Totals For This Week:'
+						),
+						this.createNutrientTable()
+					),
+					this.createMealDates().map(function (mealsForDay) {
+						return _this4.renderDay(mealsForDay);
+					})
+				)
+			);
+		}
+	}, {
+		key: 'createNutrientTable',
+		value: function createNutrientTable() {
+			var totals = this.state.watchedNutrients.map(function (wn) {
+				return { id: wn, total: 0 };
+			});
+
+			var sorted = this.createMealDates();
+			console.log("\n\n\n\n\n\n\n\n\n\n\ntotals:", totals);
+			console.log('sorted:', sorted);
+			for (var n in totals) {
+				//for every item in totals, go through each nutrientTotal, for each meal, on each date. If the id's match then add the meals nutrientTotal to the element of total with matching id
+
+				for (var i in sorted) {
+					for (var j in sorted[i].meals) {
+						for (var k in sorted[i].meals[j].nutrientTotals) {
+							console.log('checking ' + sorted[i].meals[j].nutrientTotals[k].id + ' against ' + totals[n].id);
+							if (sorted[i].meals[j].nutrientTotals[k].id == totals[n].id) {
+								totals[n].total += Number(sorted[i].meals[j].nutrientTotals[k].total);
+								if (!totals[n].hasOwnProperty('name')) {
+									totals[n].name = sorted[i].meals[j].nutrientTotals[k].name;
+									totals[n].abbr = sorted[i].meals[j].nutrientTotals[k].abbr;
+									totals[n].unit = sorted[i].meals[j].nutrientTotals[k].unit;
+								}
+
+								console.log("added new val, newTotal: " + sorted[n].total);
+							}
+						}
+					}
+				}
+			}
+
+			console.log('totals: ', totals);
+			return _react2.default.createElement(_NutrientTable2.default, { nutrients: totals });
+		}
+	}]);
+
+	return TrackerShow;
+}(_react2.default.Component);
+
+/**
+	Tracker Options - for choosing the time period(day, week, or month) as well as start OR end date
+	- if you choose end or start date, the other gets set automatically based on the time period, e.g if you choose an end date and have 'week' selected, it will set the start date to end date-7 in the end date onChange callback
+	- if you set the start/end date and the other date is automatically updated, and THEN you change the time period, the date you manually set will stay the same and the other date will be updated to match the time period:
+		: so the endDate and startDate onChange event callbacks need to set the 'chosenDate' variable to 'start' or 'end' so that if the time period is updated, it knows which date to change.
+		: by default the end date is the current date and chosenDate is 'end'
+**/
+
+
+var TrackerOptions = function (_React$Component2) {
+	_inherits(TrackerOptions, _React$Component2);
+
+	function TrackerOptions(props) {
+		_classCallCheck(this, TrackerOptions);
+
+		return _possibleConstructorReturn(this, (TrackerOptions.__proto__ || Object.getPrototypeOf(TrackerOptions)).call(this, props));
+
+		/**
+  this.state = {
+  	chosenDate: 'end',
+  	endDate: new Date(),
+  	timePeriod: 'week',
+  	startDate: (newDate().setDate(this.state.endDate.getDate() - 7)),
+  	
+  }
+  **/
+	}
+
+	_createClass(TrackerOptions, [{
+		key: 'updateOtherDate',
+		value: function updateOtherDate() {}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'tracker-props content-section tracker-options-section' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'content-block tracker-option-block' },
+					_react2.default.createElement(
+						'label',
+						{ className: 'block-label' },
+						'Select A Start Date:'
+					),
+					_react2.default.createElement(_reactDatetime2.default, { renderInput: this.renderDateInput, dateFormat: 'MM-DD-YYYY', onChange: this.startDateChange.bind(this) })
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'content-block tracker-option-block' },
+					_react2.default.createElement(
+						'label',
+						{ className: 'block-label' },
+						'Select A Time Period:'
+					),
+					_react2.default.createElement(
+						'select',
+						{ className: 'tracker-option-input', onChange: this.timePeriodChange.bind(this) },
+						_react2.default.createElement(
+							'option',
+							{ value: '1' },
+							'Day'
+						),
+						_react2.default.createElement(
+							'option',
+							{ value: '7' },
+							'Week'
+						),
+						_react2.default.createElement(
+							'option',
+							{ value: '30' },
+							'Month'
+						)
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'content-block tracker-option-block' },
+					_react2.default.createElement(
+						'label',
+						{ className: 'block-label' },
+						'OR - Select An End Date:'
+					),
+					_react2.default.createElement(_reactDatetime2.default, { renderInput: this.renderDateInput, onChange: this.endDateChange.bind(this) })
+				)
+			);
+		}
+
+		/**
+  	startDateChange() and endDateChange() functions are both called when their respective <Datetime /> is updated. Set the start-or-end date and chosenDate in options then call syncDates functions to sync up the other(start-or-end) date based on the newly updated date and user selected timePeriod value 
+  **/
+
+	}, {
+		key: 'startDateChange',
+		value: function startDateChange(mDate) {
+			//receives moment date obj, ._d is js date
+			console.log("START DATE. p1 = ", p1);
+			console.log("p2 = ", p2);
+			this.props.options.chosenDate = 'start';
+			this.props.options.startDate = mDate._d;
+
+			this.syncDates();
+		}
+	}, {
+		key: 'endDateChange',
+		value: function endDateChange(mDate) {
+			console.log("ennd DATE. p1 = ", p1);
+			console.log("p2 = ", p2);
+			this.props.optons.choseDate = 'end';
+			this.props.options.endDate = mDate._d;
+
+			this.syncDates();
+		}
+	}, {
+		key: 'timePeriodChange',
+		value: function timePeriodChange(e) {
+			console.log("SELECTED VALUE: ", e.target.options[e.target.selectedIndex].value);
+			this.props.options.timePeriod = e.target.options[e.target.selectedIndex].value;
+			console.log('Time Period Select Change. select:', e.target);
+			console.log('time period select value = ', e.target.value);
+		}
+
+		/**
+  	 - called whenever startDate, endDate, or timePeriod are updated
+  	 - keeps startDate and endDate synced, based on timePeriod, when user updates one or the other
+  	 - calls updateOptions callback when done to update and rerender components
+  	 
+  	looks at chosenDate['start' or 'end'] - to find out which date value the user is updating, then looks at timePeriod[1,7 or 30] to set the other date by either adding options.timePeriod days(if startDate was set) or subTracting days(if endDate was set by user)
+  **/
+
+	}, {
+		key: 'syncDates',
+		value: function syncDates() {
+			if (this.props.options.chosenDate == 'start') {
+				//user is setting startDate manually
+				//add timePeriod days to find endDate and set it
+				this.props.options.endDate.setDate(this.props.options.startDate.getDate() + this.props.options.timePeriod);
+				//TODO: update endDate component to match new date
+			} else {
+				//user is setting endDate, do the same as above but backwards
+
+				this.props.options.startDate.setDate(this.props.options.endDate.getDate() - this.props.options.timePeriod);
+				//TODO: update actual startDate component to match new date
+			}
+		}
+
+		//custom render function for <Datetime /> component, just chop off the time part because it's unnecessary here
+
+	}, {
+		key: 'renderDateInput',
+		value: function renderDateInput(props, openCalendar) {
+
+			function clear() {
+				props.onChange({ target: { value: '' } });
+			}
+
+			props.value = props.value.split(' ')[0];
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement('input', props)
+			);
+		}
+	}]);
+
+	return TrackerOptions;
+}(_react2.default.Component);
+
+exports.default = TrackerShow;
+
+//TrackerShow will handle the tracker data and ajax, as well as switches between day/week/month display modes. DayTracker, MonthTracker, and WeekTracker components will be children of TrackerShow that get rendered depending on the route. in turn, each specific Tracker will be a grid/table of elements such as WeekTracker will have 7 WeekTrackerDay elements. DayTracker will just display its day since it only has one thing to show.
+
+//*** look into css grid more for a possibly easy way to display the grid of tracker components for each day ***\\
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(3);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var days = new Map();
+days.set(0, 'Sunday');
+days.set(1, 'Monday');
+days.set(2, 'Tuesday');
+days.set(3, 'Wednesday');
+days.set(4, 'Thursday');
+days.set(5, 'Friday');
+days.set(6, 'Saturday');
+function TrackerDay(props) {
+	/** PROPS:
+ 	- date(only day/month/year matter)
+ 	- meals(should ONLY receive meals who's date matches this comp's date, parent component should handle logic to make sure it only passes on relevant meals)
+ 	- modifier(string, e.g('selected'), might be used to change color/border or something)
+ 	-STYLES: [maybe just have a class prefix for this(e.g day/week/month), then for each component type render it with e.g: className={'tracker-meal-name-' + props.styleType}]
+ 		font-size
+ 		?margins/padding
+ 		
+ function renderMeal(meal) {
+ 			console.log('\n\n\n\n\n\nTrackerDay Props:', props)
+ 	console.log("RENDER MEAL> MEAL:", meal);
+ 	return (
+ 		<div className={'block-detail tracker-meal tracker-meal-' + props.styleType}>
+ 			{meal.name} - {meal.date}
+ 		</div>
+ 	)
+ }
+ 
+ 
+ 
+ 
+ 
+ {
+ 				(meal.hasOwnProperty('date')) 
+ 				?
+ 					((meal.date.getMonth() + 1) + '/' + (meal.date.toDateString().split(' ')[2]) + '/' + meal.date.getFullYear())
+ 				:
+ 					'N/A'
+ 			}
+ 			
+ 
+ **/
+
+	return _react2.default.createElement(
+		'div',
+		{ className: 'content-block tracker-day tracker-day-' + props.styleType },
+		_react2.default.createElement(
+			'h4',
+			null,
+			days.get(props.date.getDay())
+		),
+		_react2.default.createElement(
+			'div',
+			{ className: 'tracker-day-date-week' },
+			props.date.getMonth() + 1 + '/' + props.date.toDateString().split(' ')[2] + '/' + props.date.getFullYear()
+		),
+		_react2.default.createElement(
+			'div',
+			{ className: 'tracker-meal-container tracker-meal-container-' + props.styleType },
+			props.meals.map(function (meal) {
+				console.log("mapping meal:", meal);
+				return _react2.default.createElement(
+					'div',
+					{ key: meal._id, className: 'block-detail detail-row tracker-meal tracker-meal-' + props.styleType },
+					_react2.default.createElement(
+						'span',
+						{ className: 'tracker-meal-mealname' },
+						meal.name
+					),
+					_react2.default.createElement(
+						'span',
+						{ className: 'tracker-meal-date right faded' },
+						meal.hasOwnProperty('date') ? Number(meal.date.toTimeString().split(':')[0]) + ':' + meal.date.toTimeString().split(':')[1] : '4:20'
+					)
+				);
+			})
+		)
+	);
+}
+
+exports.default = TrackerDay;
 
 /***/ })
 /******/ ]);

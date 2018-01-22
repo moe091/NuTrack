@@ -147,6 +147,14 @@
 		max-width: 30%;
 		margin: 1.5%;
 	}
+	.detail-row {
+		font-size: 10px;
+		width: 100%;
+		padding: 0 8px;
+		line-height: 1.4em;
+		height: 1.5em;
+		text-align: left;
+	}
 	
 	
 	.block-space {
@@ -231,6 +239,17 @@
 	height: 100px;
 }
 
+
+.right {
+	float: right;
+}
+
+.faded {
+	color: #d0dddf;
+}
+.white {
+	color: #fff;
+}
 
 
 

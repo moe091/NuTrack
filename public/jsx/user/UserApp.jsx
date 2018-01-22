@@ -34,7 +34,10 @@ class UserApp extends React.Component {
 								newMealHandler={this.newMealHandler.bind(this)} 
 								checkedItems={this.state.checkedItems} 
 								showMealHandler={this.showMealHandler.bind(this)} 
-								plusEnabled={(this.state.checkedItems.length > 0)} trackerAddHandler={this.trackerAddHandler.bind(this)} plannerAddHandler={this.plannerAddHandler.bind(this)} 
+								plusEnabled={(this.state.checkedItems.length > 0)} 
+								trackerShowHandler={this.trackerShowHandler.bind(this)}
+								trackerAddHandler={this.trackerAddHandler.bind(this)} 
+								plannerAddHandler={this.plannerAddHandler.bind(this)} 
 							/>
 						</div>
 							
@@ -89,6 +92,9 @@ class UserApp extends React.Component {
 			});
 			this.props.history.push("../../user/tracker/add");
 		}
+	}
+	trackerShowHandler() {
+		this.props.history.push("../../user/tracker/show");
 	}
 
 	plannerAddHandler(e) {
