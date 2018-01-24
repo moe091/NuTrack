@@ -60,7 +60,6 @@ function TrackerDay(props) {
 			<div className={'tracker-meal-container tracker-meal-container-' + props.styleType}>
 				{
 					props.meals.map((meal) => {
-						console.log("mapping meal:", meal);
 						return (
 							<div key={meal._id} className={('block-detail detail-row tracker-meal tracker-meal-' + props.styleType)}>
 

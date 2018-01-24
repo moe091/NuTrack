@@ -967,8 +967,10 @@ td.rdtYear:hover {
       color: #00233E; }
   .content-block .nutrient-table {
     font-size: 0.8em;
-    color: #000;
+    color: #fff;
     margin-bottom: 0; }
+  .content-block label {
+    color: #fff; }
 
 .block-third {
   min-height: 150px;

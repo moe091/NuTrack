@@ -54965,23 +54965,25 @@ var TrackerShow = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (TrackerShow.__proto__ || Object.getPrototypeOf(TrackerShow)).call(this, props));
 
-		var ed = new Date();
-		var sd = new Date(ed.getDate() - 7);
-		var opts = {
+		var ed = new Date(); //set end date to current date
+		var sd = new Date(); //just creating a date object for start date
+		sd.setDate(ed.getDate() - 7); //set start date to end date - 7(one week ago)
+
+		var opts = { //willbe passed to TrackerOptions and updated by callback from TrackerOptions
 			chosenDate: 'end',
 			endDate: ed,
-			timePeriod: 7,
+			timePeriod: 6,
 			startDate: sd
 		};
 
 		_this.state = {
-			meals: [],
-			endDate: new Date(),
+			meals: [], //this is ALL of the users meals, not necessarily sorted
+			endDate: new Date(), //redundant, refactor to use options.endDate to keep things synced
 			term: 'week',
 			message: 'Your Tracker',
-			dates: [],
-			watchedNutrients: [203, 204, 205, 208, 269, 307],
-			sortedMeals: null,
+			dates: [], //will store all the dates that are to be displayed. e.g, will have length 7 if term = 'week', or 1 if term = 'day'
+			watchedNutrients: [203, 204, 205, 208, 269, 307], //default watchedNutrients. Will be updated in Ajax call if user has different watchedNuts set
+			sortedMeals: [], //will contain an organized list of meals for each date to be displayed. sortedMeals[i] = {date: Date, meals: []} sortedMeals[i].meals[j] = 
 
 			//options will be passed to TrackerOptions component. TrackerOptions will update the options appropriately on any change, then call TrackerShow.updateOptions(which will also be passed to TrackerOptions as prop). TrackerShow will copy the object and use it to setState triggering a re-render, keeping everything looking and working correctly. This way the options are all in one place and TrackerShow only needs one callback function to pass on to TrackerOptions - TrackerShow is already getting pretty bloated.
 			options: opts
@@ -55006,16 +55008,17 @@ var TrackerShow = function (_React$Component) {
 				return response.json();
 			}).then(function (res) {
 				res.endDate = new Date(res.endDate);
-				console.log('fetch. this=', _this2);
-				console.log("tracker/show response: ", res);
+
+				//create dates here, so it can be used to sate state.dates and also to set state.sortedMeals via this.createMealDates(dates, meals), dates needs to be defined before the call to setState so it can be used, or I'd have to call createDateArray again
+				var dates = _this2.createDateArray(res.endDate, 'week');
 				_this2.setState({
 					meals: res.tracker.meals,
 					endDate: res.endDate,
 					term: res.term,
 					message: res.message,
-					dates: _this2.createDateArray(res.endDate, 'week'),
+					dates: dates,
 					watchedNutrients: res.watchedNutrients,
-					sortedMeals: null //reset this when now info is retrieved, so that when createMealDates() is called it re-calculates the sortedMeals array
+					sortedMeals: _this2.createMealDates(dates, res.tracker.meals)
 				});
 			}).catch(function (err) {
 				return console.log("ERROR fetching show: ", err);
@@ -55024,14 +55027,16 @@ var TrackerShow = function (_React$Component) {
 	}, {
 		key: 'createDateArray',
 		value: function createDateArray(end, length) {
-			console.log('create date array, end:', end);
-			console.log('this:', this);
-			if (length == 'day') length = 1; //pointless. wait, actually not, now I can call createDateArray(end, term) instead of having to check if term='day' and only call this func if it's not == 'day'
-			if (length == 'week') length = 7;
+
+			//dates will include start date and end date - so: 'for (i is less than OR EQUAL TO length)' - so: length should be 1 shorter than the number of dates I want.
+			if (length == 'day') length = 0;
+			if (length == 'week') length = 6;
 			if (length == 'month') length = 30;
+			length = Number(length); //because the html <select> element sets a string instead of a number. TODO: convert this right away on prop update instead
+
 			var dates = [];
 
-			for (var i = 0; i < length; i++) {
+			for (var i = 0; i <= length; i++) {
 				var d = new Date();
 				d.setDate(end.getDate() - i);
 
@@ -55041,61 +55046,60 @@ var TrackerShow = function (_React$Component) {
 		}
 	}, {
 		key: 'createMealDates',
-		value: function createMealDates() {
-			var _this3 = this;
+		value: function createMealDates(dates, allMeals) {
 
-			if (this.state.sortedMeals == null) {
+			var sortedMeals = dates.map(function (date, index) {
+				var meals = [];
 
-				var sortedMeals = this.state.dates.map(function (date, index) {
-					var meals = [];
-					console.log("\n\n\n\n\n\nChecking against date:", date);
+				for (var i = 0; i < allMeals.length; i++) {
 
-					for (var i = 0; i < _this3.state.meals.length; i++) {
-						console.log("meal: ", _this3.state.meals[i]);
+					if (allMeals[i].hasOwnProperty('meal')) {
 
-						if (_this3.state.meals[i].hasOwnProperty('meal')) {
+						if (typeof allMeals[i].meal.date == 'string') {
+							allMeals[i].meal.date = new Date(allMeals[i].meal.date);
+						}
 
-							if (typeof _this3.state.meals[i].meal.date == 'string') {
-								console.log("date was string, newdate:", _this3.state.meals[i].meal.date.toDateString);
-								_this3.state.meals[i].meal.date = new Date(_this3.state.meals[i].meal.date);
-							}
-
-							if (date.toDateString() == _this3.state.meals[i].meal.date.toDateString()) {
-								meals.push(_this3.state.meals[i].meal);
-							}
+						if (date.toDateString() == allMeals[i].meal.date.toDateString()) {
+							meals.push(allMeals[i].meal);
 						}
 					}
+				}
 
-					console.log("premeals:", meals);
-					meals.sort(function (a, b) {
-						return a.date - b.date;
-					});
-					var mealsForDay = { meals: meals, date: date, key: index };
-					console.log("returning mealsForDay: ", mealsForDay);
-					return mealsForDay;
+				meals.sort(function (a, b) {
+					return a.date - b.date;
 				});
+				var mealsForDay = { meals: meals, date: date, key: index };
+				return mealsForDay;
+			});
 
-				console.log("sortedMeals = ", sortedMeals);
-				return sortedMeals;
-			} else {
-				return this.state.sortedMeals;
-			}
+			return sortedMeals;
 		}
 	}, {
 		key: 'renderDay',
 		value: function renderDay(mealsForDay) {
-			console.log("renderDay():", mealsForDay);
 			return _react2.default.createElement(_TrackerDay2.default, { meals: mealsForDay.meals, date: mealsForDay.date, styleType: 'week', key: mealsForDay.key });
 		}
 	}, {
 		key: 'optionUpdateHandler',
 		value: function optionUpdateHandler(options) {
-			console.log("UPDATE OPTIONS:", options);
+			//create a new object that is a copy of options
+			console.log('optionUpdate: oldOpts:', this.state.options);
+			var newOpts = Object.assign({}, options);
+
+			var dates = this.createDateArray(newOpts.endDate, newOpts.timePeriod);
+			//set state.options to the new options object to update values and trigger render
+			this.setState({
+				options: newOpts,
+				dates: dates,
+				sortedMeals: this.createMealDates(dates, this.state.meals)
+			});
+
+			console.log('newOpts:', newOpts);
 		}
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this4 = this;
+			var _this3 = this;
 
 			return _react2.default.createElement(
 				'div',
@@ -55114,8 +55118,8 @@ var TrackerShow = function (_React$Component) {
 						),
 						this.createNutrientTable()
 					),
-					this.createMealDates().map(function (mealsForDay) {
-						return _this4.renderDay(mealsForDay);
+					this.state.sortedMeals.map(function (mealsForDay) {
+						return _this3.renderDay(mealsForDay);
 					})
 				)
 			);
@@ -55127,32 +55131,30 @@ var TrackerShow = function (_React$Component) {
 				return { id: wn, total: 0 };
 			});
 
-			var sorted = this.createMealDates();
-			console.log("\n\n\n\n\n\n\n\n\n\n\ntotals:", totals);
-			console.log('sorted:', sorted);
+			var sorted = this.state.sortedMeals;
 			for (var n in totals) {
 				//for every item in totals, go through each nutrientTotal, for each meal, on each date. If the id's match then add the meals nutrientTotal to the element of total with matching id
 
 				for (var i in sorted) {
 					for (var j in sorted[i].meals) {
 						for (var k in sorted[i].meals[j].nutrientTotals) {
-							console.log('checking ' + sorted[i].meals[j].nutrientTotals[k].id + ' against ' + totals[n].id);
 							if (sorted[i].meals[j].nutrientTotals[k].id == totals[n].id) {
+
+								//add total from current meals nutrientTotals[] to totals[]
 								totals[n].total += Number(sorted[i].meals[j].nutrientTotals[k].total);
+
+								//if totals[n] doesn't have a property called 'name', the other props(name, abbr, and unit) haven't been copied over yet, so do that. This only needs to be done once, that's why this check is here. total is the only value that is updated every time.
 								if (!totals[n].hasOwnProperty('name')) {
 									totals[n].name = sorted[i].meals[j].nutrientTotals[k].name;
 									totals[n].abbr = sorted[i].meals[j].nutrientTotals[k].abbr;
 									totals[n].unit = sorted[i].meals[j].nutrientTotals[k].unit;
 								}
+							} //if sorted.meals.nutrientTotaks.id = totals.id
+						} // for k in sorted.meals.nutrienttotals
+					} // for j in sorted.meals
+				} //for i in sorted
+			} //for n in totals
 
-								console.log("added new val, newTotal: " + sorted[n].total);
-							}
-						}
-					}
-				}
-			}
-
-			console.log('totals: ', totals);
 			return _react2.default.createElement(_NutrientTable2.default, { nutrients: totals });
 		}
 	}]);
@@ -55194,6 +55196,7 @@ var TrackerOptions = function (_React$Component2) {
 	}, {
 		key: 'render',
 		value: function render() {
+			console.log('rendering options. this:', this);
 			return _react2.default.createElement(
 				'div',
 				{ className: 'tracker-props content-section tracker-options-section' },
@@ -55205,7 +55208,7 @@ var TrackerOptions = function (_React$Component2) {
 						{ className: 'block-label' },
 						'Select A Start Date:'
 					),
-					_react2.default.createElement(_reactDatetime2.default, { renderInput: this.renderDateInput, dateFormat: 'MM-DD-YYYY', onChange: this.startDateChange.bind(this) })
+					_react2.default.createElement(_reactDatetime2.default, { value: this.props.options.startDate, renderInput: this.renderDateInput, dateFormat: 'MM-DD-YYYY', onChange: this.startDateChange.bind(this) })
 				),
 				_react2.default.createElement(
 					'div',
@@ -55217,15 +55220,15 @@ var TrackerOptions = function (_React$Component2) {
 					),
 					_react2.default.createElement(
 						'select',
-						{ className: 'tracker-option-input', onChange: this.timePeriodChange.bind(this) },
+						{ defaultValue: '6', className: 'tracker-option-input', onChange: this.timePeriodChange.bind(this) },
 						_react2.default.createElement(
 							'option',
-							{ value: '1' },
+							{ value: '0' },
 							'Day'
 						),
 						_react2.default.createElement(
 							'option',
-							{ value: '7' },
+							{ value: '6' },
 							'Week'
 						),
 						_react2.default.createElement(
@@ -55243,7 +55246,7 @@ var TrackerOptions = function (_React$Component2) {
 						{ className: 'block-label' },
 						'OR - Select An End Date:'
 					),
-					_react2.default.createElement(_reactDatetime2.default, { renderInput: this.renderDateInput, onChange: this.endDateChange.bind(this) })
+					_react2.default.createElement(_reactDatetime2.default, { value: this.props.options.endDate, renderInput: this.renderDateInput, onChange: this.endDateChange.bind(this) })
 				)
 			);
 		}
@@ -55256,8 +55259,6 @@ var TrackerOptions = function (_React$Component2) {
 		key: 'startDateChange',
 		value: function startDateChange(mDate) {
 			//receives moment date obj, ._d is js date
-			console.log("START DATE. p1 = ", p1);
-			console.log("p2 = ", p2);
 			this.props.options.chosenDate = 'start';
 			this.props.options.startDate = mDate._d;
 
@@ -55266,9 +55267,7 @@ var TrackerOptions = function (_React$Component2) {
 	}, {
 		key: 'endDateChange',
 		value: function endDateChange(mDate) {
-			console.log("ennd DATE. p1 = ", p1);
-			console.log("p2 = ", p2);
-			this.props.optons.choseDate = 'end';
+			this.props.options.chosenDate = 'end';
 			this.props.options.endDate = mDate._d;
 
 			this.syncDates();
@@ -55278,8 +55277,6 @@ var TrackerOptions = function (_React$Component2) {
 		value: function timePeriodChange(e) {
 			console.log("SELECTED VALUE: ", e.target.options[e.target.selectedIndex].value);
 			this.props.options.timePeriod = e.target.options[e.target.selectedIndex].value;
-			console.log('Time Period Select Change. select:', e.target);
-			console.log('time period select value = ', e.target.value);
 		}
 
 		/**
@@ -55293,17 +55290,23 @@ var TrackerOptions = function (_React$Component2) {
 	}, {
 		key: 'syncDates',
 		value: function syncDates() {
+			this.props.options.timePeriod = Number(this.props.options.timePeriod);
 			if (this.props.options.chosenDate == 'start') {
 				//user is setting startDate manually
 				//add timePeriod days to find endDate and set it
-				this.props.options.endDate.setDate(this.props.options.startDate.getDate() + this.props.options.timePeriod);
+				this.props.options.endDate = new Date(this.props.options.startDate);
+				this.props.options.endDate.setDate(this.props.options.endDate.getDate() + this.props.options.timePeriod);
 				//TODO: update endDate component to match new date
 			} else {
 				//user is setting endDate, do the same as above but backwards
 
-				this.props.options.startDate.setDate(this.props.options.endDate.getDate() - this.props.options.timePeriod);
+				this.props.options.startDate = new Date(this.props.options.endDate);
+				this.props.options.startDate.setDate(this.props.options.startDate.getDate() - this.props.options.timePeriod);
 				//TODO: update actual startDate component to match new date
 			}
+			console.log('sync dates. start: ', this.props.options.startDate.toString());
+			console.log('sync dates. end: ', this.props.options.endDate.toString());
+			this.props.optionUpdateHandler(this.props.options);
 		}
 
 		//custom render function for <Datetime /> component, just chop off the time part because it's unnecessary here
@@ -55414,7 +55417,6 @@ function TrackerDay(props) {
 			'div',
 			{ className: 'tracker-meal-container tracker-meal-container-' + props.styleType },
 			props.meals.map(function (meal) {
-				console.log("mapping meal:", meal);
 				return _react2.default.createElement(
 					'div',
 					{ key: meal._id, className: 'block-detail detail-row tracker-meal tracker-meal-' + props.styleType },
