@@ -75,6 +75,6 @@ app.use(function(err, req, res, next) {
 console.log(process.env.PORT);
 console.log("PORT");
 
-app.listen(3001);
+app.listen(process.env.PORT);
 console.log('port: ', process.env);
 module.exports = app;
