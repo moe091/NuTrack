@@ -20,7 +20,9 @@ let app = express();
 
 //setup mongoose/db
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/locallibrary');
+//mongoose.connect('mongodb://localhost/locallibrary');
+mongoose.connect('mongodb://moe091:10Mojo17@ds149049.mlab.com:49049/nutrack');
+
 var db = mongoose.connection;
 
 // view engine setup
