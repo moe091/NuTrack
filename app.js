@@ -8,6 +8,7 @@ var lessMiddleware = require('less-middleware');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
+var http = require('http');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -72,9 +73,42 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-console.log(process.env.PORT);
-console.log("PORT");
 
-app.listen(process.env.PORT);
-console.log('port: ', process.env);
+var port = (process.env.PORT ? process.env.PORT : 3001);
+console.log('process.env.PORT = ' + process.env.PORT);
+
+var server = app.listen(port, function() {
+  var s = http.createServer(app);
+	console.log("listening on: " + port);
+	console.log('server = ', s);
+  return s.listen.apply(s);
+});
+
+console.log("END");
+
+
+
+
+
+
+
+
 module.exports = app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
