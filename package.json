@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node app",
     "scss": "node-sass --watch public/scss -o public/stylesheets",
     "build": "webpack",
     "test": "mocha --compilers js:babel-core/register --require babel-polyfill --require ./test/.setup.js \"test/**/*_test@(.js|.jsx)\""
