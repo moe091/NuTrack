@@ -78,6 +78,10 @@ nav {
     color: #E2CAC5; }
   .sidebar .sidebar-link .icon-disabled {
     color: #4A4E69; }
+  .sidebar .sidebar-faded {
+    color: #5E637D; }
+  .sidebar .sidebar-mid {
+    color: #9A8C98; }
 
 .sidebar-segment {
   width: 100%;
@@ -457,8 +461,9 @@ nav {
   min-height: 60%; }
 
 .tracker-main-nutrient-total {
-  width: 90%;
-  display: inline-block;
+  width: 100%;
+  display: block;
+  text-align: center;
   padding: 2%;
   color: #fff; }
   .tracker-main-nutrient-total nutrient-table-item-total {
@@ -483,12 +488,27 @@ nav {
   .tracker-day h4 {
     color: #fff; }
 
+.tracker-day-month {
+  width: 12%;
+  margin: 12px 1%;
+  margin-top: 6px !important;
+  min-height: 200px !important;
+  max-height: 200px !important;
+  font-size: 0.8em !important; }
+
 .tracker-day-week {
   width: 12%;
   margin: 12px 1%;
   margin-top: 6px !important;
-  min-height: 75%;
+  min-height: 200px !important;
+  max-height: 250px !important;
   font-size: 0.8em !important; }
+
+.tracker-day-day {
+  width: 25%;
+  min-height: 360px;
+  font-size: 1em !important;
+  margin: 12px 1%; }
 
 .tracker-day-date-week {
   width: 100%;
@@ -506,6 +526,9 @@ nav {
   max-height: 3.2em !important;
   padding: 0 2px !important;
   margin: 2px 0 !important; }
+
+.tracker-meal-day {
+  font-size: 16px !important; }
 
 .tracker-meal-mealname {
   width: 68%; }
@@ -852,7 +875,7 @@ td.rdtYear:hover {
   -webkit-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14);
   -moz-box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14);
   box-shadow: 2px 2px 13px 2px rgba(0, 0, 0, 0.14); }
-  .content-section h1 {
+  .content-section h1, .content-section h4 {
     color: #f2f2f2; }
 
 .section-header {
@@ -981,6 +1004,8 @@ td.rdtYear:hover {
   background-color: transparent; }
   .block-third .nutrient-table {
     font-size: 0.6em; }
+  .block-third .block-header {
+    overflow: hidden; }
 
 .detail-label {
   font-size: 10px;
@@ -1011,6 +1036,12 @@ td.rdtYear:hover {
 
 .white {
   color: #fff; }
+
+.wrapper-dark {
+  background-color: rgba(33, 33, 33, 0.5);
+  padding: 4px;
+  border-radius: 4px;
+  margin-bottom: 12px; }
 
 html, body {
   min-height: 100%;
@@ -1044,6 +1075,12 @@ html, body {
 
 .right {
   float: right; }
+
+.pointer-cursor {
+  cursor: pointer; }
+
+.almost-white {
+  color: #f2f2f2; }
 
 /**
 .rdt {

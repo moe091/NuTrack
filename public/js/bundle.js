@@ -1230,6 +1230,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+	Dynamic SideBar that will be present throughout the whole User area of the app. 
+	Used to access Tracker, Planner, Meals, Search, etc pages as well as dynamically add items to meals, planner, and tracker based on the currently displayed component and its state
+	
+	TODO: 
+		-Redesign Layout: put a container inside SideBar taking up the entire space. Each row will be a bootstrap row, with full length links being a col-9 with an empty col-3 to the right and links with a right-link/icon-link being a col-9 for the main link + a col-3 for the little icon/side button. the col-3's will be a slightly darker color than the col-9s and the col-9s will probably have a box-shadow on the right to give a 3d effect. 
+		-Make Sidebar collapse, in its collapsed state it will only be the width of the icon-sized buttons. Each link will be replaced by an Icon(Tracker, Planner, Meal, Search) with an icon at the top to expand it. Add to meal/tracker/planner and create meal buttons won't be present on collapsed sidebar.
+		-The top nav should be responsible for account-related navigation such as user profile/settings, logging in and out, and navigating between userApp area and homepage
+**/
 var SideBar = function (_React$Component) {
 	_inherits(SideBar, _React$Component);
 
@@ -1246,6 +1255,11 @@ var SideBar = function (_React$Component) {
 				'div',
 				{ className: 'sidebar' },
 				_react2.default.createElement('div', { className: 'sidebar-spacer' }),
+				_react2.default.createElement(
+					'div',
+					{ className: "sidebar-label text-center " + (this.props.checkedItems.length > 0 ? "sidebar-mid" : "sidebar-faded") },
+					this.props.checkedItems.length + " items selected"
+				),
 				_react2.default.createElement(
 					'div',
 					{ className: 'sidebar-rowGroup' },
@@ -34843,6 +34857,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+	
+	TODO: in sidebar, render each checkedItem in a row(2 items per row) in a slightly lighter colored div and with a remove/X button to remove from selected items. So user can remove selected items at any point and so user feels the checkedItems persisting throughout the app, not just on the search page.
+**/
 var UserApp = function (_React$Component) {
 	_inherits(UserApp, _React$Component);
 
@@ -34856,6 +34874,7 @@ var UserApp = function (_React$Component) {
 			checkedItems: [],
 			selectedMeal: null
 		};
+		_this.isMealSelected = false;
 		return _this;
 	}
 
@@ -34888,7 +34907,7 @@ var UserApp = function (_React$Component) {
 								showMealHandler: this.showMealHandler.bind(this),
 								plusEnabled: this.state.checkedItems.length > 0,
 								trackerShowHandler: this.trackerShowHandler.bind(this),
-								trackerAddHandler: this.trackerAddHandler.bind(this),
+								trackerAddHandler: this.trackerAddItemsHandler.bind(this),
 								plannerAddHandler: this.plannerAddHandler.bind(this)
 							})
 						),
@@ -34912,7 +34931,8 @@ var UserApp = function (_React$Component) {
 									history: _this2.props.history,
 									checkedItems: _this2.state.checkedItems,
 									trackerAddHandler: _this2.trackerAddHandler.bind(_this2),
-									meal: _this2.state.selectedMeal
+									meal: _this2.state.selectedMeal,
+									isMealSelected: _this2.isMealSelected
 								});
 							}
 						})
@@ -34920,12 +34940,36 @@ var UserApp = function (_React$Component) {
 				)
 			);
 		}
+
+		/**
+  	Tracker Add Handler - For SideBar/when items from search are selected(instead of an already created meal).
+  	
+  	Since a specific meal isn't selected, user must create a meal out of the given items in order to add them to tracker. Set this.isMealSelected to false, so that isMealSelected can be passed on to the Tracker > TrackerAdd components, and TrackerAdd knows to display the MealBuilder component to build a new meal before allowing the user to add to tracker, instead of just adding the currently selected meal
+  **/
+
+	}, {
+		key: 'trackerAddItemsHandler',
+		value: function trackerAddItemsHandler() {
+			this.isMealSelected = false;
+			console.log('meal selected false callback. this=', this);
+			if (this.state.checkedItems.length > 0) {
+				this.props.history.push("../../user/tracker/add");
+			} else {
+				console.warn("trackerAddItemsHandler (SideBar's TrackerAdd callback) was called when checkedItems was empty!. this=", this);
+			}
+		}
+
+		/**
+  	Tracker Add Handler - For ShowMeal or ShowMeals component, when a specific meal is selected and being added.
+  **/
+
 	}, {
 		key: 'trackerAddHandler',
 		value: function trackerAddHandler(meal) {
 			console.log("TRACKER ADD: ", this.state.checkedItems);
 			console.log("meal", meal);
 			if (meal != null) {
+				this.isMealSelected = true;
 				this.setState({
 					selectedMeal: meal
 				});
@@ -35224,6 +35268,24 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+	TODO: 
+		- change nutrientMap to this.nutrientMap to pull it off global scope
+		- refactor component to make it more modular/reusable, specifically so that it can be used in the TrackerAdd component.
+		
+		- refactor render func slighty, instead of calling renderItems on the state.items array, use .map on the state.items array and the call renderItem on each item(will have to refactor renderItems array into renderItem array as well)
+		- make a builderItem component(probably a stateless functional comp) to represent each item, instead of manually rendering each one inside of this component, that should clean things up a lot
+		
+		
+	MealBuilder:
+		:: Recieves an array of Numbers(ndbno's) - this.props.checkedItems
+		:: Makes an Ajax call upon mounting, passing the checkedItems array to the user/item/list route to recieve an array of food item objects containing the full details and nutrients of each item whose ndbno was in checkedItems array
+		:: Renders a builder element for each item in the state.items array received from the ajax call above. Builder elements have a slider to select the number of servings for that item. Each slider has an onInput callback that is created by the createAmountUpdate function
+		:: Each item also has it's own nutrientTable that displays the total nutrients for the amount of servings selected by the slider/range input, table updates automatically. The nutrientTotals that are passed to <NutrientTable> are calculated by createNutrientDisplayObj(nutrientObj), to create a nutrientTotals object for a single item pass that item as a parameter to the createNutrientDisplayObj function
+		:: There is also a large NutrientTable at the top that displays the total nutrient values for all items and their serving amounts. To calculate the nutrientTotals to pass into the <NutrientTable> for all objects, call createNutrientDisplayObj() and pass null in - this causes the function to calculate total for every item in this.state.nutrients
+			TODO: change createNutrientDisplayObj to accept an array, pass in an array of 1 item to calculate totals for just that item, pass in the full this.state.items array to calculate the total across all objects. This will just make things clearer and simpler
+
+**/
 var MealBuilder = function (_React$Component) {
 	_inherits(MealBuilder, _React$Component);
 
@@ -35263,8 +35325,12 @@ var MealBuilder = function (_React$Component) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			//pass props.items(array of Numbers containing ndbno's) to user/item/list route via ajax, recieve watchedNutrients and full nutrient objects for each ndb, and then calls setState to update this.state.watched and this.state.nutrients
 			this.getItemInfos();
 		}
+
+		//Ajax function, pass in the list of ndbs and receive 'nutrients': an array containing full nutrient info for each item from the list of ndbs passed on. also receive 'watched', a Number array containing the nutrient_id of the current users watched_nutrients
+
 	}, {
 		key: 'getItemInfos',
 		value: function getItemInfos() {
@@ -35301,6 +35367,15 @@ var MealBuilder = function (_React$Component) {
 				console.log("catch error:", err);
 			});
 		}
+
+		/**
+  	recieves: 
+  		nut - a single nutrient object containing full nutrient info of a single food item
+  		nutVals - an object, containing a property called e.g 'nut_205' for nutrient_id=205, for each watchedNutrient of the current user. each prop is set to 0 by default
+  	
+  	:: Updates the properties of nutVals object - for each property matching a nutrient_id of the item passed in to the nut parameter it adds the value for that nutrient in the nut object times the number of servings(nut.amount). By the end nutVals should be an object containing a property for each watchedNutrient of the current user that is equal to the total for the item the nutVal represents(total is amount of specified nutrient per serving & # of servings)
+  **/
+
 	}, {
 		key: 'addNutrientVals',
 		value: function addNutrientVals(nut, nutVals) {
@@ -35376,7 +35451,7 @@ var MealBuilder = function (_React$Component) {
 			return watchedNuts;
 		}
 
-		//updates when mealName text input is changed
+		//updates when mealName text input is changed. sets mealName which will be used as the name of the meal when it is actually created
 
 	}, {
 		key: 'changeName',
@@ -35385,6 +35460,9 @@ var MealBuilder = function (_React$Component) {
 				mealName: e.target.value
 			});
 		}
+
+		//callback for createMeal button - should be clicked when user is done setting values and naming meal and wants to create it. calls the createMealHandler passed down from NewMeal. calls /user/meals/create route via POST and passes in a mealObj containing the items, name of meal, and pre-calculated nutrientTotals(for nutrientTables). then calls NewMeals showMealHandler to redirect to the ShowMeal component
+
 	}, {
 		key: 'createMealClick',
 		value: function createMealClick(e) {
@@ -35447,12 +35525,15 @@ var MealBuilder = function (_React$Component) {
 							item.report.food.nutrients.length > 0 ? item.report.food.nutrients[0].measures[0].qty + ' ' + item.report.food.nutrients[0].measures[0].label : '',
 							')'
 						),
-						_react2.default.createElement(_RangeSlider2.default, { minRange: '0', maxRange: '5', defaultVal: '1', sliderInput: _this5.createAmountUpdate(item), sliderStep: '0.25', wrapperClass: 'newMeal-item-amount' }),
+						_react2.default.createElement(_RangeSlider2.default, { minRange: '0', maxRange: '5', defaultVal: item.amount, sliderInput: _this5.createAmountUpdate(item), sliderStep: '0.25', wrapperClass: 'newMeal-item-amount' }),
 						_react2.default.createElement(_NutrientTable2.default, { nutrients: _this5.createNutrientDisplayObj(item) })
 					);
 				})
 			);
 		}
+
+		//creates a function to be used as the onInput callback for each meals serving amount slider. Takes the item corresponding to the slider as a parameter and returns a function that changes the .amount prop of that item and updates state
+
 	}, {
 		key: 'createAmountUpdate',
 		value: function createAmountUpdate(item) {
@@ -35515,7 +35596,7 @@ function RangeSlider(props) {
 	return _react2.default.createElement(
 		'div',
 		{ className: props.wrapperClass },
-		_react2.default.createElement('input', { type: 'range', min: props.minRange, max: props.maxRange, className: 'slider-comp', onInput: props.sliderInput, step: props.sliderStep })
+		_react2.default.createElement('input', { type: 'range', min: props.minRange, max: props.maxRange, className: 'slider-comp', onInput: props.sliderInput, step: props.sliderStep, defaultValue: props.defaultVal })
 	);
 }
 
@@ -35711,13 +35792,13 @@ var ShowMeal = function (_React$Component) {
 						{ className: 'link-span right' },
 						_react2.default.createElement(
 							'a',
-							{ href: '#', onClick: this.props.trackerAdd(meal) },
+							{ onClick: this.props.trackerAdd(meal), className: 'pointer-cursor' },
 							_react2.default.createElement('i', { className: 'fa fa-calendar-plus-o', 'aria-hidden': 'true' }),
 							' Tracker'
 						),
 						_react2.default.createElement(
 							'a',
-							{ href: '#', onClick: this.props.trackerAdd(meal) },
+							{ onClick: this.props.trackerAdd(meal), className: 'pointer-cursor' },
 							_react2.default.createElement('i', { className: 'fa fa-plus-square', 'aria-hidden': 'true' }),
 							' Planner'
 						)
@@ -35847,7 +35928,9 @@ var Tracker = function (_React$Component) {
 						return _react2.default.createElement(_TrackerAdd2.default, {
 							meal: _this2.props.meal,
 							trackerAddHandler: _this2.props.trackerAddHandler,
-							trackMealHandler: _this2.trackMealHandler.bind(_this2)
+							trackMealHandler: _this2.trackMealHandler.bind(_this2),
+							isMealSelected: _this2.props.isMealSelected,
+							checkedItems: _this2.props.checkedItems
 						});
 					}
 				}),
@@ -35919,6 +36002,10 @@ var _reactDatetime = __webpack_require__(214);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
+var _MealBuilder = __webpack_require__(85);
+
+var _MealBuilder2 = _interopRequireDefault(_MealBuilder);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35942,7 +36029,30 @@ var TrackerAdd = function (_React$Component) {
 		return _this;
 	}
 
+	/**
+ 	Render <MealBuilder> if needed.
+ 		- is needed when props.isMealSelected is false, this means that no meal is selected and a new one needs to be created using props.checkedItems. If checkedItems is also empty, display a message saying you need to select a meal or some items to add to tracker
+ 		- if mealbuilder isn't needed, return null, won't effect output html
+ **/
+
+
 	_createClass(TrackerAdd, [{
+		key: 'renderBuilderIfNeeded',
+		value: function renderBuilderIfNeeded() {
+			if (this.props.isMealSelected) {
+				return null;
+			} else {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'wrapper-dark' },
+					_react2.default.createElement(_MealBuilder2.default, { checkedItems: this.props.checkedItems, createMealHandler: this.createMealHandler.bind(this) })
+				);
+			}
+		}
+
+		//TODO: throw in a ternary, if this.props.isMealSelected == false then render a mealBuilder component, and change onClick of 'Add To Tracker' button to a callback that creates a new meal and then calls the regular trackMeal callback with the newly created meal
+
+	}, {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
@@ -35951,19 +36061,19 @@ var TrackerAdd = function (_React$Component) {
 				_react2.default.createElement(
 					'div',
 					{ className: 'content-section w-50 m-1 p-4 header-bg' },
-					'Add Meal to Tracker: ',
-					this.props.meal.name
+					this.props.meal == null ? "Create Meal Below Before Tracking" : "Add Meal To Tracker: " + this.props.meal.name
 				),
 				_react2.default.createElement(
 					'div',
-					{ className: 'content-section w-50 h-50 p-4' },
+					{ className: 'content-section w-50 p-4' },
 					_react2.default.createElement(
 						'label',
-						{ className: 'block-label' },
+						{ className: 'block-label almost-white' },
 						'Select Date And Time For Meal:'
 					),
-					_react2.default.createElement(_reactDatetime2.default, { onChange: this.dateChange.bind(this) }),
+					_react2.default.createElement(_reactDatetime2.default, { onChange: this.dateChange.bind(this), defaultValue: this.state.time }),
 					_react2.default.createElement('div', { className: 'block-space-100' }),
+					this.renderBuilderIfNeeded(),
 					_react2.default.createElement(
 						'button',
 						{ className: 'btn header-bg', onClick: this.trackMeal.bind(this) },
@@ -35973,6 +36083,12 @@ var TrackerAdd = function (_React$Component) {
 			);
 		}
 	}, {
+		key: 'createMealHandler',
+		value: function createMealHandler(p1, p2) {
+			console.log("create meal p1=", p1);
+			console.log('p2=', p2);
+		}
+	}, {
 		key: 'dateChange',
 		value: function dateChange(param) {
 			console.log("dateChange, param = ", param.toDate());
@@ -35980,12 +36096,27 @@ var TrackerAdd = function (_React$Component) {
 				date: param.toDate()
 			});
 		}
+
+		//calls the trackMealHandler function prop passed down from <Tracker> component and passes in this.state.date(set by the datetime picker rendered in this component) and this.props.meal(passed down from <UserApp> to <Tracker> to this <TrackerAdd> component, contains the selected meal from which the 'Add To Tracker' button was clicked)
+
 	}, {
 		key: 'trackMeal',
 		value: function trackMeal() {
 			console.log('this', this);
 			this.props.trackMealHandler(this.props.meal, this.state.date);
 		}
+
+		//TODO: complete this function
+		/**
+  	:: Used when isMealSelected is false
+  	
+  	- this function will be used to create a meal first and then call the above trackMeal function. Will use this.state.meal instead of this.props.meal,
+  	- this.state.meal will be set by the MealBuilderUpdateHandler function, which is a callback passed down to the mealBuilder component that is called whenever user changes something in the mealBuilder. the handler will update the state.meal object to represent a meal based on the current state of the mealBuilder, the object will be used to pass to the createMeal route of the backend API and then the response from that(a newly created meal object belonging to current user) will be used to call trackMeal-as would normally be done from the beginning if isMealSelected was true
+  **/
+
+	}, {
+		key: 'createMealAndTrack',
+		value: function createMealAndTrack() {}
 	}]);
 
 	return TrackerAdd;
@@ -54957,6 +55088,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+	Tracker Show displays a list of days in chronological order, each day is a <TrackerDay> component that displays the meals for that day in chronological order.
+	:User can select a time period (day/week/month/custom) and a startDate and/or endDate
+	:User can click buttons to view stats and graphs for chosen time periods(todo: or check off select days and only display stats for the selected days)
+	
+	TODO: 
+		- Add a 'custom' timePeriod, where instead of being a set number of days the user selects both the startDate and endDate and TrackerShow displays all days inbetween those two dates. If <3 days are selected set <TrackerDay> styleTypes to 'day', <=7 set to 'week', >7 set to 'month'
+		- Add buttons to view stats and graphs for selected days,
+		- Add checkboxes to each TrackerDay comp so that user can select days before clicking buttons to view stats/graphs for those days
+**/
 var TrackerShow = function (_React$Component) {
 	_inherits(TrackerShow, _React$Component);
 
@@ -54989,6 +55130,11 @@ var TrackerShow = function (_React$Component) {
 			options: opts
 		};
 
+		_this.styles = new Map();
+		_this.styles.set(0, 'day');
+		_this.styles.set(6, 'week');
+		_this.styles.set(30, 'month');
+
 		return _this;
 	}
 
@@ -55010,7 +55156,7 @@ var TrackerShow = function (_React$Component) {
 				res.endDate = new Date(res.endDate);
 
 				//create dates here, so it can be used to sate state.dates and also to set state.sortedMeals via this.createMealDates(dates, meals), dates needs to be defined before the call to setState so it can be used, or I'd have to call createDateArray again
-				var dates = _this2.createDateArray(res.endDate, 'week');
+				var dates = _this2.createDateArray(res.endDate, _this2.state.options.timePeriod);
 				_this2.setState({
 					meals: res.tracker.meals,
 					endDate: res.endDate,
@@ -55074,11 +55220,54 @@ var TrackerShow = function (_React$Component) {
 
 			return sortedMeals;
 		}
+
+		/**
+  	Callback function passed into each TrackerDay element. TrackerDay sets onClick of it's outermost element to clickDay(props.date), actually calling the function when setting the onClick prop so that onClick is set to the function returned by the clickDay function. When onClick prop is set, date of current TrackerDay element is passed in and clickDay creates a function that uses the date to handle clicking on that date:
+  	
+  	it creates a modal displaying details for that specific day(including the meals and links to those meals and a NutrientTable for just that day), and also includes links/buttons to add meals to that days tracker
+  **/
+
+	}, {
+		key: 'clickDay',
+		value: function clickDay(date) {
+			return function (e) {
+				console.log('this = ', this);
+				console.log("clicked on day: ", date);
+				console.log('target: ', e.target);
+			}.bind(this);
+		}
+	}, {
+		key: 'clickMeal',
+		value: function clickMeal(meal) {
+			var _this3 = this;
+
+			return function (e) {
+				console.log('this = ', _this3);
+				e.stopPropagation();
+				console.log('meal: ', meal);
+			};
+		}
+
+		/**
+  	Render an individual day
+  	@param mealsForDay: object containing a Date object representing the current day and an array of meal items for that day
+  **/
+
 	}, {
 		key: 'renderDay',
 		value: function renderDay(mealsForDay) {
-			return _react2.default.createElement(_TrackerDay2.default, { meals: mealsForDay.meals, date: mealsForDay.date, styleType: 'week', key: mealsForDay.key });
+			return _react2.default.createElement(_TrackerDay2.default, { meals: mealsForDay.meals, date: mealsForDay.date, styleType: this.styles.get(this.state.options.timePeriod), key: mealsForDay.key, clickDay: this.clickDay.bind(this), clickMeal: this.clickMeal.bind(this) });
 		}
+
+		/**
+  	Handles all option updates from the TrackerOptions component. 
+  	options: {
+  		startDate: Date
+  		endDate: Date
+  		timePeriod: Number //how many days to display, e.g 0 = 1day, 6 = 1 week(is 1 less than the number of days, because days 0 to options.timePeriod, inclusive, are rendered. <TrackerOptions> makes sure startDate, endDate and timePeriod are synced up, options.timePeriod is just used to know how to display and style the day elements
+  	}
+  **/
+
 	}, {
 		key: 'optionUpdateHandler',
 		value: function optionUpdateHandler(options) {
@@ -55096,10 +55285,15 @@ var TrackerShow = function (_React$Component) {
 
 			console.log('newOpts:', newOpts);
 		}
+
+		/**
+  	Render a content-section that takes up 100% of it's parent element. At the top render TrackerOptions component, below that render a NutrientTable component to display the total nutrients for all displayed dates, and then below that render a TrackerDay component for each day between startDate and endDate(state.sortedMeals will already contain an array full of only the elements needed for each day between startDate and endDate)
+  **/
+
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this3 = this;
+			var _this4 = this;
 
 			return _react2.default.createElement(
 				'div',
@@ -55119,11 +55313,16 @@ var TrackerShow = function (_React$Component) {
 						this.createNutrientTable()
 					),
 					this.state.sortedMeals.map(function (mealsForDay) {
-						return _this3.renderDay(mealsForDay);
+						return _this4.renderDay(mealsForDay);
 					})
 				)
 			);
 		}
+
+		/**
+  	basically just loop through all of the nutrients for each meal of each day and add the nutrient values to create the totals object to be passed to the NutrientTable component, then create <NutrientTable> passing in the newly created totals.
+  **/
+
 	}, {
 		key: 'createNutrientTable',
 		value: function createNutrientTable() {
@@ -55178,22 +55377,14 @@ var TrackerOptions = function (_React$Component2) {
 		_classCallCheck(this, TrackerOptions);
 
 		return _possibleConstructorReturn(this, (TrackerOptions.__proto__ || Object.getPrototypeOf(TrackerOptions)).call(this, props));
-
-		/**
-  this.state = {
-  	chosenDate: 'end',
-  	endDate: new Date(),
-  	timePeriod: 'week',
-  	startDate: (newDate().setDate(this.state.endDate.getDate() - 7)),
-  	
-  }
-  **/
 	}
 
+	/**
+ 	Render a content-section to display the options in. Inside the content section render a datePicker for startDate on the left, a dropdown/select element for choosing the timePeriod(day/week/month) and another datepicker for endDate
+ **/
+
+
 	_createClass(TrackerOptions, [{
-		key: 'updateOtherDate',
-		value: function updateOtherDate() {}
-	}, {
 		key: 'render',
 		value: function render() {
 			console.log('rendering options. this:', this);
@@ -55277,6 +55468,8 @@ var TrackerOptions = function (_React$Component2) {
 		value: function timePeriodChange(e) {
 			console.log("SELECTED VALUE: ", e.target.options[e.target.selectedIndex].value);
 			this.props.options.timePeriod = e.target.options[e.target.selectedIndex].value;
+
+			this.syncDates();
 		}
 
 		/**
@@ -55399,10 +55592,11 @@ function TrackerDay(props) {
  			
  
  **/
+	if (props.styleType == 6) props.styleType = 'week';else if (props.styleType == 30) props.styleType = 'month';else if (props.styleType == 0) props.styleType = 'day';
 
 	return _react2.default.createElement(
 		'div',
-		{ className: 'content-block tracker-day tracker-day-' + props.styleType },
+		{ className: 'content-block tracker-day tracker-day-' + props.styleType, onClick: props.clickDay(props.date) },
 		_react2.default.createElement(
 			'h4',
 			null,
@@ -55419,7 +55613,7 @@ function TrackerDay(props) {
 			props.meals.map(function (meal) {
 				return _react2.default.createElement(
 					'div',
-					{ key: meal._id, className: 'block-detail detail-row tracker-meal tracker-meal-' + props.styleType },
+					{ key: meal._id, className: 'block-detail detail-row tracker-meal tracker-meal-' + props.styleType, onClick: props.clickMeal(meal) },
 					_react2.default.createElement(
 						'span',
 						{ className: 'tracker-meal-mealname' },

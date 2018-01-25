@@ -17,8 +17,9 @@
 }
 
 .tracker-main-nutrient-total {
-	width: 90%;
-	display: inline-block;
+	width: 100%;
+	display: block;
+	text-align: center;
 	padding: 2%;
 	color: #fff;
 	nutrient-table-item-total {
@@ -40,6 +41,8 @@
 	min-height: 120px;
 }
 
+
+//__________ .tracker-day-{styleType}
 .tracker-day {
 	padding: 4px 0 !important;
 	vertical-align: top;
@@ -48,12 +51,27 @@
 		color: #fff;
 	}
 }
+.tracker-day-month {
+	width: 12%;
+	margin: 12px 1%;
+	margin-top: 6px !important;
+	min-height: 200px !important;
+	max-height: 200px !important;
+	font-size: 0.8em !important;
+}
 .tracker-day-week {
 	width: 12%;
 	margin: 12px 1%;
 	margin-top: 6px !important;
-	min-height: 75%;
+	min-height: 200px !important;
+	max-height: 250px !important;
 	font-size: 0.8em !important;
+}
+.tracker-day-day {
+	width: 25%;
+	min-height: 360px;
+	font-size: 1em !important;
+	margin: 12px 1%;
 }
 
 
@@ -77,6 +95,10 @@
 	padding: 0 2px !important;
 	margin: 2px 0 !important;
 }
+.tracker-meal-day {
+	font-size: 16px !important;
+}
+
 .tracker-meal-mealname {
 	width: 68%;
 }

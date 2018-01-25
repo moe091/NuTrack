@@ -10,7 +10,7 @@ function RangeSlider(props) {
 	**/
 	return (
 		<div className={props.wrapperClass}>
-			<input type="range" min={props.minRange} max={props.maxRange} className="slider-comp" onInput={props.sliderInput} step={props.sliderStep} ></input> 
+			<input type="range" min={props.minRange} max={props.maxRange} className="slider-comp" onInput={props.sliderInput} step={props.sliderStep} defaultValue={props.defaultVal} ></input> 
 		</div>
 	)
 }

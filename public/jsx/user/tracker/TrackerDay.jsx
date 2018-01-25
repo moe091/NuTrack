@@ -42,9 +42,15 @@ function TrackerDay(props) {
 				
 	
 	**/
+	if (props.styleType == 6) 
+		props.styleType = 'week';
+	else if (props.styleType == 30)
+		props.styleType = 'month';
+	else if (props.styleType == 0)
+		props.styleType = 'day';
 	
 	return (
-		<div className={('content-block tracker-day tracker-day-' + props.styleType)}>
+		<div className={('content-block tracker-day tracker-day-' + props.styleType)} onClick={props.clickDay(props.date)}>
 			<h4>{days.get(props.date.getDay())}</h4>
 			<div className='tracker-day-date-week'>
 				{
@@ -61,7 +67,7 @@ function TrackerDay(props) {
 				{
 					props.meals.map((meal) => {
 						return (
-							<div key={meal._id} className={('block-detail detail-row tracker-meal tracker-meal-' + props.styleType)}>
+							<div key={meal._id} className={('block-detail detail-row tracker-meal tracker-meal-' + props.styleType)} onClick={props.clickMeal(meal)}>
 
 								<span className='tracker-meal-mealname'>{meal.name}</span>
 								<span className='tracker-meal-date right faded'>

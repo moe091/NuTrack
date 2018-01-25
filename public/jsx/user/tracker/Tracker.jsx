@@ -23,6 +23,8 @@ class Tracker extends React.Component {
 								meal={this.props.meal}
 								trackerAddHandler={this.props.trackerAddHandler}
 								trackMealHandler={this.trackMealHandler.bind(this)}
+								isMealSelected={this.props.isMealSelected}
+								checkedItems={this.props.checkedItems}
 							/>
 						)
 					}}

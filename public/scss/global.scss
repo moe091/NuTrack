@@ -61,6 +61,14 @@ html, body {
 	float: right;
 }
 
+.pointer-cursor {
+	cursor: pointer;
+}
+
+.almost-white {
+	color: $almost-white;
+}
+
 //fix for react-datetime 
 /**
 .rdt {

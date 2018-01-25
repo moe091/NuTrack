@@ -7,6 +7,17 @@ import NutrientTable from '../components/NutrientTable.jsx';
  
 import Datetime from 'react-datetime';
 
+
+/**
+	Tracker Show displays a list of days in chronological order, each day is a <TrackerDay> component that displays the meals for that day in chronological order.
+	:User can select a time period (day/week/month/custom) and a startDate and/or endDate
+	:User can click buttons to view stats and graphs for chosen time periods(todo: or check off select days and only display stats for the selected days)
+	
+	TODO: 
+		- Add a 'custom' timePeriod, where instead of being a set number of days the user selects both the startDate and endDate and TrackerShow displays all days inbetween those two dates. If <3 days are selected set <TrackerDay> styleTypes to 'day', <=7 set to 'week', >7 set to 'month'
+		- Add buttons to view stats and graphs for selected days,
+		- Add checkboxes to each TrackerDay comp so that user can select days before clicking buttons to view stats/graphs for those days
+**/
 class TrackerShow extends React.Component {
 	constructor(props) {
 		super(props);
@@ -34,6 +45,11 @@ class TrackerShow extends React.Component {
 			options: opts
 		}
 		
+		this.styles = new Map();
+		this.styles.set(0, 'day');
+		this.styles.set(6, 'week');
+		this.styles.set(30, 'month');
+		
 		
 	}
 	
@@ -52,7 +68,7 @@ class TrackerShow extends React.Component {
 			res.endDate = new Date(res.endDate);
 			
 			//create dates here, so it can be used to sate state.dates and also to set state.sortedMeals via this.createMealDates(dates, meals), dates needs to be defined before the call to setState so it can be used, or I'd have to call createDateArray again
-			var dates = this.createDateArray(res.endDate, 'week');
+			var dates = this.createDateArray(res.endDate, this.state.options.timePeriod);
 			this.setState({
 				meals: res.tracker.meals,
 				endDate: res.endDate,
@@ -118,12 +134,46 @@ class TrackerShow extends React.Component {
 			return sortedMeals;
 	}
 	
+	
+	/**
+		Callback function passed into each TrackerDay element. TrackerDay sets onClick of it's outermost element to clickDay(props.date), actually calling the function when setting the onClick prop so that onClick is set to the function returned by the clickDay function. When onClick prop is set, date of current TrackerDay element is passed in and clickDay creates a function that uses the date to handle clicking on that date:
+		
+		it creates a modal displaying details for that specific day(including the meals and links to those meals and a NutrientTable for just that day), and also includes links/buttons to add meals to that days tracker
+	**/
+	clickDay(date) {
+		return (function(e) {
+			console.log('this = ', this);
+			console.log("clicked on day: ", date);
+			console.log('target: ', e.target);
+		}).bind(this);
+	}
+	
+	clickMeal(meal) {
+		return (e) => {
+			console.log('this = ', this);
+			e.stopPropagation();
+			console.log('meal: ', meal);
+		}
+	}
+	
+	/**
+		Render an individual day
+		@param mealsForDay: object containing a Date object representing the current day and an array of meal items for that day
+	**/
 	renderDay(mealsForDay) {
 		return (
-			<TrackerDay meals={mealsForDay.meals} date={mealsForDay.date} styleType='week' key={mealsForDay.key} />
+			<TrackerDay meals={mealsForDay.meals} date={mealsForDay.date} styleType={this.styles.get(this.state.options.timePeriod)} key={mealsForDay.key} clickDay={this.clickDay.bind(this)} clickMeal={this.clickMeal.bind(this)} />
 		)
 	}
 	
+	/**
+		Handles all option updates from the TrackerOptions component. 
+		options: {
+			startDate: Date
+			endDate: Date
+			timePeriod: Number //how many days to display, e.g 0 = 1day, 6 = 1 week(is 1 less than the number of days, because days 0 to options.timePeriod, inclusive, are rendered. <TrackerOptions> makes sure startDate, endDate and timePeriod are synced up, options.timePeriod is just used to know how to display and style the day elements
+		}
+	**/
 	optionUpdateHandler(options) {
 		//create a new object that is a copy of options
 		console.log('optionUpdate: oldOpts:', this.state.options);
@@ -141,6 +191,10 @@ class TrackerShow extends React.Component {
 		
 	}
 	
+	
+	/**
+		Render a content-section that takes up 100% of it's parent element. At the top render TrackerOptions component, below that render a NutrientTable component to display the total nutrients for all displayed dates, and then below that render a TrackerDay component for each day between startDate and endDate(state.sortedMeals will already contain an array full of only the elements needed for each day between startDate and endDate)
+	**/
 	render() {
 		return (
 			<div className='content-section h-100 w-100 tracker-content-section'>
@@ -165,6 +219,9 @@ class TrackerShow extends React.Component {
 	}
 
 	
+	/**
+		basically just loop through all of the nutrients for each meal of each day and add the nutrient values to create the totals object to be passed to the NutrientTable component, then create <NutrientTable> passing in the newly created totals.
+	**/
 	createNutrientTable() {
 		var totals = this.state.watchedNutrients.map((wn) => {
 			return {id: wn, total: 0}
@@ -211,22 +268,11 @@ class TrackerShow extends React.Component {
 class TrackerOptions extends React.Component {
 	constructor(props) {
 		super(props);
-		
-		/**
-		this.state = {
-			chosenDate: 'end',
-			endDate: new Date(),
-			timePeriod: 'week',
-			startDate: (newDate().setDate(this.state.endDate.getDate() - 7)),
-			
-		}
-		**/
 	}
 	
-	updateOtherDate() {
-		
-	}
-	
+	/**
+		Render a content-section to display the options in. Inside the content section render a datePicker for startDate on the left, a dropdown/select element for choosing the timePeriod(day/week/month) and another datepicker for endDate
+	**/
 	render() {
 		console.log('rendering options. this:', this);
 		return (
@@ -273,6 +319,8 @@ class TrackerOptions extends React.Component {
 	timePeriodChange(e) {
 		console.log("SELECTED VALUE: ", e.target.options[e.target.selectedIndex].value);
 		this.props.options.timePeriod = e.target.options[e.target.selectedIndex].value;
+		
+		this.syncDates();
 	}
 	
 	

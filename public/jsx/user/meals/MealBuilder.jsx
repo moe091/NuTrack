@@ -4,7 +4,24 @@ import ReactDOM from 'react-dom';
 import RangeSlider from '../components/RangeSlider.jsx';
 import NutrientTable from '../components/NutrientTable.jsx'; 
 
+/**
+	TODO: 
+		- change nutrientMap to this.nutrientMap to pull it off global scope
+		- refactor component to make it more modular/reusable, specifically so that it can be used in the TrackerAdd component.
+		
+		- refactor render func slighty, instead of calling renderItems on the state.items array, use .map on the state.items array and the call renderItem on each item(will have to refactor renderItems array into renderItem array as well)
+		- make a builderItem component(probably a stateless functional comp) to represent each item, instead of manually rendering each one inside of this component, that should clean things up a lot
+		
+		
+	MealBuilder:
+		:: Recieves an array of Numbers(ndbno's) - this.props.checkedItems
+		:: Makes an Ajax call upon mounting, passing the checkedItems array to the user/item/list route to recieve an array of food item objects containing the full details and nutrients of each item whose ndbno was in checkedItems array
+		:: Renders a builder element for each item in the state.items array received from the ajax call above. Builder elements have a slider to select the number of servings for that item. Each slider has an onInput callback that is created by the createAmountUpdate function
+		:: Each item also has it's own nutrientTable that displays the total nutrients for the amount of servings selected by the slider/range input, table updates automatically. The nutrientTotals that are passed to <NutrientTable> are calculated by createNutrientDisplayObj(nutrientObj), to create a nutrientTotals object for a single item pass that item as a parameter to the createNutrientDisplayObj function
+		:: There is also a large NutrientTable at the top that displays the total nutrient values for all items and their serving amounts. To calculate the nutrientTotals to pass into the <NutrientTable> for all objects, call createNutrientDisplayObj() and pass null in - this causes the function to calculate total for every item in this.state.nutrients
+			TODO: change createNutrientDisplayObj to accept an array, pass in an array of 1 item to calculate totals for just that item, pass in the full this.state.items array to calculate the total across all objects. This will just make things clearer and simpler
 
+**/
 class MealBuilder extends React.Component {
 	constructor(props) {
 		super(props);
@@ -41,10 +58,12 @@ class MealBuilder extends React.Component {
 	
 	
 	componentDidMount() {
+		//pass props.items(array of Numbers containing ndbno's) to user/item/list route via ajax, recieve watchedNutrients and full nutrient objects for each ndb, and then calls setState to update this.state.watched and this.state.nutrients
 		this.getItemInfos();
 	}
 	
 	
+	//Ajax function, pass in the list of ndbs and receive 'nutrients': an array containing full nutrient info for each item from the list of ndbs passed on. also receive 'watched', a Number array containing the nutrient_id of the current users watched_nutrients
 	getItemInfos() {
 		var reqBody = {
 			ndbs: this.props.checkedItems,
@@ -78,7 +97,13 @@ class MealBuilder extends React.Component {
 		});
 	}
 	
-	
+	/**
+		recieves: 
+			nut - a single nutrient object containing full nutrient info of a single food item
+			nutVals - an object, containing a property called e.g 'nut_205' for nutrient_id=205, for each watchedNutrient of the current user. each prop is set to 0 by default
+		
+		:: Updates the properties of nutVals object - for each property matching a nutrient_id of the item passed in to the nut parameter it adds the value for that nutrient in the nut object times the number of servings(nut.amount). By the end nutVals should be an object containing a property for each watchedNutrient of the current user that is equal to the total for the item the nutVal represents(total is amount of specified nutrient per serving & # of servings)
+	**/
 	addNutrientVals(nut, nutVals) {
 		console.log("nut = ", nut);
 		console.log("display = ", nutVals);
@@ -146,14 +171,14 @@ class MealBuilder extends React.Component {
 		return watchedNuts;
 	}
 	
-	//updates when mealName text input is changed
+	//updates when mealName text input is changed. sets mealName which will be used as the name of the meal when it is actually created
 	changeName(e) {
 		this.setState({
 			mealName: e.target.value
 		})
 	}
 	
-	
+	//callback for createMeal button - should be clicked when user is done setting values and naming meal and wants to create it. calls the createMealHandler passed down from NewMeal. calls /user/meals/create route via POST and passes in a mealObj containing the items, name of meal, and pre-calculated nutrientTotals(for nutrientTables). then calls NewMeals showMealHandler to redirect to the ShowMeal component
 	createMealClick(e) {
 		console.log("CREATE MEAL! state:", this.state);
 		this.props.createMealHandler(this.state.nutrients, this.state.mealName, this.createNutrientDisplayObj());
@@ -199,7 +224,7 @@ class MealBuilder extends React.Component {
 									)
 								</label>
 								
-								<RangeSlider minRange='0' maxRange='5' defaultVal="1" sliderInput={this.createAmountUpdate(item)} sliderStep='0.25' wrapperClass='newMeal-item-amount' /> 
+								<RangeSlider minRange='0' maxRange='5' defaultVal={item.amount} sliderInput={this.createAmountUpdate(item)} sliderStep='0.25' wrapperClass='newMeal-item-amount' /> 
 								
 								<NutrientTable nutrients={this.createNutrientDisplayObj(item)} />
 						</div>
@@ -210,6 +235,8 @@ class MealBuilder extends React.Component {
 		)
 	}
 	
+	
+	//creates a function to be used as the onInput callback for each meals serving amount slider. Takes the item corresponding to the slider as a parameter and returns a function that changes the .amount prop of that item and updates state
 	createAmountUpdate(item) {
 		console.log("Create Amount Update. item: ", item);
 		console.log("this = ", this);
