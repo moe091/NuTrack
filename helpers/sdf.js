@@ -1,7 +1,7 @@
 var User = require('../models/user');
 var food = require('../foods');
 var nutrientMap = new Map();
-
+ 
 
 nutrientMap.set(203, {name: 'Protein', abbr: 'Protein'});
 nutrientMap.set(204, {name: 'Total Fat', abbr: 'Fat'});
@@ -33,7 +33,7 @@ var fHelper = function() {
                     return obj.nutrient_id === nutrientList[i].id; 
                 })[0];
             }
-        }
+        }  
     };
     
     this.populateDefNutrients = function(obj, list) {
