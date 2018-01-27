@@ -60,6 +60,14 @@ class HomePage extends React.Component {
 	
 }
 
+
+
+/**
+	Component for the searchbox shown on homepage. 
+		- Renders the textbox input and searchButton inside an input-group-btn span
+		- State: queryString = the value currently entered into the search area textbox, updated in textBox's onChange event
+		- calls props.searchHandler(should always be <HomePage>'s searchHandler function) passing in state.queryString to be used as the search query
+**/
 class SearchBox extends React.Component {
 	constructor(props) {
 		super(props);

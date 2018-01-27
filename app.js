@@ -74,7 +74,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var port = (process.env.PORT ? process.env.PORT : 3001);
+var port = (process.env.PORT ? process.env.PORT : 3000);
 console.log('process.env.PORT = ' + process.env.PORT);
 
 var server = app.listen(port, function() {

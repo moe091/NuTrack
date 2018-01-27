@@ -36,7 +36,7 @@ class SideBar extends React.Component {
 				</div>
 
 				<div className="sidebar-section">
-					<a disabled={this.props.plusEnabled} onClick={this.props.showMealHandler}><div className="sidebar-segment segment-head"> <i className="fa fa-cutlery sidebar-icon" aria-hidden="true"></i> Meals</div></a>
+					<a onClick={this.props.showMealHandler}><div className="sidebar-segment segment-head"> <i className="fa fa-cutlery sidebar-icon" aria-hidden="true"></i> Meals</div></a>
 					<a disabled={this.props.plusEnabled} onClick={this.props.newMealHandler}><div className="link-div sidebar-segment segment-item meal-item meal-item-0">Create Meal</div></a>
 				</div>
 

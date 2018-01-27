@@ -100,11 +100,15 @@
 }
 
 .tracker-meal-mealname {
-	width: 68%;
+	display: inline-block;
+	max-height: 3em;
+	overflow: hidden;
+	width: 63%;
+	padding-right: 2%;
 }
 
 .tracker-meal-date {
-	width: 30%;
+	width: 35%;
 	text-align: right;
 }
 

@@ -5895,7 +5895,7 @@ var SideBar = function (_React$Component) {
 						{ className: 'sidebar-section' },
 						_react2['default'].createElement(
 							'a',
-							{ disabled: this.props.plusEnabled, onClick: this.props.showMealHandler },
+							{ onClick: this.props.showMealHandler },
 							_react2['default'].createElement(
 								'div',
 								{ className: 'sidebar-segment segment-head' },
@@ -7256,6 +7256,18 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+/**
+	Renders a nutrient table, displaying any number of nutrients(specified by each element of props.nutrients), showing the name of the nutrient, the amount, and the units for each nutrient.
+	
+	this component can be displayed in various ways, e.g as a large element spreading across the entire main section of app, or as a small element that is rendered for each item in a list of displayed items on a page. By default is displayed with it's width taking up it's parent html container and font-size set to 1em. Different styles for different uses and sizes are specified in SASS by adding a ruleset for .nutrient-table as a child of whatever element it is being rendered inside(e.g  .show-meal-item .nutrient-table { ... })
+	
+	PROPS: 
+		- nutrients - an Array of objects. each element represents a nutrient whose value is to be displayed by this component.
+			nutrients[i].name = (String) name of nutrient
+									.abbr = (String) abbreviation(e.g 'Cals' instead of 'Calories')
+									.total = (Number) the value/amount of the nutrient
+									.unit = (String) string representing the units the nutrient is measured in(e.g 'mg' for milligrams)
+**/
 function NutrientTable(props) {
 
 	function createNutrientItem(item) {
@@ -8335,7 +8347,8 @@ var MealBuilder = function (_React$Component) {
 			nutrients: [],
 			itemDetails: [],
 			watched: [],
-			nutrientMap: nutrientMap
+			nutrientMap: nutrientMap,
+			message: _this.props.message == null ? "Set # of Portions for Each Item and Enter a Name Then Click 'Create Meal'" : _this.props.message
 		};
 		return _this;
 	}
@@ -8546,6 +8559,11 @@ var MealBuilder = function (_React$Component) {
 							'button',
 							{ type: 'button', className: 'btn btn-default', onClick: this.createMealClick.bind(this) },
 							'Create Meal'
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'center-text mt-2 small almost-white' },
+							this.state.message
 						)
 					),
 					_react2['default'].createElement(
@@ -42060,6 +42078,14 @@ var HomePage = function (_React$Component) {
 	return HomePage;
 }(_react2['default'].Component);
 
+/**
+	Component for the searchbox shown on homepage. 
+		- Renders the textbox input and searchButton inside an input-group-btn span
+		- State: queryString = the value currently entered into the search area textbox, updated in textBox's onChange event
+		- calls props.searchHandler(should always be <HomePage>'s searchHandler function) passing in state.queryString to be used as the search query
+**/
+
+
 var SearchBox = function (_React$Component2) {
 	_inherits(SearchBox, _React$Component2);
 
@@ -52488,6 +52514,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
+	::UserApp - Wraps the entire user area of website. Always displayes top bar, sidebar(which changes dynamically depending on state), and a main content area that represents the current page of the app and renders a different component depending on the route.
 	
 	TODO: in sidebar, render each checkedItem in a row(2 items per row) in a slightly lighter colored div and with a remove/X button to remove from selected items. So user can remove selected items at any point and so user feels the checkedItems persisting throughout the app, not just on the search page.
 **/
@@ -52508,6 +52535,10 @@ var UserApp = function (_React$Component) {
 		return _this;
 	}
 
+	//callback for searches, passed into components that have a search input, calls search route via Ajax then return response, allowing component calling search to either update route to search page or use the results in whatever other way is needed
+	//TODO write function
+
+
 	_createClass(UserApp, [{
 		key: 'search',
 		value: function () {
@@ -52517,6 +52548,14 @@ var UserApp = function (_React$Component) {
 
 			return search;
 		}()
+
+		/**
+  	Renders app-wrapper div, which is basically the whole WebApp
+  	<Nav> across top
+  	<SideBar> along left of page
+  	<Route> - renders whatever the current component/page is based on the current route in the main section of the screen
+  **/
+
 	}, {
 		key: 'render',
 		value: function () {
@@ -52614,7 +52653,7 @@ var UserApp = function (_React$Component) {
 		}()
 
 		/**
-  	Tracker Add Handler - For ShowMeal or ShowMeals component, when a specific meal is selected and being added.
+  	renders the <TrackerAdd> component, passing in the appropriate props. This function renders <TrackerAdd> with isMealSelected true, which just renders the component in it's ready-to-add state since it has a selected meal to add to Tracker and doesn't need to create one first
   **/
 
 	}, {
@@ -52634,6 +52673,9 @@ var UserApp = function (_React$Component) {
 
 			return trackerAddHandler;
 		}()
+
+		//simply updates route, will trigger a re-render in which UserApp will render the <TrackerShow> component in the main area
+
 	}, {
 		key: 'trackerShowHandler',
 		value: function () {
@@ -52643,6 +52685,9 @@ var UserApp = function (_React$Component) {
 
 			return trackerShowHandler;
 		}()
+
+		//update route, causes re-render with <PlannerAdd> component in main area of page, passes in appropriate props
+
 	}, {
 		key: 'plannerAddHandler',
 		value: function () {
@@ -52650,15 +52695,22 @@ var UserApp = function (_React$Component) {
 
 			return plannerAddHandler;
 		}()
+
+		//update route, cause re-render with <ShowMeal> component in main section of page.
+
 	}, {
 		key: 'showMealHandler',
 		value: function () {
 			function showMealHandler(e) {
+				console.log("SHOW MEAL HANDLER - UserApp");
 				this.props.history.push("../../user/meals/show");
 			}
 
 			return showMealHandler;
 		}()
+
+		//update route, cause re-render with <NewMeal> component in main section of page
+
 	}, {
 		key: 'newMealHandler',
 		value: function () {
@@ -52671,6 +52723,14 @@ var UserApp = function (_React$Component) {
 
 			return newMealHandler;
 		}()
+
+		/**
+  	Callback function that is called whenever a food product item is selected/checked, e.g by the user clicking the checkbox next to an item in the search results page. 
+  	-Only works as a callback from an input event on an html element, extracting the ndbno of selected item from the elements id tag
+  	
+  	TODO: refactor this function, instead of taking the html element as a parameter and calculating the ndbno from the elements id, just accept the ndbno. Components calling this function will manually extract/find the ndbno of the item being selected and pass that in when calling this function, instead of just setting this func as the callback for input events on html elements
+  **/
+
 	}, {
 		key: 'checkItemHandler',
 		value: function () {
@@ -52760,6 +52820,11 @@ var Meal = function (_React$Component) {
 		};
 		return _this;
 	}
+
+	//creates a function that calls this.props.trackerAddHandler and passes in the (meal) parameter.
+	//TODO: instead of creating a returning a function to be used as the trackerAddHandler, just set the function to call this.props.trackerAddHandler(was only setup this way so I could log some stuff to the console and see what it's doing). 
+	//NOTE: tried to implement todo, and meal wasn't being passed on for some reason. gotta fix that later
+
 
 	_createClass(Meal, [{
 		key: 'trackerAdd',
@@ -52868,6 +52933,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+	Component for creating new meals. Mostly just renders MealBuilder component and handles the createMeal callback for it
+**/
 var NewMeal = function (_React$Component) {
 	_inherits(NewMeal, _React$Component);
 
@@ -52891,6 +52959,14 @@ var NewMeal = function (_React$Component) {
 
 			return render;
 		}()
+
+		/**
+  	callback for creating meals, passed into <MealBuilder> and called when user clicks 'create meal' button. 
+  	
+  	- Posts the meal info(nutrients: an item representing a single food product item from USDA database, mealName: user-entered name for meal, nutTotals: Array of pre-calculated values for nutrient totals of the meal for each nutrient in users watchedNutrients setting)
+  	- calls this.props.showMealHandler and passes in meal name. This should call <UserApp>'s showMealHandler function, which will update the route and render the ShowMeal component
+  **/
+
 	}, {
 		key: 'createMealHandler',
 		value: function () {
@@ -52956,6 +53032,17 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+/**
+	Custom range slider component. pass in props for things like min/max/step size and a custom slider is rendered that calls props.sliderInput whenever the user changes its value
+	
+	PROPS: 
+		- min: the minimum value of the slider
+		- max: the max value
+		- step: the resolution of slider/minimum amount between each discrete value that slider is able to be set to
+		- defaultValue: the initial starting value of slider before user changes it
+		- sliderInput: the callback function that will be called when the value changes/user touches the component. the callback function will be passed the actual slider element as a parameter, it's current value can be accessed by e.target.value (for parameter named e)
+		- wrapperClass: the className the div wrapping the slider will have, to be used for identifying the wrapper in css/sass to write different custom styles for it depending on where it's being rendered
+**/
 function RangeSlider(props) {
 	/** PROPS:
  	minRange - Number
@@ -53006,6 +53093,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+	TODO: 
+		- rename this ShowMeals, ShowMeal will be what the component for viewing details of a single meal will be called
+	
+	ShowMeal displays info about each meal that a user has saved.
+**/
 var ShowMeal = function (_React$Component) {
 	_inherits(ShowMeal, _React$Component);
 
@@ -53137,10 +53230,10 @@ var ShowMeal = function (_React$Component) {
 			function renderItem(item) {
 				return _react2['default'].createElement(
 					'div',
-					{ key: item.id, className: 'col-md-4' },
+					{ key: item._id, className: 'col-md-4' },
 					_react2['default'].createElement(
 						'div',
-						{ key: item.id, className: 'show-meal-portion block-detail' },
+						{ className: 'show-meal-portion block-detail' },
 						_react2['default'].createElement(
 							'div',
 							{ className: 'show-meal-portion-servings' },
@@ -53371,8 +53464,14 @@ var TrackerAdd = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (TrackerAdd.__proto__ || Object.getPrototypeOf(TrackerAdd)).call(this, props));
 
+		var date = new Date();
+		var msg = _this.props.meal == null ? "Create Meal Below Before Adding Items to Tracker" : "Add Meal '" + _this.props.meal.name + "' to Tracker on " + date.toDateString() + " at " + (date.toTimeString().split(':')[0] + ':' + date.toTimeString().split(':')[1]);
+
 		_this.state = {
-			time: new Date()
+			time: date,
+			meal: _this.props.meal,
+			isMealSelected: _this.props.isMealSelected,
+			message: msg
 		};
 
 		return _this;
@@ -53389,7 +53488,7 @@ var TrackerAdd = function (_React$Component) {
 		key: 'renderBuilderIfNeeded',
 		value: function () {
 			function renderBuilderIfNeeded() {
-				if (this.props.isMealSelected) {
+				if (this.state.isMealSelected) {
 					return null;
 				} else {
 					return _react2['default'].createElement(
@@ -53403,7 +53502,7 @@ var TrackerAdd = function (_React$Component) {
 			return renderBuilderIfNeeded;
 		}()
 
-		//TODO: throw in a ternary, if this.props.isMealSelected == false then render a mealBuilder component, and change onClick of 'Add To Tracker' button to a callback that creates a new meal and then calls the regular trackMeal callback with the newly created meal
+		//TODO: throw in a ternary, if this.state.isMealSelected == false then render a mealBuilder component, and change onClick of 'Add To Tracker' button to a callback that creates a new meal and then calls the regular trackMeal callback with the newly created meal
 
 	}, {
 		key: 'render',
@@ -53415,23 +53514,34 @@ var TrackerAdd = function (_React$Component) {
 					_react2['default'].createElement(
 						'div',
 						{ className: 'content-section w-50 m-1 p-4 header-bg' },
-						this.props.meal == null ? "Create Meal Below Before Tracking" : "Add Meal To Tracker: " + this.props.meal.name
+						this.state.isMealSelected == false ? "Create Meal Below Before Tracking" : "Add Meal To Tracker: " + this.state.meal.name
 					),
 					_react2['default'].createElement(
 						'div',
-						{ className: 'content-section w-50 p-4' },
+						{ className: 'content-section w-75 p-4' },
 						_react2['default'].createElement(
 							'label',
 							{ className: 'block-label almost-white' },
 							'Select Date And Time For Meal:'
 						),
 						_react2['default'].createElement(_reactDatetime2['default'], { onChange: this.dateChange.bind(this), defaultValue: this.state.time }),
-						_react2['default'].createElement('div', { className: 'block-space-100' }),
+						_react2['default'].createElement('div', { className: 'block-space-50' }),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'text-center almost-white' },
+							this.state.message
+						),
+						_react2['default'].createElement('div', { className: 'block-space-50' }),
 						this.renderBuilderIfNeeded(),
 						_react2['default'].createElement(
 							'button',
-							{ className: 'btn header-bg', onClick: this.trackMeal.bind(this) },
+							{ className: 'btn header-bg ' + (this.state.isMealSelected ? '' : 'btn-disabled'), onClick: this.state.isMealSelected ? this.trackMeal.bind(this) : null },
 							'Add To Tracker'
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'text-center text-danger small' },
+							this.state.isMealSelected ? '' : "Click 'Create Meal' button above to create a meal before adding to tracker"
 						)
 					)
 				);
@@ -53445,6 +53555,49 @@ var TrackerAdd = function (_React$Component) {
 			function createMealHandler(p1, p2) {
 				console.log("create meal p1=", p1);
 				console.log('p2=', p2);
+			}
+
+			return createMealHandler;
+		}()
+	}, {
+		key: 'createMealHandler',
+		value: function () {
+			function createMealHandler(nutrients, mealName, nutTotals) {
+				var _this2 = this;
+
+				var mealObj = {
+					items: nutrients,
+					mealName: mealName,
+					nutTotals: nutTotals,
+					date: null
+				};
+
+				fetch('../../user/meals/create', {
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(mealObj)
+				}).then(function (resp) {
+					return resp.json();
+				}).then(function (res) {
+					//AJAX response for nutrient data
+
+					console.log("CREATE MEAL: ", res);
+					var mealExists = res.meal != null;
+					_this2.setState({
+						message: res.message,
+						meal: res.meal,
+						isMealSelected: mealExists
+					});
+					_this2.props.showMealHandler(res.meal.name); //trying to keep functions that change the url in the component with the actual route/history object
+				})['catch'](function (err) {
+					console.log("createMealClick() - MealBuilder. catch error:", err);
+					//TODO: set this.state.message: "Unable to create meal, server failed to respond"(or a more specific error message if possible). 
+					//Also, if message != null, then render it in red text at top of MealBuilder component(have to pass message down)
+				});
 			}
 
 			return createMealHandler;
@@ -53469,7 +53622,7 @@ var TrackerAdd = function (_React$Component) {
 		value: function () {
 			function trackMeal() {
 				console.log('this', this);
-				this.props.trackMealHandler(this.props.meal, this.state.date);
+				this.props.trackMealHandler(this.state.meal, this.state.date);
 			}
 
 			return trackMeal;
@@ -55365,6 +55518,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 		- Add a 'custom' timePeriod, where instead of being a set number of days the user selects both the startDate and endDate and TrackerShow displays all days inbetween those two dates. If <3 days are selected set <TrackerDay> styleTypes to 'day', <=7 set to 'week', >7 set to 'month'
 		- Add buttons to view stats and graphs for selected days,
 		- Add checkboxes to each TrackerDay comp so that user can select days before clicking buttons to view stats/graphs for those days
+		- Set endDate and startDate as url params so that refreshing and using back button doesn't reset the dates being shown
 **/
 var TrackerShow = function (_React$Component) {
 	_inherits(TrackerShow, _React$Component);
@@ -55920,6 +56074,16 @@ function TrackerDay(props) {
  			
  
  **/
+	function createTimeString(d) {
+		var hrs = void 0,
+		    mins = void 0,
+		    dt = void 0;
+		hrs = Number(d.toTimeString().split(':')[0] % 12);
+		mins = Number(d.toTimeString().split(':')[1]);
+		dt = Number(d.toTimeString().split(':')[0]) >= 12 ? 'pm' : 'am';
+		return hrs + ':' + mins + dt;
+	}
+
 	if (props.styleType == 6) props.styleType = 'week';else if (props.styleType == 30) props.styleType = 'month';else if (props.styleType == 0) props.styleType = 'day';
 
 	return _react2['default'].createElement(
@@ -55950,7 +56114,7 @@ function TrackerDay(props) {
 					_react2['default'].createElement(
 						'span',
 						{ className: 'tracker-meal-date right faded' },
-						meal.hasOwnProperty('date') ? Number(meal.date.toTimeString().split(':')[0]) + ':' + meal.date.toTimeString().split(':')[1] : '4:20'
+						meal.hasOwnProperty('date') ? createTimeString(meal.date) : '4:20pm'
 					)
 				);
 			})

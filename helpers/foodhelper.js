@@ -174,42 +174,42 @@ var foodHelper = {
 							console.log("ERROR: item=" + i + ":  ", err);
 							resolve(err);
 						} else {
-							//TODO copy and paste below implementation into this block
-						}
-						console.log("RESPONSE:", res);
 
-						var info = []
-						if (res != null) {
-							console.log(res);
-							if (type == 'b')
-								foodHelper.populateNutrients(info, res.report.food.nutrients); //takes the report for a food item and uses foodHelper.nutrientList array to populate info with the data on each nutrient listed in the nutrientList array. Change this method to accept watchedNutrients array instead of using foodHelper.nutrientList
-						} else {
-							ndbs = []; //so length = 0, and promise can resolve(see if below with resolve() statement in it). Definitely gotta find a better resolve condition
-						}
-
-
-						var watched = foodHelper.updateWatchedNutrients(user, session);
-
-						if (watched && watched.length > 0) {
-							if (type == 'b') {
-								var fObj = foodHelper.createNutrientObj(res.report.food, watched);
+							var info = []
+							if (res != null) {
+								console.log(res);
+								if (type == 'b')
+									foodHelper.populateNutrients(info, res.report.food.nutrients); //takes the report for a food item and uses foodHelper.nutrientList array to populate info with the data on each nutrient listed in the nutrientList array. Change this method to accept watchedNutrients array instead of using foodHelper.nutrientList
 							} else {
-								var fObj = res;
+								ndbs = []; //so length = 0, and promise can resolve(see if below with resolve() statement in it). Definitely gotta find a better resolve condition
 							}
-							nutLists.push(fObj); 
-						} else {
-							console.log("\n\n\n\n\nWatchedNutrients still empty!!");
-						}
-						//info.cals = res.report.food.nutrients.filter(function(obj) {
-								//return obj.nutrient_id === '208';
-						//});
 
-						//info.cals = info.cals[0].value;
-						itemInfos.push(info);
-						if (itemInfos.length == ndbs.length) {
-							resolve(nutLists); 
-						}
-					});
+
+							var watched = foodHelper.updateWatchedNutrients(user, session);
+
+							if (watched && watched.length > 0) {
+								if (type == 'b') {
+									var fObj = foodHelper.createNutrientObj(res.report.food, watched);
+								} else {
+									var fObj = res;
+								}
+								nutLists.push(fObj); 
+							} else {
+								console.log("\n\n\n\n\nWatchedNutrients still empty!!");
+							}
+							//info.cals = res.report.food.nutrients.filter(function(obj) {
+									//return obj.nutrient_id === '208';
+							//});
+
+							//info.cals = info.cals[0].value;
+							itemInfos.push(info);
+							if (itemInfos.length == ndbs.length) {
+								resolve(nutLists); 
+							}
+							
+						} //if (error) else 
+						
+					}); //promise
 				}//end loop
 				
 			}

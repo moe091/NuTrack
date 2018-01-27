@@ -8,7 +8,9 @@ import SideBar from '../../SideBar.jsx';
 import MealBuilder from './MealBuilder.jsx';
 
 
-
+/**
+	Component for creating new meals. Mostly just renders MealBuilder component and handles the createMeal callback for it
+**/
 class NewMeal extends React.Component {
 	constructor(props) {
 		super(props);
@@ -24,6 +26,12 @@ class NewMeal extends React.Component {
 	}
 	  
 	
+	/**
+		callback for creating meals, passed into <MealBuilder> and called when user clicks 'create meal' button. 
+		
+		- Posts the meal info(nutrients: an item representing a single food product item from USDA database, mealName: user-entered name for meal, nutTotals: Array of pre-calculated values for nutrient totals of the meal for each nutrient in users watchedNutrients setting)
+		- calls this.props.showMealHandler and passes in meal name. This should call <UserApp>'s showMealHandler function, which will update the route and render the ShowMeal component
+	**/
 	createMealHandler(nutrients, mealName, nutTotals) {
 		var mealObj = {
 			items: nutrients,

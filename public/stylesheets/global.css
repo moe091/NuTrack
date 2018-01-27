@@ -531,10 +531,14 @@ nav {
   font-size: 16px !important; }
 
 .tracker-meal-mealname {
-  width: 68%; }
+  display: inline-block;
+  max-height: 3em;
+  overflow: hidden;
+  width: 63%;
+  padding-right: 2%; }
 
 .tracker-meal-date {
-  width: 30%;
+  width: 35%;
   text-align: right; }
 
 .tracker-options-section {
@@ -1028,6 +1032,10 @@ td.rdtYear:hover {
   display: block;
   height: 100px; }
 
+.block-space-50 {
+  display: block;
+  height: 50px; }
+
 .right {
   float: right; }
 
@@ -1038,10 +1046,11 @@ td.rdtYear:hover {
   color: #fff; }
 
 .wrapper-dark {
-  background-color: rgba(33, 33, 33, 0.5);
+  background-color: #518590;
   padding: 4px;
-  border-radius: 4px;
-  margin-bottom: 12px; }
+  border: 5px #334455 solid;
+  border-radius: 22px;
+  margin-bottom: 24px; }
 
 html, body {
   min-height: 100%;
@@ -1081,6 +1090,11 @@ html, body {
 
 .almost-white {
   color: #f2f2f2; }
+
+.btn-disabled {
+  cursor: context-menu !important;
+  background-color: #1f2e38 !important;
+  color: #ccc !important; }
 
 /**
 .rdt {

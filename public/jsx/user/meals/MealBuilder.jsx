@@ -40,7 +40,8 @@ class MealBuilder extends React.Component {
 			nutrients: [],
 			itemDetails: [],
 			watched: [],
-			nutrientMap: nutrientMap
+			nutrientMap: nutrientMap,
+			message: (this.props.message == null) ? "Set # of Portions for Each Item and Enter a Name Then Click 'Create Meal'" : this.props.message
 		}
 	}
 	
@@ -192,6 +193,8 @@ class MealBuilder extends React.Component {
 					<label value="Name Meal">Meal Name</label>
 					<input type="text" onChange={this.changeName.bind(this)}></input>
 					<button type="button" className="btn btn-default" onClick={this.createMealClick.bind(this)}>Create Meal</button>
+					
+					<div className="center-text mt-2 small almost-white">{this.state.message}</div>
 				
 				</div>
 				<h4>Total Nutrient Values:</h4>

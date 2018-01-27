@@ -42,6 +42,15 @@ function TrackerDay(props) {
 				
 	
 	**/
+	function createTimeString(d) {
+		let hrs, mins, dt;
+		hrs = Number(d.toTimeString().split(':')[0] % 12);
+		mins = Number(d.toTimeString().split(':')[1]);
+		dt = (Number(d.toTimeString().split(':')[0]) >= 12) ? 'pm' : 'am';
+		return hrs + ':' + mins + dt;
+	}
+	
+	
 	if (props.styleType == 6) 
 		props.styleType = 'week';
 	else if (props.styleType == 30)
@@ -74,9 +83,9 @@ function TrackerDay(props) {
 									{
 										(meal.hasOwnProperty('date')) 
 											?
-										(Number(meal.date.toTimeString().split(':')[0]) + ':' + meal.date.toTimeString().split(':')[1]) 
+										createTimeString(meal.date)
 											: 
-										'4:20'
+										'4:20pm'
 									} 
 								</span>
 

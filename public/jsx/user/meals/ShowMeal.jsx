@@ -4,6 +4,12 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import NutrientTable from '../components/NutrientTable.jsx';
 
+/**
+	TODO: 
+		- rename this ShowMeals, ShowMeal will be what the component for viewing details of a single meal will be called
+	
+	ShowMeal displays info about each meal that a user has saved.
+**/
 class ShowMeal extends React.Component {
 	constructor(props) {
 		super(props);
@@ -55,7 +61,7 @@ class ShowMeal extends React.Component {
 		}
 	}
 	
-	renderMeal(meal) {
+	renderMeal(meal) { 
 		return (
 			<div key={meal._id} className="col-lg-6 show-meal">
 				
@@ -88,11 +94,11 @@ class ShowMeal extends React.Component {
 		)
 	}
 	
-	renderItem(item) {
+	renderItem(item) { 
 		return (
-			<div key={item.id} className="col-md-4">
+			<div key={item._id} className="col-md-4">
 				
-				<div key={item.id} className="show-meal-portion block-detail">
+				<div className="show-meal-portion block-detail">
 					<div className="show-meal-portion-servings">servings {item.servings}</div>
 					<span className="show-meal-portion-name">{item.name}</span>
 				</div>

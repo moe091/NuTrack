@@ -17,6 +17,7 @@ import Datetime from 'react-datetime';
 		- Add a 'custom' timePeriod, where instead of being a set number of days the user selects both the startDate and endDate and TrackerShow displays all days inbetween those two dates. If <3 days are selected set <TrackerDay> styleTypes to 'day', <=7 set to 'week', >7 set to 'month'
 		- Add buttons to view stats and graphs for selected days,
 		- Add checkboxes to each TrackerDay comp so that user can select days before clicking buttons to view stats/graphs for those days
+		- Set endDate and startDate as url params so that refreshing and using back button doesn't reset the dates being shown
 **/
 class TrackerShow extends React.Component {
 	constructor(props) {

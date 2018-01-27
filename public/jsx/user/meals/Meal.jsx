@@ -14,6 +14,9 @@ class Meal extends React.Component {
 		}
 	}
 	
+	//creates a function that calls this.props.trackerAddHandler and passes in the (meal) parameter.
+	//TODO: instead of creating a returning a function to be used as the trackerAddHandler, just set the function to call this.props.trackerAddHandler(was only setup this way so I could log some stuff to the console and see what it's doing). 
+	//NOTE: tried to implement todo, and meal wasn't being passed on for some reason. gotta fix that later
 	trackerAdd(meal) {
 		console.log('this1: ', this);
 		var that = this;

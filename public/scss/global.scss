@@ -69,6 +69,12 @@ html, body {
 	color: $almost-white;
 }
 
+.btn-disabled {
+	cursor: context-menu !important;
+	background-color: #1f2e38 !important;
+	color: #ccc !important;
+}
+  
 //fix for react-datetime 
 /**
 .rdt {
