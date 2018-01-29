@@ -42,7 +42,7 @@ class UserApp extends React.Component {
 			<div className="app-wrapper">
 				<Nav />
 				<div className="container-fixed h-100 no-gap">
-					<div className="row">
+					<div className="row row-leftFix">
 
 						<div className="col-sm-2 p-0">
 							<SideBar 

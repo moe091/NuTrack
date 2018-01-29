@@ -5831,140 +5831,91 @@ var SideBar = function (_React$Component) {
 
 	_createClass(SideBar, [{
 		key: 'render',
+
+
+		/**
+  	Top: checkedItems:
+  		label-'Selected Items'
+  		each item(i): 
+  			item[i].name		-
+  		;
+  		
+  		Tracker/Planner/Meal
+  		each type(i):
+  			type[i].name		+
+  		;
+  		
+  		LINK:
+  			Compare Selected Items
+  		; {FUTURE TASK - implement comparisons later}
+  **/
+
+		/**
+  	TODO Next Time:
+  	- Need checkedItems to contain name of selected item(currently just an int with ndbno):
+  		- in SearchArea component, create a function to render each table row
+  		- when rendering the table row, set the callback for checking the items checkbox to by calling a function that creates a function, likes this:
+  		
+  		createItemCheckCB(item) {
+  			return function() {
+  				//call props.checkItemHandler(handler func in UserApp component)
+  				this.props.checkItem(item.ndbno, item.name);
+  			}
+  		}
+  		
+  		then the checkbox's callback will be linked to the items name
+  		
+  		So in userApp, the checkItemHandler will just have to be changed to add objects instead of Numbers to checkedItems array, like:
+  			checkedItems.push({ndbno: ndb, name: name});
+  			
+  		This will require re-working many other components that rely on checkedItems(NewMeal/MealBuilder, Maybe TrackerAdd, SideBar, etc)
+  **/
 		value: function () {
 			function render() {
+				var _this2 = this;
+
 				return _react2['default'].createElement(
 					'div',
-					{ className: 'sidebar' },
-					_react2['default'].createElement('div', { className: 'sidebar-spacer' }),
+					{ className: 'sidebar container-fixed' },
 					_react2['default'].createElement(
 						'div',
-						{ className: "sidebar-label text-center " + (this.props.checkedItems.length > 0 ? "sidebar-mid" : "sidebar-faded") },
-						this.props.checkedItems.length + " items selected"
-					),
-					_react2['default'].createElement(
-						'div',
-						{ className: 'sidebar-rowGroup' },
+						{ className: 'sidebar-section container-fixed' },
 						_react2['default'].createElement(
-							'a',
-							{ onClick: this.props.trackerShowHandler, className: 'sidebar-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment' },
-								' ',
-								_react2['default'].createElement('i', { className: 'fa fa-tasks sidebar-icon', 'aria-hidden': 'true' }),
-								' Tracker'
-							)
+							'label',
+							null,
+							this.props.checkedItems.length,
+							' Selected Items:'
 						),
-						_react2['default'].createElement(
-							'a',
-							{ onClick: this.props.trackerAddHandler, className: 'sidebar-link right-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment right-segment' },
-								_react2['default'].createElement('i', { className: "fa fa-plus sidebar-icon right-icon" + (this.props.plusEnabled ? '' : ' icon-disabled') })
-							)
-						)
-					),
-					_react2['default'].createElement(
-						'div',
-						{ className: 'sidebar-rowGroup' },
-						_react2['default'].createElement(
-							'a',
-							{ href: '#', onClick: this.props.plannerAddHandler, className: 'sidebar-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment' },
-								' ',
-								_react2['default'].createElement('i', { className: 'fa fa-calendar sidebar-icon', 'aria-hidden': 'true' }),
-								' Planner'
-							)
-						),
-						_react2['default'].createElement(
-							'a',
-							{ href: '#', className: 'sidebar-link right-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment right-segment' },
-								_react2['default'].createElement('i', { className: "fa fa-plus sidebar-icon right-icon" + (this.props.plusEnabled ? '' : ' icon-disabled') })
-							)
-						)
-					),
-					_react2['default'].createElement(
-						'div',
-						{ className: 'sidebar-section' },
-						_react2['default'].createElement(
-							'a',
-							{ onClick: this.props.showMealHandler },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment segment-head' },
-								' ',
-								_react2['default'].createElement('i', { className: 'fa fa-cutlery sidebar-icon', 'aria-hidden': 'true' }),
-								' Meals'
-							)
-						),
-						_react2['default'].createElement(
-							'a',
-							{ disabled: this.props.plusEnabled, onClick: this.props.newMealHandler },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'link-div sidebar-segment segment-item meal-item meal-item-0' },
-								'Create Meal'
-							)
-						)
-					),
-					_react2['default'].createElement(
-						'div',
-						{ className: 'sidebar-section' },
-						_react2['default'].createElement(
-							'div',
-							{ className: 'sidebar-segment segment-head' },
-							' ',
-							_react2['default'].createElement('i', { className: 'fa fa-bar-chart sidebar-icon', 'aria-hidden': 'true' }),
-							' Comparisons'
-						),
-						_react2['default'].createElement(
-							'a',
-							{ href: '#', className: 'sidebar-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment segment-item compare-item compare-item-0' },
-								'Comparison #1'
-							)
-						),
-						_react2['default'].createElement(
-							'a',
-							{ href: '#', className: 'sidebar-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment segment-item compare-item compare-item-1' },
-								'Comparison #2'
-							)
-						),
-						_react2['default'].createElement(
-							'a',
-							{ href: '#', className: 'sidebar-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment segment-item compare-item compare-item-2' },
-								'Comparison #3'
-							)
-						),
-						_react2['default'].createElement(
-							'a',
-							{ href: '#', className: 'sidebar-link' },
-							_react2['default'].createElement(
-								'div',
-								{ className: 'sidebar-segment segment-item compare-item compare-item-3' },
-								'Comparison #4'
-							)
-						)
+						this.props.checkedItems.map(function (item) {
+							return _this2.renderSelectedItem(item);
+						})
 					)
 				);
 			}
 
 			return render;
+		}()
+	}, {
+		key: 'renderSelectedItem',
+		value: function () {
+			function renderSelectedItem(item) {
+				return _react2['default'].createElement(
+					'div',
+					{ className: 'row sidebar-list-item' },
+					_react2['default'].createElement(
+						'a',
+						{ className: 'col-sm-9 sidebar-list-item-main sidebar-item-main' },
+						item.name
+					),
+					_react2['default'].createElement(
+						'a',
+						{ className: 'col-sm-3 sidebar-list-item-right sidebar-item-right' },
+						_react2['default'].createElement('i', { className: 'fa fa-plus sidebar-icon sidebar-list-icon' })
+					)
+				);
+			}
+
+			return renderSelectedItem;
 		}()
 	}]);
 
@@ -5972,6 +5923,43 @@ var SideBar = function (_React$Component) {
 }(_react2['default'].Component);
 
 exports['default'] = SideBar;
+
+/** 
+	__________________OLD SIDEBAR__________________
+	
+	<div className="sidebar">
+	
+				<div className="sidebar-spacer"></div>
+
+				<div className={"sidebar-label text-center " + ((this.props.checkedItems.length > 0) ? "sidebar-mid" : "sidebar-faded")} >
+					{this.props.checkedItems.length + " items selected"}
+				</div>
+				<div className="sidebar-rowGroup">
+					<a onClick={this.props.trackerShowHandler} className="sidebar-link"><div className="sidebar-segment"> <i className="fa fa-tasks sidebar-icon" aria-hidden="true"></i> Tracker</div></a>
+					<a onClick={this.props.trackerAddHandler} className="sidebar-link right-link"><div className="sidebar-segment right-segment"><i className={"fa fa-plus sidebar-icon right-icon" + (this.props.plusEnabled ? '' : ' icon-disabled')}></i></div></a> 
+				</div>
+
+				<div className="sidebar-rowGroup">
+					<a href="#" onClick={this.props.plannerAddHandler} className="sidebar-link"><div className="sidebar-segment"> <i className="fa fa-calendar sidebar-icon" aria-hidden="true"></i> Planner</div></a>
+					<a href="#" className="sidebar-link right-link"><div className="sidebar-segment right-segment"><i className={"fa fa-plus sidebar-icon right-icon" + (this.props.plusEnabled ? '' : ' icon-disabled')}></i></div></a> 
+				</div>
+
+				<div className="sidebar-section">
+					<a onClick={this.props.showMealHandler}><div className="sidebar-segment segment-head"> <i className="fa fa-cutlery sidebar-icon" aria-hidden="true"></i> Meals</div></a>
+					<a disabled={this.props.plusEnabled} onClick={this.props.newMealHandler}><div className="link-div sidebar-segment segment-item meal-item meal-item-0">Create Meal</div></a>
+				</div>
+
+				<div className="sidebar-section">
+					<div className="sidebar-segment segment-head"> <i className="fa fa-bar-chart sidebar-icon" aria-hidden="true"></i> Comparisons</div>
+					<a href="#" className="sidebar-link"><div className="sidebar-segment segment-item compare-item compare-item-0">Comparison #1</div></a>
+					<a href="#" className="sidebar-link"><div className="sidebar-segment segment-item compare-item compare-item-1">Comparison #2</div></a>
+					<a href="#" className="sidebar-link"><div className="sidebar-segment segment-item compare-item compare-item-2">Comparison #3</div></a>
+					<a href="#" className="sidebar-link"><div className="sidebar-segment segment-item compare-item compare-item-3">Comparison #4</div></a>
+				</div>	
+
+			</div>
+			
+			**/
 
 /***/ }),
 /* 19 */
@@ -52571,7 +52559,7 @@ var UserApp = function (_React$Component) {
 						{ className: 'container-fixed h-100 no-gap' },
 						_react2['default'].createElement(
 							'div',
-							{ className: 'row' },
+							{ className: 'row row-leftFix' },
 							_react2['default'].createElement(
 								'div',
 								{ className: 'col-sm-2 p-0' },

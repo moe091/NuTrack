@@ -1,5 +1,52 @@
+//______ NEW SIDEBAR _______\\
+
+.sidebar {
+	background-color: $sidebar-bg;
+	color: $white;
+	height: 100%;
+	min-width: 140px;
+	
+	label {
+		color: $sidebar-label;
+	}
+	
+	a {
+		color: sidebar-link;
+		transition: ease-in-ease-out .3s;
+		
+		&:hover {
+			background-color: $sidebar-highlight;
+			transition: ease-in-ease-out .3s;
+		}
+	}
+	
+	.sidebar-item-right {
+		background-color: $sidebar-right-bg;
+		
+		&:hover {
+			background-color: $sidebar-right-highlight;
+		}
+	}
+}
 
 
+/**
+COLORS:
+$white: #ffffff;
+$sidebar-bg: #071733;
+$sidebar-right-bg: #040f23;
+$sidebar-highlight: #1e2f4f;
+
+$sidebar-link: #eae8e5;
+$sidebar-link-hover: #fffbf7;
+
+$sidebar-inset-section: #495568;
+$sidebar-inset-link: #d5d2d8;
+$sidebar-inset-link-hover: #e7e3ea;
+
+
+
+			__________ OLD SIDEBAR  __________
 .sidebar {
 	background-color: $sidebar-dark-col;
 	height: 100%;
@@ -138,7 +185,7 @@
 	}
 }
 
-
+**/
 
 
 

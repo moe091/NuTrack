@@ -14,11 +14,87 @@ import ReactDOM from 'react-dom';
 **/
 class SideBar extends React.Component {
 	
+	/**
+		Top: checkedItems:
+			label-'Selected Items'
+			each item(i): 
+				item[i].name		-
+			;
+			
+			Tracker/Planner/Meal
+			each type(i):
+				type[i].name		+
+			;
+			
+			LINK:
+				Compare Selected Items
+			; {FUTURE TASK - implement comparisons later}
+	**/
 	
+	
+	/**
+		TODO Next Time:
+		- Need checkedItems to contain name of selected item(currently just an int with ndbno):
+			- in SearchArea component, create a function to render each table row
+			- when rendering the table row, set the callback for checking the items checkbox to by calling a function that creates a function, likes this:
+			
+			createItemCheckCB(item) {
+				return function() {
+					//call props.checkItemHandler(handler func in UserApp component)
+					this.props.checkItem(item.ndbno, item.name);
+				}
+			}
+			
+			then the checkbox's callback will be linked to the items name
+			
+			So in userApp, the checkItemHandler will just have to be changed to add objects instead of Numbers to checkedItems array, like:
+				checkedItems.push({ndbno: ndb, name: name});
+				
+			This will require re-working many other components that rely on checkedItems(NewMeal/MealBuilder, Maybe TrackerAdd, SideBar, etc)
+	**/
 	render() {
 		return (
 			
-			<div className="sidebar">
+			<div className="sidebar container-fixed">
+				
+				<div className="sidebar-section container-fixed">
+					<label>{this.props.checkedItems.length} Selected Items:</label>
+					{
+						this.props.checkedItems.map((item) => {
+							return this.renderSelectedItem(item);
+						})
+					}
+				</div>
+			</div>
+			
+			
+		)
+	}
+	
+	renderSelectedItem(item) {
+		return (
+		
+			<div className="row sidebar-list-item">
+				<a className="col-sm-9 sidebar-list-item-main sidebar-item-main">
+					{item.name}
+				</a>
+				<a className="col-sm-3 sidebar-list-item-right sidebar-item-right">
+					<i className="fa fa-plus sidebar-icon sidebar-list-icon"></i>
+				</a>
+			</div>
+		
+		)
+	}
+}
+
+export default SideBar;
+
+
+
+/** 
+	__________________OLD SIDEBAR__________________
+	
+	<div className="sidebar">
 	
 				<div className="sidebar-spacer"></div>
 
@@ -50,8 +126,4 @@ class SideBar extends React.Component {
 
 			</div>
 			
-		)
-	}
-}
-
-export default SideBar;
+			**/
