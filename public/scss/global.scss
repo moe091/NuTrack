@@ -1,4 +1,5 @@
 @import "colors";
+@import "values";
 @import "layouts/masthead";
 @import "layouts/nav";
 @import "layouts/sidebar";
@@ -15,11 +16,27 @@
 
 
  
-
-html, body {
-	min-height: 100%;
-	background-color: $col-bg;
+html {
+	background-color: #85d8ce;
 }
+body {
+	height: 100%;
+}
+
+html, body, #App, .app-wrapper, #App>div {
+	height: 100%;
+}
+
+
+.fill-height{
+	height: 100% !important;
+	margin-top: -$total-nav-height !important;
+	padding-top: $total-nav-height !important;
+}
+.min-height-fill {
+	min-height: 100%;
+}
+
 
 
 
@@ -84,6 +101,9 @@ html, body {
 	margin-left: 0 !important;
 }
   
+.vh-95 {
+	height: 100%;
+}
 //fix for react-datetime 
 /**
 .rdt {

@@ -26,6 +26,14 @@ class Meal extends React.Component {
 		}
 	}
 	
+	componentWillReceiveProps(newProps) {
+		if (this.state.checkeditems != newProps.checkedItems) {
+			this.setState({
+				checkedItems: newProps.checkedItems
+			});
+		}
+	}
+	
 	render() {
 		return (
 			<div className="col-sm-10 p-0 main-col">

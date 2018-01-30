@@ -5,28 +5,128 @@
 	color: $white;
 	height: 100%;
 	min-width: 140px;
+	font-size: 18px; 
 	
-	label {
-		color: $sidebar-label;
+	.sidebar-main-group {
+		border-top: 1px $sidebar-main-border solid;
+	}
+	.sidebar-main-section {	
 	}
 	
 	a {
-		color: sidebar-link;
-		transition: ease-in-ease-out .3s;
-		
+		transition: background-color .2s ease-in;
+		cursor: pointer;
 		&:hover {
-			background-color: $sidebar-highlight;
-			transition: ease-in-ease-out .3s;
+			transition: background-color .2s ease-in;
 		}
 	}
 	
-	.sidebar-item-right {
-		background-color: $sidebar-right-bg;
-		
-		&:hover {
-			background-color: $sidebar-right-highlight;
-		}
+	
+	label {
+		color: $sidebar-label;
+		display: block;
+		border-bottom: 2px $sidebar-highlight solid;
+		margin-bottom: 0;
+		padding: 16px 0 2px 0;
+		text-align: center;
+		background-color: $sidebar-label-bg;
 	}
+	
+	
+	.sidebar-search-label {
+	}
+	.sidebar-search-section {
+		display: flex;
+		flex-direction: row;
+		button {
+			min-width: 40px;
+			display: inline-block;
+			margin: 0;
+			flex-grow: 2;
+			height: 2em;
+			background-color: $sidebar-main-link;
+			color: #fff;
+		}
+		input[type="text"] {
+			min-width: 100px;
+			display: inline-block;
+			margin: 0;
+			flex-grow: 8;
+			height: 2em;
+		}  
+	}
+
+	
+	.sidebar-section {
+	
+		.sidebar-item-main {
+			background-color: $sidebar-main-link;
+			border-bottom: 1px $sidebar-main-border solid;
+			text-align: center;
+			padding: 3px 1px;
+			
+			&:hover {
+				background-color: $sidebar-main-highlight;
+			}
+		}
+		
+		.sidebar-item-right {
+			background-color: $sidebar-right-bg;
+			text-align: center;
+			transition: border .2s ease-in;
+
+			&:hover {
+				background-color: $sidebar-right-highlight;
+				border-right: 1px $sidebar-right-border-highlight solid;
+				transition: border .2s ease-in;
+			}
+		}
+		
+	}
+	
+	
+	
+
+	
+	
+	
+	.sidebar-list-section {	
+		
+		color: $faded-white;
+		.sidebar-list-item {
+			font-size: 13px;
+			line-height: 1.4em;
+			max-height: 2em;
+			
+			
+			.sidebar-list-item-main {
+				background-color: $sidebar-list-main;
+				text-transform: lowercase;
+				overflow: hidden;
+				border: none;
+				padding: 0;
+				
+				&:hover {
+					background-color: $sidebar-list-highlight;
+				}
+			}
+			
+			
+			.sidebar-list-item-right {
+				text-align: center;
+				background-color: $sidebar-right;
+				
+				&:hover {
+					background-color: $sidebar-right-highlight;
+				}
+			}
+			
+			
+		}
+		
+		
+	}
+	
 }
 
 

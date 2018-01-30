@@ -21,7 +21,7 @@ class NewMeal extends React.Component {
 	
 	render() {
 		return (
-							<MealBuilder checkedItems={this.props.checkedItems} createMealHandler={this.createMealHandler.bind(this)} />
+			<MealBuilder checkedItems={this.props.checkedItems} createMealHandler={this.createMealHandler.bind(this)} />
 		)
 	}
 	  

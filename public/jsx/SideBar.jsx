@@ -11,6 +11,9 @@ import ReactDOM from 'react-dom';
 		-Redesign Layout: put a container inside SideBar taking up the entire space. Each row will be a bootstrap row, with full length links being a col-9 with an empty col-3 to the right and links with a right-link/icon-link being a col-9 for the main link + a col-3 for the little icon/side button. the col-3's will be a slightly darker color than the col-9s and the col-9s will probably have a box-shadow on the right to give a 3d effect. 
 		-Make Sidebar collapse, in its collapsed state it will only be the width of the icon-sized buttons. Each link will be replaced by an Icon(Tracker, Planner, Meal, Search) with an icon at the top to expand it. Add to meal/tracker/planner and create meal buttons won't be present on collapsed sidebar.
 		-The top nav should be responsible for account-related navigation such as user profile/settings, logging in and out, and navigating between userApp area and homepage
+		
+		IDEAS:
+		- for the 'Selected Items: N' label, make it display a NutrientTable on hover
 **/
 class SideBar extends React.Component {
 	
@@ -33,38 +36,58 @@ class SideBar extends React.Component {
 	
 	
 	/**
-		TODO Next Time:
-		- Need checkedItems to contain name of selected item(currently just an int with ndbno):
-			- in SearchArea component, create a function to render each table row
-			- when rendering the table row, set the callback for checking the items checkbox to by calling a function that creates a function, likes this:
-			
-			createItemCheckCB(item) {
-				return function() {
-					//call props.checkItemHandler(handler func in UserApp component)
-					this.props.checkItem(item.ndbno, item.name);
-				}
-			}
-			
-			then the checkbox's callback will be linked to the items name
-			
-			So in userApp, the checkItemHandler will just have to be changed to add objects instead of Numbers to checkedItems array, like:
-				checkedItems.push({ndbno: ndb, name: name});
-				
-			This will require re-working many other components that rely on checkedItems(NewMeal/MealBuilder, Maybe TrackerAdd, SideBar, etc)
+		TODO:/Idea: Tracker, Meal, and Planner, split the right section into two halves(also make it a lil wider, col-4 instead of col-3). Right section will be a dropdown button icon, left section will be the +/add btn. The dropdown will cause a section to slide out under the button that displays extra info.
+		
+		For Meals it will display 4-6 most recent meal names as links that lead to that meals page
+		
+		For Tracker/Planner it will dispaly a NutrientTable for the last day/week/month/etc based on your default settings(default default is week). Or maybe have it display all 3 on top of eachother.
 	**/
 	render() {
 		return (
 			
-			<div className="sidebar container-fixed">
+			<div className="sidebar w-100 h-100">
 				
-				<div className="sidebar-section container-fixed">
-					<label>{this.props.checkedItems.length} Selected Items:</label>
+				<label className="sidebar-search-label">Search</label>	
+				<div className="sidebar-section sidebar-search-section">
+					<input type="text" className="sidebar-search-text sidebar-input"></input>
+					<button className="sidebar-search-btn sidebar-input">
+						<i className="fa fa-search sidebar-icon"></i>
+					</button>
+				</div>
+				
+				<label>{this.props.checkedItems.length} Selected Items:</label>
+				<div className="sidebar-section container-fixed sidebar-list-section">
 					{
 						this.props.checkedItems.map((item) => {
 							return this.renderSelectedItem(item);
 						})
 					}
 				</div>
+				
+				<div className="sidebar-main-group container-fixed">
+					<div className="sidebar-section sidebar-main-section row m-0">
+						<a onClick={this.props.trackerShowHandler} className="col-sm-9 sidebar-item-main p-1">Tracker</a>
+						<a onClick={this.props.trackerAddHandler}className="col-sm-3 sidebar-item-right p-1">
+							<i className="fa fa-plus sidebar-icon"></i>
+						</a>
+					</div>
+				
+					<div className="sidebar-section sidebar-main-section row m-0">
+						<a className="col-sm-9 sidebar-item-main p-1">Planner</a>
+						<a className="col-sm-3 sidebar-item-right p-1">
+							<i className="fa fa-plus sidebar-icon"></i>
+						</a>
+					</div>
+				
+					<div className="sidebar-section sidebar-main-section row m-0">
+						<a onClick={this.props.showMealHandler} className="col-sm-9 sidebar-item-main p-1">Meals</a>
+						<a onClick={this.props.newMealHandler} className="col-sm-3 sidebar-item-right p-1">
+							<i className="fa fa-plus sidebar-icon"></i>
+						</a>
+					</div>
+				</div>
+				
+				
 			</div>
 			
 			
@@ -74,17 +97,31 @@ class SideBar extends React.Component {
 	renderSelectedItem(item) {
 		return (
 		
-			<div className="row sidebar-list-item">
-				<a className="col-sm-9 sidebar-list-item-main sidebar-item-main">
+			<div key={item.ndb} className="row sidebar-list-item m-0">
+				<a className="col-sm-9 sidebar-list-item-main sidebar-item-main p-1">
 					{item.name}
 				</a>
-				<a className="col-sm-3 sidebar-list-item-right sidebar-item-right">
-					<i className="fa fa-plus sidebar-icon sidebar-list-icon"></i>
+				<a onClick={this.createDeselectHandler(item)}className="col-sm-3 sidebar-list-item-right sidebar-item-right p-1">
+					<i className="fa fa-times sidebar-icon sidebar-list-icon"></i>
 				</a>
 			</div>
 		
 		)
 	}
+	
+	createDeselectHandler(item) {
+		//use arrow func to bind
+		return (e) => {
+			this.props.checkItemHandler({
+				ndb: item.ndb,
+				name: item.name,
+				checked: false
+			});
+		}
+	}
+	
+	
+	
 }
 
 export default SideBar;

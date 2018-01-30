@@ -20,7 +20,9 @@ nav {
 
 .nav-corner {
 	background-color: $col-nav-title;
-	font-size: 1.5em;
-	line-height: 1em;
+	font-size: $nav-logo-fontsize;
+	line-height: $nav-logo-lineheight;
+	margin: $nav-logo-margin;
+	padding: $nav-logo-padding;
 	font-weight: bold;
 }

@@ -47,7 +47,7 @@ class SearchArea extends React.Component {
 							Results For "{this.props.query}"
 						</div>
 					</div>
-					<SearchTable nutNames={this.state.nutNames} items={this.state.items} nutrients={this.state.nutrients} checkItemHandler={this.props.checkItemHandler}/>
+					<SearchTable nutNames={this.state.nutNames} items={this.state.items} nutrients={this.state.nutrients} checkedItems={this.props.checkedItems} checkItemHandler={this.props.checkItemHandler}/>
 				</div>
 			</div>
 		)
@@ -190,7 +190,7 @@ class SearchTable extends React.Component {
 			<tr key={item.ndb}>
 				<td>
 					<label className="fancy-checkbox">
-						<input type="checkbox" className="search-result-chk" id={"item-chk-" + item.ndb}  name="item-chk-1" onClick={this.props.checkItemHandler} num="1"></input>
+						<input type="checkbox" className="search-result-chk" id={"item-chk-" + item.ndb}  name="item-chk-1" onClick={this.createCheckHandler(item)} num="1" checked={this.getCheckedVal(item.ndb)} ></input>
 						<i aria-hidden="true" className="chk-icon fa fa-square-o unchecked"></i>
 						<i aria-hidden="true" className="chk-icon fa fa-check-square-o checked"></i>
 					</label>	
@@ -211,10 +211,38 @@ class SearchTable extends React.Component {
 		)
 	}
 	
+	/**
+		for setting boolean attribute 'checked' on <input> element for items. for boolean attributes <e boolAttr=""> defaults to just <e> and <e boolAttr="boolAttr"> defaults to <e boolAttr>, which is a good thing. See https://github.com/facebook/react/issues/9230 if confused
+	**/
+	getCheckedVal(ndb) {
+		for (var i = 0; i < this.props.checkedItems.length; i++) {
+			if (this.props.checkedItems[i].ndb == ndb) {
+				return "checked";
+			}
+		}
+		return "";
+	}
+	
+	/**
+		Create an checkItem handler specific for each item that calls props.checkItemHandler and passes in an object with item.name and item.ndbno
+	**/
+	createCheckHandler(item) {
+		//arrow func so I don't have to bind 
+		return (e) => {
+			console.log("callback. this:", this);
+			this.props.checkItemHandler({
+				ndb: item.ndb,
+				name: item.name,
+				checked: e.target.checked
+			})
+		}
+	}
+	
 	itemCheck(e) {
 		console.log("check");
 		console.log(e.target.id.split("-")[2]);
 	}
+	
 }
 
 export {SearchArea, SearchTable}

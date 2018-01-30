@@ -6,8 +6,8 @@ class Nav extends React.Component {
 	
 	render() {
 		return (
-			<div className="container-fixed h-100 no-gap">
-				<div className="row">
+			<div className="container-fixed no-gap">
+				<div className="row row-leftFix">
 
 					<div className="col-sm-2 p-3 nav-corner d-flex align-content-center justify-content-center">
 						<span className="nav-title align-self-center justify-self-center">

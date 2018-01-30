@@ -41,13 +41,14 @@ class UserApp extends React.Component {
 		return (
 			<div className="app-wrapper">
 				<Nav />
-				<div className="container-fixed h-100 no-gap">
-					<div className="row row-leftFix">
+				<div className="container-fixed fill-height no-gap">
+					<div className="row row-leftFix min-height-fill">
 
 						<div className="col-sm-2 p-0">
 							<SideBar 
 								newMealHandler={this.newMealHandler.bind(this)} 
 								checkedItems={this.state.checkedItems} 
+								checkItemHandler={this.checkItemHandler.bind(this)}
 								showMealHandler={this.showMealHandler.bind(this)} 
 								plusEnabled={(this.state.checkedItems.length > 0)} 
 								trackerShowHandler={this.trackerShowHandler.bind(this)}
@@ -72,6 +73,7 @@ class UserApp extends React.Component {
 										searchHandler={this.search.bind(this)} 
 										newMealHandler={this.newMealHandler.bind(this)} checkItemHandler={this.checkItemHandler.bind(this)} 
 										query={this.state.query[this.state.query.length - 1]} 
+										checkedItems={this.state.checkedItems}
 									/> 	
 								)
 							}}
@@ -161,30 +163,78 @@ class UserApp extends React.Component {
 		
 		TODO: refactor this function, instead of taking the html element as a parameter and calculating the ndbno from the elements id, just accept the ndbno. Components calling this function will manually extract/find the ndbno of the item being selected and pass that in when calling this function, instead of just setting this func as the callback for input events on html elements
 	**/
-	checkItemHandler(e) {
-		var ndb = e.target.id.split("-")[2]; 
-		if (e.target.checked) {
-			this.setState({
-				checkedItems: this.state.checkedItems.concat(ndb)
-			});
+	checkItemHandler(item) {
+		//call isNdbChecked on items ndb, if it already exists in checkedItems then itemIndex will be set to the items index in checkedItems, if not it will be set to -1
+		var itemIndex = this.isNdbChecked(item.ndb);
+		//if itemIndex equals -1 then the item wasn't 'checkedBefore', so set to false. otherwise set to true
+		var checkedBefore = (itemIndex < 0) ? false : true
+		var isCheckedNow = item.checked
+		item = {name: item.name, ndb: item.ndb};
+		
+		
+		if (isCheckedNow) { 
+			
+			if (!checkedBefore) { //wasn't checked, is now, so add to newArr
+				var newArr = this.state.checkedItems.concat(item);
+			} else { //ndb is checked now, and it was already checked(somehow)??
+				console.warn("wasn't checked, still isn't?", this.state.checkedItems);
+				console.warn("newly checked item:", item);
+			}
+			
 		} else {
-			var newArr = [];
-			this.state.checkedItems.map((i) => {
-				if (i != null && i != ndb) {
-					console.log("not null:", i);
-					newArr.push(i);
-				} else {
-					console.log("null: ", i);
-				}
-			});
-			console.log("newArr:", newArr);
+			
+			if (checkedBefore) { //isn't checked, but was, so remove item
+				//reomve itemIndex from checkedItems, set to newArr
+				var newArr = 
+					this.state.checkedItems
+					.slice(0, itemIndex)
+					.concat(
+						this.state.checkedItems.slice(itemIndex + 1, this.state.checkedItems.length)
+					);
+			} else {//ndb wasn't checked, and it's not now. this shouldn't be called
+				console.warn("was checked, still is?", this.state.checkedItems);
+				console.warn("newly checked item:", item);
+				console.warn("itemIndex = " + itemIndex);
+			}
+			
+		}
+		
+		//if newArr was set, checkedItems has changed. update state
+		if (newArr != null) {
 			this.setState({
 				checkedItems: newArr
 			});
+		} else {
+			console.warn("Something was checked but nothing changed, what happened? Look above for details");
 		}
-		console.log("checked Items = ", this.state.checkedItems);
+		
 	}
+	
+	//returns -1 if ndb isn't already in checkedItems, returns index of item if it is in array
+	isNdbChecked(ndb) {
+		console.log("ndbCheck: ndb = " + ndb);
+		for (var i = 0; i < this.state.checkedItems.length; i++) {
+			console.log("checking against " + this.state.checkedItems[i].ndb);
+			if (this.state.checkedItems[i].ndb == ndb) {
+				console.log("MATCH");
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	
+	
 }
 
 
 export default UserApp;
+
+
+
+
+
+
+
+
+

@@ -67,7 +67,9 @@ class MealBuilder extends React.Component {
 	//Ajax function, pass in the list of ndbs and receive 'nutrients': an array containing full nutrient info for each item from the list of ndbs passed on. also receive 'watched', a Number array containing the nutrient_id of the current users watched_nutrients
 	getItemInfos() {
 		var reqBody = {
-			ndbs: this.props.checkedItems,
+			ndbs: this.props.checkedItems.map((item) => {
+				return item.ndb;
+			}),
 			type: 'f'
 		}
 		fetch('../../user/item/list', {

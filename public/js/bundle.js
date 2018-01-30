@@ -5586,10 +5586,10 @@ var Nav = function (_React$Component) {
 			function render() {
 				return _react2['default'].createElement(
 					'div',
-					{ className: 'container-fixed h-100 no-gap' },
+					{ className: 'container-fixed no-gap' },
 					_react2['default'].createElement(
 						'div',
-						{ className: 'row' },
+						{ className: 'row row-leftFix' },
 						_react2['default'].createElement(
 							'div',
 							{ className: 'col-sm-2 p-3 nav-corner d-flex align-content-center justify-content-center' },
@@ -5819,6 +5819,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 		-Redesign Layout: put a container inside SideBar taking up the entire space. Each row will be a bootstrap row, with full length links being a col-9 with an empty col-3 to the right and links with a right-link/icon-link being a col-9 for the main link + a col-3 for the little icon/side button. the col-3's will be a slightly darker color than the col-9s and the col-9s will probably have a box-shadow on the right to give a 3d effect. 
 		-Make Sidebar collapse, in its collapsed state it will only be the width of the icon-sized buttons. Each link will be replaced by an Icon(Tracker, Planner, Meal, Search) with an icon at the top to expand it. Add to meal/tracker/planner and create meal buttons won't be present on collapsed sidebar.
 		-The top nav should be responsible for account-related navigation such as user profile/settings, logging in and out, and navigating between userApp area and homepage
+		
+		IDEAS:
+		- for the 'Selected Items: N' label, make it display a NutrientTable on hover
 **/
 var SideBar = function (_React$Component) {
 	_inherits(SideBar, _React$Component);
@@ -5851,24 +5854,11 @@ var SideBar = function (_React$Component) {
   **/
 
 		/**
-  	TODO Next Time:
-  	- Need checkedItems to contain name of selected item(currently just an int with ndbno):
-  		- in SearchArea component, create a function to render each table row
-  		- when rendering the table row, set the callback for checking the items checkbox to by calling a function that creates a function, likes this:
-  		
-  		createItemCheckCB(item) {
-  			return function() {
-  				//call props.checkItemHandler(handler func in UserApp component)
-  				this.props.checkItem(item.ndbno, item.name);
-  			}
-  		}
-  		
-  		then the checkbox's callback will be linked to the items name
-  		
-  		So in userApp, the checkItemHandler will just have to be changed to add objects instead of Numbers to checkedItems array, like:
-  			checkedItems.push({ndbno: ndb, name: name});
-  			
-  		This will require re-working many other components that rely on checkedItems(NewMeal/MealBuilder, Maybe TrackerAdd, SideBar, etc)
+  	TODO:/Idea: Tracker, Meal, and Planner, split the right section into two halves(also make it a lil wider, col-4 instead of col-3). Right section will be a dropdown button icon, left section will be the +/add btn. The dropdown will cause a section to slide out under the button that displays extra info.
+  	
+  	For Meals it will display 4-6 most recent meal names as links that lead to that meals page
+  	
+  	For Tracker/Planner it will dispaly a NutrientTable for the last day/week/month/etc based on your default settings(default default is week). Or maybe have it display all 3 on top of eachother.
   **/
 		value: function () {
 			function render() {
@@ -5876,19 +5866,80 @@ var SideBar = function (_React$Component) {
 
 				return _react2['default'].createElement(
 					'div',
-					{ className: 'sidebar container-fixed' },
+					{ className: 'sidebar w-100 h-100' },
+					_react2['default'].createElement(
+						'label',
+						{ className: 'sidebar-search-label' },
+						'Search'
+					),
 					_react2['default'].createElement(
 						'div',
-						{ className: 'sidebar-section container-fixed' },
+						{ className: 'sidebar-section sidebar-search-section' },
+						_react2['default'].createElement('input', { type: 'text', className: 'sidebar-search-text sidebar-input' }),
 						_react2['default'].createElement(
-							'label',
-							null,
-							this.props.checkedItems.length,
-							' Selected Items:'
-						),
+							'button',
+							{ className: 'sidebar-search-btn sidebar-input' },
+							_react2['default'].createElement('i', { className: 'fa fa-search sidebar-icon' })
+						)
+					),
+					_react2['default'].createElement(
+						'label',
+						null,
+						this.props.checkedItems.length,
+						' Selected Items:'
+					),
+					_react2['default'].createElement(
+						'div',
+						{ className: 'sidebar-section container-fixed sidebar-list-section' },
 						this.props.checkedItems.map(function (item) {
 							return _this2.renderSelectedItem(item);
 						})
+					),
+					_react2['default'].createElement(
+						'div',
+						{ className: 'sidebar-main-group container-fixed' },
+						_react2['default'].createElement(
+							'div',
+							{ className: 'sidebar-section sidebar-main-section row m-0' },
+							_react2['default'].createElement(
+								'a',
+								{ onClick: this.props.trackerShowHandler, className: 'col-sm-9 sidebar-item-main p-1' },
+								'Tracker'
+							),
+							_react2['default'].createElement(
+								'a',
+								{ onClick: this.props.trackerAddHandler, className: 'col-sm-3 sidebar-item-right p-1' },
+								_react2['default'].createElement('i', { className: 'fa fa-plus sidebar-icon' })
+							)
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'sidebar-section sidebar-main-section row m-0' },
+							_react2['default'].createElement(
+								'a',
+								{ className: 'col-sm-9 sidebar-item-main p-1' },
+								'Planner'
+							),
+							_react2['default'].createElement(
+								'a',
+								{ className: 'col-sm-3 sidebar-item-right p-1' },
+								_react2['default'].createElement('i', { className: 'fa fa-plus sidebar-icon' })
+							)
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'sidebar-section sidebar-main-section row m-0' },
+							_react2['default'].createElement(
+								'a',
+								{ onClick: this.props.showMealHandler, className: 'col-sm-9 sidebar-item-main p-1' },
+								'Meals'
+							),
+							_react2['default'].createElement(
+								'a',
+								{ onClick: this.props.newMealHandler, className: 'col-sm-3 sidebar-item-right p-1' },
+								_react2['default'].createElement('i', { className: 'fa fa-plus sidebar-icon' })
+							)
+						)
 					)
 				);
 			}
@@ -5901,21 +5952,39 @@ var SideBar = function (_React$Component) {
 			function renderSelectedItem(item) {
 				return _react2['default'].createElement(
 					'div',
-					{ className: 'row sidebar-list-item' },
+					{ key: item.ndb, className: 'row sidebar-list-item m-0' },
 					_react2['default'].createElement(
 						'a',
-						{ className: 'col-sm-9 sidebar-list-item-main sidebar-item-main' },
+						{ className: 'col-sm-9 sidebar-list-item-main sidebar-item-main p-1' },
 						item.name
 					),
 					_react2['default'].createElement(
 						'a',
-						{ className: 'col-sm-3 sidebar-list-item-right sidebar-item-right' },
-						_react2['default'].createElement('i', { className: 'fa fa-plus sidebar-icon sidebar-list-icon' })
+						{ onClick: this.createDeselectHandler(item), className: 'col-sm-3 sidebar-list-item-right sidebar-item-right p-1' },
+						_react2['default'].createElement('i', { className: 'fa fa-times sidebar-icon sidebar-list-icon' })
 					)
 				);
 			}
 
 			return renderSelectedItem;
+		}()
+	}, {
+		key: 'createDeselectHandler',
+		value: function () {
+			function createDeselectHandler(item) {
+				var _this3 = this;
+
+				//use arrow func to bind
+				return function (e) {
+					_this3.props.checkItemHandler({
+						ndb: item.ndb,
+						name: item.name,
+						checked: false
+					});
+				};
+			}
+
+			return createDeselectHandler;
 		}()
 	}]);
 
@@ -6959,7 +7028,7 @@ var SearchArea = function (_React$Component) {
 								'"'
 							)
 						),
-						_react2['default'].createElement(SearchTable, { nutNames: this.state.nutNames, items: this.state.items, nutrients: this.state.nutrients, checkItemHandler: this.props.checkItemHandler })
+						_react2['default'].createElement(SearchTable, { nutNames: this.state.nutNames, items: this.state.items, nutrients: this.state.nutrients, checkedItems: this.props.checkedItems, checkItemHandler: this.props.checkItemHandler })
 					)
 				);
 			}
@@ -7173,7 +7242,7 @@ var SearchTable = function (_React$Component2) {
 						_react2['default'].createElement(
 							'label',
 							{ className: 'fancy-checkbox' },
-							_react2['default'].createElement('input', { type: 'checkbox', className: 'search-result-chk', id: "item-chk-" + item.ndb, name: 'item-chk-1', onClick: this.props.checkItemHandler, num: '1' }),
+							_react2['default'].createElement('input', { type: 'checkbox', className: 'search-result-chk', id: "item-chk-" + item.ndb, name: 'item-chk-1', onClick: this.createCheckHandler(item), num: '1', checked: this.getCheckedVal(item.ndb) }),
 							_react2['default'].createElement('i', { 'aria-hidden': 'true', className: 'chk-icon fa fa-square-o unchecked' }),
 							_react2['default'].createElement('i', { 'aria-hidden': 'true', className: 'chk-icon fa fa-check-square-o checked' })
 						)
@@ -7204,6 +7273,49 @@ var SearchTable = function (_React$Component2) {
 			}
 
 			return createRow;
+		}()
+
+		/**
+  	for setting boolean attribute 'checked' on <input> element for items. for boolean attributes <e boolAttr=""> defaults to just <e> and <e boolAttr="boolAttr"> defaults to <e boolAttr>, which is a good thing. See https://github.com/facebook/react/issues/9230 if confused
+  **/
+
+	}, {
+		key: 'getCheckedVal',
+		value: function () {
+			function getCheckedVal(ndb) {
+				for (var i = 0; i < this.props.checkedItems.length; i++) {
+					if (this.props.checkedItems[i].ndb == ndb) {
+						return "checked";
+					}
+				}
+				return "";
+			}
+
+			return getCheckedVal;
+		}()
+
+		/**
+  	Create an checkItem handler specific for each item that calls props.checkItemHandler and passes in an object with item.name and item.ndbno
+  **/
+
+	}, {
+		key: 'createCheckHandler',
+		value: function () {
+			function createCheckHandler(item) {
+				var _this5 = this;
+
+				//arrow func so I don't have to bind 
+				return function (e) {
+					console.log("callback. this:", _this5);
+					_this5.props.checkItemHandler({
+						ndb: item.ndb,
+						name: item.name,
+						checked: e.target.checked
+					});
+				};
+			}
+
+			return createCheckHandler;
 		}()
 	}, {
 		key: 'itemCheck',
@@ -8374,7 +8486,9 @@ var MealBuilder = function (_React$Component) {
 				var _this2 = this;
 
 				var reqBody = {
-					ndbs: this.props.checkedItems,
+					ndbs: this.props.checkedItems.map(function (item) {
+						return item.ndb;
+					}),
 					type: 'f'
 				};
 				fetch('../../user/item/list', {
@@ -52556,16 +52670,17 @@ var UserApp = function (_React$Component) {
 					_react2['default'].createElement(_Nav2['default'], null),
 					_react2['default'].createElement(
 						'div',
-						{ className: 'container-fixed h-100 no-gap' },
+						{ className: 'container-fixed fill-height no-gap' },
 						_react2['default'].createElement(
 							'div',
-							{ className: 'row row-leftFix' },
+							{ className: 'row row-leftFix min-height-fill' },
 							_react2['default'].createElement(
 								'div',
 								{ className: 'col-sm-2 p-0' },
 								_react2['default'].createElement(_SideBar2['default'], {
 									newMealHandler: this.newMealHandler.bind(this),
 									checkedItems: this.state.checkedItems,
+									checkItemHandler: this.checkItemHandler.bind(this),
 									showMealHandler: this.showMealHandler.bind(this),
 									plusEnabled: this.state.checkedItems.length > 0,
 									trackerShowHandler: this.trackerShowHandler.bind(this),
@@ -52589,7 +52704,8 @@ var UserApp = function (_React$Component) {
 										return _react2['default'].createElement(_SearchArea.SearchArea, {
 											searchHandler: _this2.search.bind(_this2),
 											newMealHandler: _this2.newMealHandler.bind(_this2), checkItemHandler: _this2.checkItemHandler.bind(_this2),
-											query: _this2.state.query[_this2.state.query.length - 1]
+											query: _this2.state.query[_this2.state.query.length - 1],
+											checkedItems: _this2.state.checkedItems
 										});
 									}
 
@@ -52722,31 +52838,69 @@ var UserApp = function (_React$Component) {
 	}, {
 		key: 'checkItemHandler',
 		value: function () {
-			function checkItemHandler(e) {
-				var ndb = e.target.id.split("-")[2];
-				if (e.target.checked) {
-					this.setState({
-						checkedItems: this.state.checkedItems.concat(ndb)
-					});
+			function checkItemHandler(item) {
+				//call isNdbChecked on items ndb, if it already exists in checkedItems then itemIndex will be set to the items index in checkedItems, if not it will be set to -1
+				var itemIndex = this.isNdbChecked(item.ndb);
+				//if itemIndex equals -1 then the item wasn't 'checkedBefore', so set to false. otherwise set to true
+				var checkedBefore = itemIndex < 0 ? false : true;
+				var isCheckedNow = item.checked;
+				item = { name: item.name, ndb: item.ndb };
+
+				if (isCheckedNow) {
+
+					if (!checkedBefore) {
+						//wasn't checked, is now, so add to newArr
+						var newArr = this.state.checkedItems.concat(item);
+					} else {
+						//ndb is checked now, and it was already checked(somehow)??
+						console.warn("wasn't checked, still isn't?", this.state.checkedItems);
+						console.warn("newly checked item:", item);
+					}
 				} else {
-					var newArr = [];
-					this.state.checkedItems.map(function (i) {
-						if (i != null && i != ndb) {
-							console.log("not null:", i);
-							newArr.push(i);
-						} else {
-							console.log("null: ", i);
-						}
-					});
-					console.log("newArr:", newArr);
+
+					if (checkedBefore) {
+						//isn't checked, but was, so remove item
+						//reomve itemIndex from checkedItems, set to newArr
+						var newArr = this.state.checkedItems.slice(0, itemIndex).concat(this.state.checkedItems.slice(itemIndex + 1, this.state.checkedItems.length));
+					} else {
+						//ndb wasn't checked, and it's not now. this shouldn't be called
+						console.warn("was checked, still is?", this.state.checkedItems);
+						console.warn("newly checked item:", item);
+						console.warn("itemIndex = " + itemIndex);
+					}
+				}
+
+				//if newArr was set, checkedItems has changed. update state
+				if (newArr != null) {
 					this.setState({
 						checkedItems: newArr
 					});
+				} else {
+					console.warn("Something was checked but nothing changed, what happened? Look above for details");
 				}
-				console.log("checked Items = ", this.state.checkedItems);
 			}
 
 			return checkItemHandler;
+		}()
+
+		//returns -1 if ndb isn't already in checkedItems, returns index of item if it is in array
+
+	}, {
+		key: 'isNdbChecked',
+		value: function () {
+			function isNdbChecked(ndb) {
+				console.log("ndbCheck: ndb = " + ndb);
+				for (var i = 0; i < this.state.checkedItems.length; i++) {
+					console.log("checking against " + this.state.checkedItems[i].ndb);
+					if (this.state.checkedItems[i].ndb == ndb) {
+						console.log("MATCH");
+						return i;
+					}
+				}
+				return -1;
+			}
+
+			return isNdbChecked;
 		}()
 	}]);
 
@@ -52827,6 +52981,19 @@ var Meal = function (_React$Component) {
 			}
 
 			return trackerAdd;
+		}()
+	}, {
+		key: 'componentWillReceiveProps',
+		value: function () {
+			function componentWillReceiveProps(newProps) {
+				if (this.state.checkeditems != newProps.checkedItems) {
+					this.setState({
+						checkedItems: newProps.checkedItems
+					});
+				}
+			}
+
+			return componentWillReceiveProps;
 		}()
 	}, {
 		key: 'render',
