@@ -113,77 +113,13 @@ router.get('/search/', function(req, res, next) {
 		});
 });
 
-router.get('/search/:q', function(req, res, next) {  
- 	console.log("search food route");
-	console.log("responding - New search route")
-	console.log("user:", req.user);
-	res.render('index', {title: req.params.q, data: req.params.q}); 
-});
 
 
 
 
-router.get('/search/results/:q', (req, res, next) => {
-	console.log("sesion:", req.session);
-	console.log("user:", req.user);
-	console.log("testname: ", req.body);
-	var nutrientNames;
-		nutrientNames = ["Calories", "Fat", "Sugar", "Carbs", "Protein"];
-	
-	var e = food.search(req.params.q, 25, 0).then(function(val) {
-	console.log("user:", req.user);
-		res.send({nutNames: nutrientNames, items: val.list, query: req.params.q});
-	}).catch(function(err) {
-		res.send({nutNames: nutrientNames, items: null, query: req.params.q});
-	}); 
-});
 
 
-router.post('/item/list', (req, res, nex) => {
-	console.log("-\n-\n-\n-\n");
-	console.log("-\n-\n-\n-\n");
-	console.log("req body:", req.body);
-	
-	//TODO: instead of this big complicated process to find nutrients/names, just take the watchedNutrients, and for each item set nutrients[i] = findNutrient(nutrients, watchedNutrients[i]);
-	//findNutrient will set values to "N/A" if they don't exist, so React can easily render without any complicated client side logic
-	var watched = []
-		if (req.user) {
-			watched = req.user.watchedNutrients;
-		}
-		foodHelper.getNutrientInfos(req.user, req.body.ndbs, req.body.type, req.session).then((nutrientList) => {
-			if (req.body.type == 'b') {
-				var index = -1;
-				for (var i = 0; i < nutrientList.length; i++) {
-					if (nutrientList[i].nutrients.length >= 5) {
-						index = i;
-						break;
-					}
-				}
 
-				console.log("user:", req.user);
-				res.setHeader('Content-Type', 'application/json');
-				res.send({
-					nutrients: nutrientList,
-					nutrientNames: nutrientList[index].nutrients.map((n) => {
-						return n.name
-					})				
-				});
-			} else {
-				res.setHeader('Content-Type', 'application/json');
-				res.send({
-					nutrients: nutrientList,
-					watched: watched
-				});
-			}
-		}).catch((err) => {
-			console.log("error:", err);
-    	res.setHeader('Content-Type', 'application/json');
-			res.send("just a string");
-		});
-	
-	console.log("-\n-\n-\n-\n");
-	console.log("-\n-\n-\n-\n");
-});
 
 
 

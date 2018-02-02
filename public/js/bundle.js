@@ -5699,6 +5699,24 @@ var Nav = function (_React$Component) {
 
 			return render;
 		}()
+	}, {
+		key: 'homeLinkHandler',
+		value: function () {
+			function homeLinkHandler() {
+				this.props.history.push('/');
+			}
+
+			return homeLinkHandler;
+		}()
+	}, {
+		key: 'searchLinkHandler',
+		value: function () {
+			function searchLinkHandler() {
+				this.props.history.push('user/search');
+			}
+
+			return searchLinkHandler;
+		}()
 	}]);
 
 	return Nav;
@@ -7039,7 +7057,28 @@ var SearchArea = function (_React$Component) {
 		key: 'componentDidMount',
 		value: function () {
 			function componentDidMount() {
+				var _this2 = this;
+
 				console.log("SEARCH AREA MOUNTED");
+
+				this.getSearchResults().then(function (data) {
+
+					_this2.setState({
+						nutNames: data.nutNames,
+						items: data.items.item
+					});
+					_this2.getItemInfos();
+				})['catch'](function (err) {
+					console.log('error getting search results. err:', err);
+				});
+			}
+
+			return componentDidMount;
+		}()
+	}, {
+		key: 'getSearchResults',
+		value: function () {
+			function getSearchResults() {
 				var that = this;
 				if (window.user == null) {
 					console.log("NULL USER");
@@ -7048,28 +7087,22 @@ var SearchArea = function (_React$Component) {
 					console.log(window.user);
 				}
 				console.log("AJAXING");
-				fetch('/user/search/results/' + this.props.query, {
+
+				return fetch('/user/search/results/' + this.props.query, {
 					method: 'GET',
 					credentials: 'include'
 				}).then(function (resp) {
 					return resp.json();
-				}).then(function (data) {
-					console.log("data = ", data);
-					that.setState({
-						nutNames: data.nutNames,
-						items: data.items.item
-					});
-					that.getItemInfos();
-				});
+				}); //this line returns a promise that contains the json info as data param - meaning this function returns promise containing data from fetch
 			}
 
-			return componentDidMount;
+			return getSearchResults;
 		}()
 	}, {
 		key: 'getItemInfos',
 		value: function () {
 			function getItemInfos() {
-				var _this2 = this;
+				var _this3 = this;
 
 				console.log("getItemInfos() - this:", this);
 				var ndbArr = this.state.items.map(function (item) {
@@ -7093,7 +7126,7 @@ var SearchArea = function (_React$Component) {
 					return resp.json();
 				}).then(function (res) {
 					console.log("getItemInfos response:", res);
-					_this2.setState({
+					_this3.setState({
 						nutrients: res.nutrients,
 						nutrientNames: res.nutrientNames,
 						sample: "sample string"
@@ -7149,19 +7182,19 @@ var SearchTable = function (_React$Component2) {
 	function SearchTable(props) {
 		_classCallCheck(this, SearchTable);
 
-		var _this3 = _possibleConstructorReturn(this, (SearchTable.__proto__ || Object.getPrototypeOf(SearchTable)).call(this, props));
+		var _this4 = _possibleConstructorReturn(this, (SearchTable.__proto__ || Object.getPrototypeOf(SearchTable)).call(this, props));
 
-		_this3.state = {
+		_this4.state = {
 			itemDatas: []
 		};
-		return _this3;
+		return _this4;
 	}
 
 	_createClass(SearchTable, [{
 		key: 'render',
 		value: function () {
 			function render() {
-				var _this4 = this;
+				var _this5 = this;
 
 				return _react2['default'].createElement(
 					'table',
@@ -7218,7 +7251,7 @@ var SearchTable = function (_React$Component2) {
 						'tbody',
 						null,
 						this.props.nutrients.map(function (item) {
-							return _this4.createRow(item);
+							return _this5.createRow(item);
 						})
 					)
 				);
@@ -7302,12 +7335,12 @@ var SearchTable = function (_React$Component2) {
 		key: 'createCheckHandler',
 		value: function () {
 			function createCheckHandler(item) {
-				var _this5 = this;
+				var _this6 = this;
 
 				//arrow func so I don't have to bind 
 				return function (e) {
-					console.log("callback. this:", _this5);
-					_this5.props.checkItemHandler({
+					console.log("callback. this:", _this6);
+					_this6.props.checkItemHandler({
 						ndb: item.ndb,
 						name: item.name,
 						checked: e.target.checked
@@ -42124,7 +42157,7 @@ var HomePage = function (_React$Component) {
 			function render() {
 				return _react2['default'].createElement(
 					'section',
-					{ className: 'bottom-slant masthead', id: 'App' },
+					{ className: 'bottom-slant masthead' },
 					_react2['default'].createElement(_Nav2['default'], null),
 					_react2['default'].createElement(
 						'div',

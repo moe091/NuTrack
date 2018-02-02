@@ -56,11 +56,13 @@ nav {
   color: #F2E9E4; }
 
 .nav-corner {
+  color: #dfd9d5;
+  font-family: 'Lobster', cursive;
   background-color: #3271AA;
-  font-size: 16px;
+  font-size: 32px;
   line-height: 24px;
   margin: 0;
-  padding: 16px;
+  padding: 4px;
   font-weight: bold; }
 
 .sidebar {
@@ -1202,8 +1204,8 @@ html, body, #App, .app-wrapper, #App > div {
 
 .fill-height {
   height: 100% !important;
-  margin-top: -56px !important;
-  padding-top: 56px !important; }
+  margin-top: -32px !important;
+  padding-top: 32px !important; }
 
 .min-height-fill {
   min-height: 100%; }
@@ -1253,6 +1255,9 @@ html, body, #App, .app-wrapper, #App > div {
 
 .vh-95 {
   height: 100%; }
+
+.fancy-text {
+  font-family: 'Lobster', cursive; }
 
 /**
 .rdt {

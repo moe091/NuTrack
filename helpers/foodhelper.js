@@ -163,7 +163,6 @@ var foodHelper = {
 		
 		console.log("Called getNutrientInfos() - " + type);
 		return new Promise(function(resolve, reject) {
-			console.log("in promise. ndbs = ", ndbs);
 			for (var i in ndbs) {
 				if (ndbs[i] != null) {
 					food.nd.foodReports({
@@ -177,7 +176,6 @@ var foodHelper = {
 
 							var info = []
 							if (res != null) {
-								console.log(res);
 								if (type == 'b')
 									foodHelper.populateNutrients(info, res.report.food.nutrients); //takes the report for a food item and uses foodHelper.nutrientList array to populate info with the data on each nutrient listed in the nutrientList array. Change this method to accept watchedNutrients array instead of using foodHelper.nutrientList
 							} else {

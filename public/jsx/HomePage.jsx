@@ -22,7 +22,7 @@ class HomePage extends React.Component {
 	render() {
 		return (
 		
-			<section className="bottom-slant masthead" id="App">	
+			<section className="bottom-slant masthead">	
 			<Nav />
 				<div className="d-flex align-items-center justify-content-center my-5">
 					<div className="center-block d-flex justify-content-center flex-column align-self-center pb-3" id="home-searchdiv">

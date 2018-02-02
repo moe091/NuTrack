@@ -55,6 +55,21 @@ class SearchArea extends React.Component {
 	
 	componentDidMount() {
 		console.log("SEARCH AREA MOUNTED");
+		
+		this.getSearchResults().then((data) => {
+			
+			this.setState({
+				nutNames: data.nutNames,
+				items: data.items.item
+			});
+			this.getItemInfos();
+			
+		}).catch((err) => {
+			console.log('error getting search results. err:', err);
+		})
+	}
+	
+	getSearchResults() {
 		let that = this; 
 		if (window.user == null) {
 			console.log("NULL USER");
@@ -63,21 +78,12 @@ class SearchArea extends React.Component {
 			console.log(window.user);
 		}
 		console.log("AJAXING");
-		fetch('/user/search/results/' + this.props.query, {
+		
+		return fetch('/user/search/results/' + this.props.query, {
 			method: 'GET',
 			credentials: 'include'
 		})
-		.then((resp) => resp.json())
-		.then(function(data) {
-			console.log("data = ", data);
-			that.setState({
-				nutNames: data.nutNames,
-				items: data.items.item
-			});
-			that.getItemInfos();
-		});
-		
-		
+		.then((resp) => resp.json()); //this line returns a promise that contains the json info as data param - meaning this function returns promise containing data from fetch
 	}
 	
 	

@@ -66,6 +66,14 @@ class Nav extends React.Component {
 		)
 	}
 	
+	homeLinkHandler() {
+		this.props.history.push('/');
+	}
+	
+	searchLinkHandler() {
+		this.props.history.push('user/search');
+	}
+	
 	
 }
 

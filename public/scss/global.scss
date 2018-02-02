@@ -81,7 +81,7 @@ html, body, #App, .app-wrapper, #App>div {
 .pointer-cursor {
 	cursor: pointer;
 }
-
+;
 .almost-white {
 	color: $almost-white;
 }
@@ -103,6 +103,13 @@ html, body, #App, .app-wrapper, #App>div {
   
 .vh-95 {
 	height: 100%;
+}
+
+
+
+//_______________ FONTS ________________\\
+.fancy-text {
+	font-family: 'Lobster', cursive;
 }
 //fix for react-datetime 
 /**
