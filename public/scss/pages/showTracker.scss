@@ -43,10 +43,13 @@
 
 
 //__________ .tracker-day-{styleType}
+//TODO: instead of having to set min-width to 10em(makes it so that the name of the day doesn't extend out wider than the div it's in), add a breakpoint to reduce font-size of the h4(day name) when the screen gets too narrow, so the name can still fit without making the divs so wide that 7 can't fit in a single row
+//Bonus TODO: if necessary, implement code to change the day name to an abbreviation(e.g wednesday -> Wed) when screen is at certain size - will have to be done in React component[OR... have two h4's, one .full-day-name and one .abbr-day-name, use media queries to hide the one that isn't supposed to be displayed: MUCH cooler]
 .tracker-day {
 	padding: 4px 0 !important;
 	vertical-align: top;
 	background-color: rgba(0, 0, 0, 0.15);
+	min-width: 10em; //FIX IN TODO
 	h4 {
 		color: #fff;
 	}

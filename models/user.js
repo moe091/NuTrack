@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');  
 var pplMongoose = require('passport-local-mongoose');
 var tracker = require('./tracker.js');
+var planner = require('./planner.js');
 var meal = require('./meal.js');
 
 
@@ -12,7 +13,7 @@ var userSchema = new mongoose.Schema({
     email: String,
 		mealPlans: [meal.schema],
     tracker: tracker.schema,
-    planner: tracker.schema,
+    planner: planner.schema,
 		watchedNutrients: {type: Array, 'default': [203, 204, 205, 208, 269, 307]}
 });
 

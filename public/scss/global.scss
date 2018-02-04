@@ -111,6 +111,13 @@ html, body, #App, .app-wrapper, #App>div {
 .fancy-text {
 	font-family: 'Lobster', cursive;
 }
+.faded-white {
+	color: $faded-white;
+}
+.bold-text {
+	font-weight: bold;
+}
+
 //fix for react-datetime 
 /**
 .rdt {

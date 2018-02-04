@@ -5,14 +5,16 @@ var food = require('../foods');
 var foodHelper = require('../helpers/foodhelper');
 
 var User = require('../models/user');
-var trackerRoute = require('./user/trackerRoute');
+var tracker = require('./user/tracker');
+var planner = require('./user/planner');
 var meals = require('./user/meals');
 
 /* GET users listing. */
 
 
 
-router.use('/tracker', trackerRoute);
+router.use('/tracker', tracker);
+router.use('/planner', planner);
 router.use('/meals', meals);
 
 router.get('/home', function(req, res, next) {

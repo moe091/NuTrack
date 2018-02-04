@@ -26,6 +26,13 @@ class Meal extends React.Component {
 		}
 	}
 	
+	plannerAdd(meal) {
+		var that = this;
+		return function() {
+			that.props.plannerAddHandler(meal);
+		}
+	}
+	
 	componentWillReceiveProps(newProps) {
 		if (this.state.checkeditems != newProps.checkedItems) {
 			this.setState({
@@ -43,6 +50,7 @@ class Meal extends React.Component {
 							checkedItems={this.state.checkedItems} 
 							showMealHandler={this.showMealHandler.bind(this)} 
 							trackerAddHandler={this.props.trackerAddHandler}
+							plannerAddHandler={this.props.plannerAddHandler}
 						/>
 					)
 				}} />
@@ -51,6 +59,7 @@ class Meal extends React.Component {
 						return (
 							<ShowMeal
 								trackerAdd={this.trackerAdd.bind(this)}
+								plannerAdd={this.plannerAdd.bind(this)}
 							/>
 						)
 					}} />

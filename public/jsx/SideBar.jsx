@@ -66,22 +66,22 @@ class SideBar extends React.Component {
 				
 				<div className="sidebar-main-group container-fixed">
 					<div className="sidebar-section sidebar-main-section row m-0">
-						<a onClick={this.props.trackerShowHandler} className="col-sm-9 sidebar-item-main p-1">Tracker</a>
+						<a onClick={this.trackerShowHandler.bind(this)} className="col-sm-9 sidebar-item-main p-1">Tracker</a>
 						<a onClick={this.props.trackerAddHandler}className="col-sm-3 sidebar-item-right p-1">
 							<i className="fa fa-plus sidebar-icon"></i>
 						</a>
 					</div>
 				
 					<div className="sidebar-section sidebar-main-section row m-0">
-						<a className="col-sm-9 sidebar-item-main p-1">Planner</a>
-						<a className="col-sm-3 sidebar-item-right p-1">
+						<a onClick={this.plannerShowHandler.bind(this)} className="col-sm-9 sidebar-item-main p-1">Planner</a>
+						<a onClick={this.props.plannerAddHandler} className="col-sm-3 sidebar-item-right p-1">
 							<i className="fa fa-plus sidebar-icon"></i>
 						</a>
 					</div>
 				
 					<div className="sidebar-section sidebar-main-section row m-0">
-						<a onClick={this.props.showMealHandler} className="col-sm-9 sidebar-item-main p-1">Meals</a>
-						<a onClick={this.props.newMealHandler} className="col-sm-3 sidebar-item-right p-1">
+						<a onClick={this.showMealHandler.bind(this)} className="col-sm-9 sidebar-item-main p-1">Meals</a>
+						<a onClick={this.newMealHandler.bind(this)} className="col-sm-3 sidebar-item-right p-1">
 							<i className="fa fa-plus sidebar-icon"></i>
 						</a>
 					</div>
@@ -120,6 +120,25 @@ class SideBar extends React.Component {
 		}
 	}
 	
+	
+	trackerShowHandler() {
+		this.props.history.push("../../user/tracker/show");
+	}
+
+	//update route, causes re-render with <PlannerAdd> component in main area of page, passes in appropriate props
+	plannerShowHandler(e) {
+		this.props.history.push("../../user/planner/show");
+	}
+	
+	//update route, cause re-render with <ShowMeal> component in main section of page.
+	showMealHandler(e) {
+		this.props.history.push("../../user/meals/show");
+	}
+	
+	//update route, cause re-render with <NewMeal> component in main section of page
+	newMealHandler(e) {
+		this.props.history.push("../../user/meals/new");
+	}
 	
 	
 }

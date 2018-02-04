@@ -69,15 +69,9 @@ class SearchArea extends React.Component {
 		})
 	}
 	
+	//returns promise that resolves to search results based on props.query(search results is an array of items containing the name and ndbno's but no nutrient info, have to specifically call USDA API for each item to get specific data)
 	getSearchResults() {
-		let that = this; 
-		if (window.user == null) {
-			console.log("NULL USER");
-			window.user = {_id: 0, username: "empty"}
-		} else {
-			console.log(window.user);
-		}
-		console.log("AJAXING");
+		let that = this; //TODO: figure out why I did it this way(probably forgot a bind somewhere) and fix
 		
 		return fetch('/user/search/results/' + this.props.query, {
 			method: 'GET',
@@ -87,6 +81,7 @@ class SearchArea extends React.Component {
 	}
 	
 	
+	//requests full nutrient data on each item in this.state.items from the backend. Update's state(causing full search results to render) when complete, returns nothing
 	getItemInfos() {
 		console.log("getItemInfos() - this:", this);
 		var ndbArr = this.state.items.map((item) => { 
@@ -188,6 +183,7 @@ class SearchTable extends React.Component {
 		)
 	}
 	
+	//renders a <tr> in table containing data(name, nutrient vals) from item
 	createRow(item) {
 		if (item.nutrients.length > 5) {
 			item.nutrients = item.nutrients.slice(0, 5);
@@ -244,10 +240,6 @@ class SearchTable extends React.Component {
 		}
 	}
 	
-	itemCheck(e) {
-		console.log("check");
-		console.log(e.target.id.split("-")[2]);
-	}
 	
 }
 

@@ -23,7 +23,7 @@ class HomePage extends React.Component {
 		return (
 		
 			<section className="bottom-slant masthead">	
-			<Nav />
+			<Nav user={window.user} history={this.props.history} />
 				<div className="d-flex align-items-center justify-content-center my-5">
 					<div className="center-block d-flex justify-content-center flex-column align-self-center pb-3" id="home-searchdiv">
 						<div className="container">

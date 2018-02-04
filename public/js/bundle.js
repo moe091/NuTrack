@@ -5571,6 +5571,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+	TODO:
+		create login/logout/register routes and components in React. Update Nav.props.user prop whenever something changes
+**/
 var Nav = function (_React$Component) {
 	_inherits(Nav, _React$Component);
 
@@ -5581,6 +5585,89 @@ var Nav = function (_React$Component) {
 	}
 
 	_createClass(Nav, [{
+		key: 'renderUserNav',
+		value: function () {
+			function renderUserNav() {
+				return _react2['default'].createElement(
+					'ul',
+					{ className: 'navbar-nav mr-auto mt-2 mt-md-0' },
+					_react2['default'].createElement(
+						'li',
+						{ className: 'nav-item active' },
+						_react2['default'].createElement(
+							'a',
+							{ className: 'nav-link pointer-cursor', onClick: this.navToUserHome.bind(this) },
+							_react2['default'].createElement(
+								'span',
+								{ className: 'bold-text' },
+								this.props.user.username,
+								'\'s Home'
+							)
+						)
+					),
+					_react2['default'].createElement(
+						'li',
+						{ className: 'nav-item' },
+						_react2['default'].createElement(
+							'a',
+							{ className: 'nav-link pointer-cursor', onClick: this.navToTracker.bind(this) },
+							'Tracker'
+						)
+					),
+					_react2['default'].createElement(
+						'li',
+						{ className: 'nav-item' },
+						_react2['default'].createElement(
+							'a',
+							{ className: 'nav-link pointer-cursor', onClick: this.navToPlanner.bind(this) },
+							'Planner'
+						)
+					),
+					_react2['default'].createElement(
+						'li',
+						{ className: 'nav-item' },
+						_react2['default'].createElement(
+							'a',
+							{ className: 'nav-link pointer-cursor', onClick: this.navToMeals.bind(this) },
+							'Meals'
+						)
+					)
+				);
+			}
+
+			return renderUserNav;
+		}()
+	}, {
+		key: 'renderProfileNav',
+		value: function () {
+			function renderProfileNav() {
+				return _react2['default'].createElement(
+					'ul',
+					{ className: 'navbar-nav pull-right' },
+					_react2['default'].createElement(
+						'li',
+						{ className: 'nav-item' },
+						_react2['default'].createElement(
+							'a',
+							{ className: 'nav-link mx-2 bold-text pointer-cursor', onClick: this.navToProfile.bind(this) },
+							this.props.user.username
+						)
+					),
+					_react2['default'].createElement(
+						'li',
+						{ className: 'nav-item' },
+						_react2['default'].createElement(
+							'a',
+							{ className: 'nav-link mx-2', href: '/users/logout' },
+							'Logout'
+						)
+					)
+				);
+			}
+
+			return renderProfileNav;
+		}()
+	}, {
 		key: 'render',
 		value: function () {
 			function render() {
@@ -5594,9 +5681,13 @@ var Nav = function (_React$Component) {
 							'div',
 							{ className: 'col-sm-2 p-3 nav-corner d-flex align-content-center justify-content-center' },
 							_react2['default'].createElement(
-								'span',
-								{ className: 'nav-title align-self-center justify-self-center' },
-								'NuTrack'
+								'a',
+								{ className: 'pointer-cursor', onClick: this.navToHome.bind(this) },
+								_react2['default'].createElement(
+									'span',
+									{ className: 'nav-title align-self-center justify-self-center' },
+									'NuTrack'
+								)
 							)
 						),
 						_react2['default'].createElement(
@@ -5615,50 +5706,18 @@ var Nav = function (_React$Component) {
 									)
 								),
 								_react2['default'].createElement(
-									'a',
-									{ className: 'navbar-brand', href: '#' },
-									'NuTrack'
-								),
-								_react2['default'].createElement(
 									'div',
 									{ className: 'collapse navbar-collapse', id: 'navbarTogglerDemo02' },
-									_react2['default'].createElement(
+									this.props.user == null ? _react2['default'].createElement(
 										'ul',
 										{ className: 'navbar-nav mr-auto mt-2 mt-md-0' },
 										_react2['default'].createElement(
 											'li',
-											{ className: 'nav-item active' },
-											_react2['default'].createElement(
-												'a',
-												{ className: 'nav-link', href: '/' },
-												'Home ',
-												_react2['default'].createElement(
-													'span',
-													{ className: 'sr-only' },
-													'(current)'
-												)
-											)
-										),
-										_react2['default'].createElement(
-											'li',
-											{ className: 'nav-item' },
-											_react2['default'].createElement(
-												'a',
-												{ className: 'nav-link', href: '/user/tracker' },
-												'Tracker'
-											)
-										),
-										_react2['default'].createElement(
-											'li',
-											{ className: 'nav-item' },
-											_react2['default'].createElement(
-												'a',
-												{ className: 'nav-link', href: '/user/home' },
-												'not logged in'
-											)
+											{ className: 'nav-item active faded-white' },
+											'not logged in'
 										)
-									),
-									_react2['default'].createElement(
+									) : this.renderUserNav(),
+									this.props.user == null ? _react2['default'].createElement(
 										'ul',
 										{ className: 'navbar-nav pull-right' },
 										_react2['default'].createElement(
@@ -5675,11 +5734,11 @@ var Nav = function (_React$Component) {
 											{ className: 'nav-item' },
 											_react2['default'].createElement(
 												'a',
-												{ className: 'nav-link mx-2', href: '#' },
+												{ className: 'nav-link mx-2', href: '/users/register' },
 												'Register'
 											)
 										)
-									),
+									) : this.renderProfileNav(),
 									_react2['default'].createElement(
 										'form',
 										{ className: 'form-inline my-2 my-lg-0', id: 'nav-search-form' },
@@ -5700,22 +5759,65 @@ var Nav = function (_React$Component) {
 			return render;
 		}()
 	}, {
-		key: 'homeLinkHandler',
+		key: 'navToHome',
 		value: function () {
-			function homeLinkHandler() {
-				this.props.history.push('/');
+			function navToHome() {
+				this.props.history.push("/");
 			}
 
-			return homeLinkHandler;
+			return navToHome;
 		}()
 	}, {
-		key: 'searchLinkHandler',
+		key: 'navToUserHome',
 		value: function () {
-			function searchLinkHandler() {
-				this.props.history.push('user/search');
+			function navToUserHome() {
+				this.props.history.push("/user");
 			}
 
-			return searchLinkHandler;
+			return navToUserHome;
+		}()
+	}, {
+		key: 'navToProfile',
+		value: function () {
+			function navToProfile() {
+				this.props.history.push("/users/profile");
+			}
+
+			return navToProfile;
+		}()
+	}, {
+		key: 'navToTracker',
+		value: function () {
+			function navToTracker() {
+				this.props.history.push('/user/tracker/show');
+			}
+
+			return navToTracker;
+		}()
+	}, {
+		key: 'navToPlanner',
+		value: function () {
+			function navToPlanner() {
+				this.props.history.push("/user/planner/show");
+			}
+
+			return navToPlanner;
+		}()
+	}, {
+		key: 'navToMeals',
+		value: function () {
+			function navToMeals() {
+				this.props.history.push("/user/meals/show");
+			}
+
+			return navToMeals;
+		}()
+	}, {
+		key: 'searchHandler',
+		value: function () {
+			function searchHandler() {}
+
+			return searchHandler;
 		}()
 	}]);
 
@@ -5921,7 +6023,7 @@ var SideBar = function (_React$Component) {
 							{ className: 'sidebar-section sidebar-main-section row m-0' },
 							_react2['default'].createElement(
 								'a',
-								{ onClick: this.props.trackerShowHandler, className: 'col-sm-9 sidebar-item-main p-1' },
+								{ onClick: this.trackerShowHandler.bind(this), className: 'col-sm-9 sidebar-item-main p-1' },
 								'Tracker'
 							),
 							_react2['default'].createElement(
@@ -5935,12 +6037,12 @@ var SideBar = function (_React$Component) {
 							{ className: 'sidebar-section sidebar-main-section row m-0' },
 							_react2['default'].createElement(
 								'a',
-								{ className: 'col-sm-9 sidebar-item-main p-1' },
+								{ onClick: this.plannerShowHandler.bind(this), className: 'col-sm-9 sidebar-item-main p-1' },
 								'Planner'
 							),
 							_react2['default'].createElement(
 								'a',
-								{ className: 'col-sm-3 sidebar-item-right p-1' },
+								{ onClick: this.props.plannerAddHandler, className: 'col-sm-3 sidebar-item-right p-1' },
 								_react2['default'].createElement('i', { className: 'fa fa-plus sidebar-icon' })
 							)
 						),
@@ -5949,12 +6051,12 @@ var SideBar = function (_React$Component) {
 							{ className: 'sidebar-section sidebar-main-section row m-0' },
 							_react2['default'].createElement(
 								'a',
-								{ onClick: this.props.showMealHandler, className: 'col-sm-9 sidebar-item-main p-1' },
+								{ onClick: this.showMealHandler.bind(this), className: 'col-sm-9 sidebar-item-main p-1' },
 								'Meals'
 							),
 							_react2['default'].createElement(
 								'a',
-								{ onClick: this.props.newMealHandler, className: 'col-sm-3 sidebar-item-right p-1' },
+								{ onClick: this.newMealHandler.bind(this), className: 'col-sm-3 sidebar-item-right p-1' },
 								_react2['default'].createElement('i', { className: 'fa fa-plus sidebar-icon' })
 							)
 						)
@@ -6003,6 +6105,51 @@ var SideBar = function (_React$Component) {
 			}
 
 			return createDeselectHandler;
+		}()
+	}, {
+		key: 'trackerShowHandler',
+		value: function () {
+			function trackerShowHandler() {
+				this.props.history.push("../../user/tracker/show");
+			}
+
+			return trackerShowHandler;
+		}()
+
+		//update route, causes re-render with <PlannerAdd> component in main area of page, passes in appropriate props
+
+	}, {
+		key: 'plannerShowHandler',
+		value: function () {
+			function plannerShowHandler(e) {
+				this.props.history.push("../../user/planner/show");
+			}
+
+			return plannerShowHandler;
+		}()
+
+		//update route, cause re-render with <ShowMeal> component in main section of page.
+
+	}, {
+		key: 'showMealHandler',
+		value: function () {
+			function showMealHandler(e) {
+				this.props.history.push("../../user/meals/show");
+			}
+
+			return showMealHandler;
+		}()
+
+		//update route, cause re-render with <NewMeal> component in main section of page
+
+	}, {
+		key: 'newMealHandler',
+		value: function () {
+			function newMealHandler(e) {
+				this.props.history.push("../../user/meals/new");
+			}
+
+			return newMealHandler;
 		}()
 	}]);
 
@@ -7075,18 +7222,14 @@ var SearchArea = function (_React$Component) {
 
 			return componentDidMount;
 		}()
+
+		//returns promise that resolves to search results based on props.query(search results is an array of items containing the name and ndbno's but no nutrient info, have to specifically call USDA API for each item to get specific data)
+
 	}, {
 		key: 'getSearchResults',
 		value: function () {
 			function getSearchResults() {
-				var that = this;
-				if (window.user == null) {
-					console.log("NULL USER");
-					window.user = { _id: 0, username: "empty" };
-				} else {
-					console.log(window.user);
-				}
-				console.log("AJAXING");
+				var that = this; //TODO: figure out why I did it this way(probably forgot a bind somewhere) and fix
 
 				return fetch('/user/search/results/' + this.props.query, {
 					method: 'GET',
@@ -7098,6 +7241,9 @@ var SearchArea = function (_React$Component) {
 
 			return getSearchResults;
 		}()
+
+		//requests full nutrient data on each item in this.state.items from the backend. Update's state(causing full search results to render) when complete, returns nothing
+
 	}, {
 		key: 'getItemInfos',
 		value: function () {
@@ -7259,6 +7405,9 @@ var SearchTable = function (_React$Component2) {
 
 			return render;
 		}()
+
+		//renders a <tr> in table containing data(name, nutrient vals) from item
+
 	}, {
 		key: 'createRow',
 		value: function () {
@@ -7349,16 +7498,6 @@ var SearchTable = function (_React$Component2) {
 			}
 
 			return createCheckHandler;
-		}()
-	}, {
-		key: 'itemCheck',
-		value: function () {
-			function itemCheck(e) {
-				console.log("check");
-				console.log(e.target.id.split("-")[2]);
-			}
-
-			return itemCheck;
 		}()
 	}]);
 
@@ -42158,7 +42297,7 @@ var HomePage = function (_React$Component) {
 				return _react2['default'].createElement(
 					'section',
 					{ className: 'bottom-slant masthead' },
-					_react2['default'].createElement(_Nav2['default'], null),
+					_react2['default'].createElement(_Nav2['default'], { user: window.user, history: this.props.history }),
 					_react2['default'].createElement(
 						'div',
 						{ className: 'd-flex align-items-center justify-content-center my-5' },
@@ -52700,7 +52839,7 @@ var UserApp = function (_React$Component) {
 				return _react2['default'].createElement(
 					'div',
 					{ className: 'app-wrapper' },
-					_react2['default'].createElement(_Nav2['default'], null),
+					_react2['default'].createElement(_Nav2['default'], { user: window.user, history: this.props.history }),
 					_react2['default'].createElement(
 						'div',
 						{ className: 'container-fixed fill-height no-gap' },
@@ -52711,14 +52850,14 @@ var UserApp = function (_React$Component) {
 								'div',
 								{ className: 'col-sm-2 p-0' },
 								_react2['default'].createElement(_SideBar2['default'], {
-									newMealHandler: this.newMealHandler.bind(this),
+									history: this.props.history,
+
 									checkedItems: this.state.checkedItems,
 									checkItemHandler: this.checkItemHandler.bind(this),
-									showMealHandler: this.showMealHandler.bind(this),
 									plusEnabled: this.state.checkedItems.length > 0,
-									trackerShowHandler: this.trackerShowHandler.bind(this),
+
 									trackerAddHandler: this.trackerAddItemsHandler.bind(this),
-									plannerAddHandler: this.plannerAddHandler.bind(this)
+									plannerAddHandler: this.plannerAddItemsHandler.bind(this)
 								})
 							),
 							_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/meals', render: function () {
@@ -52736,7 +52875,7 @@ var UserApp = function (_React$Component) {
 									function render() {
 										return _react2['default'].createElement(_SearchArea.SearchArea, {
 											searchHandler: _this2.search.bind(_this2),
-											newMealHandler: _this2.newMealHandler.bind(_this2), checkItemHandler: _this2.checkItemHandler.bind(_this2),
+											checkItemHandler: _this2.checkItemHandler.bind(_this2),
 											query: _this2.state.query[_this2.state.query.length - 1],
 											checkedItems: _this2.state.checkedItems
 										});
@@ -52751,8 +52890,26 @@ var UserApp = function (_React$Component) {
 											history: _this2.props.history,
 											checkedItems: _this2.state.checkedItems,
 											trackerAddHandler: _this2.trackerAddHandler.bind(_this2),
+											plannerAddHandler: _this2.plannerAddHandler.bind(_this2),
 											meal: _this2.state.selectedMeal,
-											isMealSelected: _this2.isMealSelected
+											isMealSelected: _this2.isMealSelected,
+											type: 'tracker'
+										});
+									}
+
+									return render;
+								}()
+							}),
+							_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/planner', render: function () {
+									function render() {
+										return _react2['default'].createElement(_Tracker2['default'], {
+											history: _this2.props.history,
+											checkedItems: _this2.state.checkedItems,
+											trackerAddHandler: _this2.trackerAddHandler.bind(_this2),
+											plannerAddHandler: _this2.plannerAddHandler.bind(_this2),
+											meal: _this2.state.selectedMeal,
+											isMealSelected: _this2.isMealSelected,
+											type: 'planner'
 										});
 									}
 
@@ -52788,6 +52945,20 @@ var UserApp = function (_React$Component) {
 
 			return trackerAddItemsHandler;
 		}()
+	}, {
+		key: 'plannerAddItemsHandler',
+		value: function () {
+			function plannerAddItemsHandler() {
+				this.isMealSelected = false;
+				if (this.state.checkedItems.length > 0) {
+					this.props.history.push("../../user/planner/add");
+				} else {
+					console.warn("plannerAddItemsHandler (SideBar's PlannerAdd callback) was called when checkedItems was empty!. this=", this);
+				}
+			}
+
+			return plannerAddItemsHandler;
+		}()
 
 		/**
   	renders the <TrackerAdd> component, passing in the appropriate props. This function renders <TrackerAdd> with isMealSelected true, which just renders the component in it's ready-to-add state since it has a selected meal to add to Tracker and doesn't need to create one first
@@ -52810,56 +52981,24 @@ var UserApp = function (_React$Component) {
 
 			return trackerAddHandler;
 		}()
-
-		//simply updates route, will trigger a re-render in which UserApp will render the <TrackerShow> component in the main area
-
-	}, {
-		key: 'trackerShowHandler',
-		value: function () {
-			function trackerShowHandler() {
-				this.props.history.push("../../user/tracker/show");
-			}
-
-			return trackerShowHandler;
-		}()
-
-		//update route, causes re-render with <PlannerAdd> component in main area of page, passes in appropriate props
-
 	}, {
 		key: 'plannerAddHandler',
 		value: function () {
-			function plannerAddHandler(e) {}
+			function plannerAddHandler(meal) {
+				if (meal != null) {
+					this.isMealSelected = true;
+					this.setState({
+						selectedMeal: meal
+					});
+					this.props.history.push("../../user/planner/add");
+				}
+			}
 
 			return plannerAddHandler;
 		}()
 
-		//update route, cause re-render with <ShowMeal> component in main section of page.
+		//simply updates route, will trigger a re-render in which UserApp will render the <TrackerShow> component in the main area
 
-	}, {
-		key: 'showMealHandler',
-		value: function () {
-			function showMealHandler(e) {
-				console.log("SHOW MEAL HANDLER - UserApp");
-				this.props.history.push("../../user/meals/show");
-			}
-
-			return showMealHandler;
-		}()
-
-		//update route, cause re-render with <NewMeal> component in main section of page
-
-	}, {
-		key: 'newMealHandler',
-		value: function () {
-			function newMealHandler(e) {
-				console.log("new meal click");
-				console.log(e.target);
-				console.log("this = ", this);
-				this.props.history.push("../../user/meals/new");
-			}
-
-			return newMealHandler;
-		}()
 
 		/**
   	Callback function that is called whenever a food product item is selected/checked, e.g by the user clicking the checkbox next to an item in the search results page. 
@@ -53016,6 +53155,18 @@ var Meal = function (_React$Component) {
 			return trackerAdd;
 		}()
 	}, {
+		key: 'plannerAdd',
+		value: function () {
+			function plannerAdd(meal) {
+				var that = this;
+				return function () {
+					that.props.plannerAddHandler(meal);
+				};
+			}
+
+			return plannerAdd;
+		}()
+	}, {
 		key: 'componentWillReceiveProps',
 		value: function () {
 			function componentWillReceiveProps(newProps) {
@@ -53042,7 +53193,8 @@ var Meal = function (_React$Component) {
 								return _react2['default'].createElement(_NewMeal2['default'], {
 									checkedItems: _this2.state.checkedItems,
 									showMealHandler: _this2.showMealHandler.bind(_this2),
-									trackerAddHandler: _this2.props.trackerAddHandler
+									trackerAddHandler: _this2.props.trackerAddHandler,
+									plannerAddHandler: _this2.props.plannerAddHandler
 								});
 							}
 
@@ -53051,7 +53203,8 @@ var Meal = function (_React$Component) {
 					_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/meals/show', render: function () {
 							function render() {
 								return _react2['default'].createElement(_ShowMeal2['default'], {
-									trackerAdd: _this2.trackerAdd.bind(_this2)
+									trackerAdd: _this2.trackerAdd.bind(_this2),
+									plannerAdd: _this2.plannerAdd.bind(_this2)
 								});
 							}
 
@@ -53401,7 +53554,7 @@ var ShowMeal = function (_React$Component) {
 							),
 							_react2['default'].createElement(
 								'a',
-								{ onClick: this.props.trackerAdd(meal), className: 'pointer-cursor' },
+								{ onClick: this.props.plannerAdd(meal), className: 'pointer-cursor' },
 								_react2['default'].createElement('i', { className: 'fa fa-plus-square', 'aria-hidden': 'true' }),
 								' Planner'
 							)
@@ -53546,7 +53699,25 @@ var Tracker = function (_React$Component) {
 									trackerAddHandler: _this2.props.trackerAddHandler,
 									trackMealHandler: _this2.trackMealHandler.bind(_this2),
 									isMealSelected: _this2.props.isMealSelected,
-									checkedItems: _this2.props.checkedItems
+									checkedItems: _this2.props.checkedItems,
+									type: 'tracker'
+								});
+							}
+
+							return render;
+						}()
+					}),
+					_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/planner/add', render: function () {
+							function render() {
+								return _react2['default'].createElement(_TrackerAdd2['default'], {
+									meal: _this2.props.meal,
+									trackerAddHandler: _this2.props.plannerAddHandler
+
+									//props.type will be passed to trackMealHandler when called, if type is planner it post to the planner/create route, if type is 'tracker' it will post to tracker/create
+									, trackMealHandler: _this2.trackMealHandler.bind(_this2),
+									isMealSelected: _this2.props.isMealSelected,
+									checkedItems: _this2.props.checkedItems,
+									type: 'planner'
 								});
 							}
 
@@ -53555,7 +53726,15 @@ var Tracker = function (_React$Component) {
 					}),
 					_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/tracker/show', render: function () {
 							function render() {
-								return _react2['default'].createElement(_TrackerShow2['default'], null);
+								return _react2['default'].createElement(_TrackerShow2['default'], { type: 'tracker' });
+							}
+
+							return render;
+						}()
+					}),
+					_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/planner/show', render: function () {
+							function render() {
+								return _react2['default'].createElement(_TrackerShow2['default'], { type: 'planner' });
 							}
 
 							return render;
@@ -53566,16 +53745,28 @@ var Tracker = function (_React$Component) {
 
 			return render;
 		}()
+
+		//type = 'planner' or 'tracker'
+
 	}, {
 		key: 'trackMealHandler',
 		value: function () {
-			function trackMealHandler(meal, time) {
+			function trackMealHandler(meal, time, type) {
 				var _this3 = this;
 
 				console.log("track meal:", meal);
 				console.log("time: ", time);
 
-				fetch('../../user/tracker/create', {
+				var route;
+				if (type == "tracker") {
+					route = "../../user/tracker/create";
+				} else if (type == "planner") {
+					route = "../../user/planner/create";
+				} else {
+					console.warn("<Tracker>, trackMealHandler() - type is not equal to 'tracker' or 'planner', something is wrong. this:", this);
+				}
+
+				fetch(route, {
 					method: 'POST',
 					credentials: 'include',
 					headers: {
@@ -53590,7 +53781,13 @@ var Tracker = function (_React$Component) {
 					return response.json();
 				}).then(function (res) {
 					console.log("tracker/create response:", res);
-					_this3.props.history.push("../../user/tracker/show");
+					if (type == "tracker") {
+						_this3.props.history.push("../../user/tracker/show");
+					} else if (type == "planner") {
+						_this3.props.history.push("../../user/planner/show");
+					} else {
+						console.warn("type not 'planner' or 'tracker', this:", _this3);
+					}
 				})['catch'](function (err) {
 					console.log("error fetching tracker/create: ", err);
 				});
@@ -53653,7 +53850,7 @@ var TrackerAdd = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (TrackerAdd.__proto__ || Object.getPrototypeOf(TrackerAdd)).call(this, props));
 
 		var date = new Date();
-		var msg = _this.props.meal == null ? "Create Meal Below Before Adding Items to Tracker" : "Add Meal '" + _this.props.meal.name + "' to Tracker on " + date.toDateString() + " at " + (date.toTimeString().split(':')[0] + ':' + date.toTimeString().split(':')[1]);
+		var msg = _this.props.meal == null ? "Create Meal Below Before Adding Items to " + _this.props.type : "Add Meal '" + _this.props.meal.name + "' to " + _this.props.type + " on " + date.toDateString() + " at " + (date.toTimeString().split(':')[0] + ':' + date.toTimeString().split(':')[1]);
 
 		_this.state = {
 			time: date,
@@ -53724,12 +53921,12 @@ var TrackerAdd = function (_React$Component) {
 						_react2['default'].createElement(
 							'button',
 							{ className: 'btn header-bg ' + (this.state.isMealSelected ? '' : 'btn-disabled'), onClick: this.state.isMealSelected ? this.trackMeal.bind(this) : null },
-							'Add To Tracker'
+							this.type == "tracker" ? "Add To Tracker" : "Add To Planner"
 						),
 						_react2['default'].createElement(
 							'div',
 							{ className: 'text-center text-danger small' },
-							this.state.isMealSelected ? '' : "Click 'Create Meal' button above to create a meal before adding to tracker"
+							this.state.isMealSelected ? '' : "Click 'Create Meal' button above to create a meal before adding to " + this.props.type
 						)
 					)
 				);
@@ -53810,7 +54007,9 @@ var TrackerAdd = function (_React$Component) {
 		value: function () {
 			function trackMeal() {
 				console.log('this', this);
-				this.props.trackMealHandler(this.state.meal, this.state.date);
+
+				//type('planner' or 'tracker') will tell the trackMealHandler function in <Tracker> component whether to post new meal to the /planner/create or /tracker/create route
+				this.props.trackMealHandler(this.state.meal, this.state.date, this.props.type);
 			}
 
 			return trackMeal;
@@ -55754,7 +55953,15 @@ var TrackerShow = function (_React$Component) {
 			function componentDidMount() {
 				var _this2 = this;
 
-				fetch('../../user/tracker/showtracker', {
+				if (this.props.type == "tracker") {
+					var route = "../../user/tracker/showtracker";
+				} else if (this.props.type == "planner") {
+					var route = "../../user/planner/showplanner";
+				} else {
+					console.warn("ERROR, showTracker props.type isn't equal to 'tracker' or 'planner'. this:", this);
+				}
+
+				fetch(route, {
 					method: 'GET',
 					credentials: 'include',
 					headers: {
@@ -55764,6 +55971,7 @@ var TrackerShow = function (_React$Component) {
 				}).then(function (response) {
 					return response.json();
 				}).then(function (res) {
+					console.log("RES:", res);
 					res.endDate = new Date(res.endDate);
 
 					//create dates here, so it can be used to sate state.dates and also to set state.sortedMeals via this.createMealDates(dates, meals), dates needs to be defined before the call to setState so it can be used, or I'd have to call createDateArray again
@@ -55794,15 +56002,20 @@ var TrackerShow = function (_React$Component) {
 				if (length == 'week') length = 6;
 				if (length == 'month') length = 30;
 				length = Number(length); //because the html <select> element sets a string instead of a number. TODO: convert this right away on prop update instead
-
+				console.log("\n\n\n\n\n\ncreate date array. length=" + length);
+				console.log("end date = ", end);
 				var dates = [];
 
 				for (var i = 0; i <= length; i++) {
 					var d = new Date();
 					d.setDate(end.getDate() - i);
+					console.log("adding date #" + i + ": ", d);
 
+					d = new Date(end.getTime() - i * 86400000);
 					dates.unshift(d);
 				}
+
+				console.log('returning dates', dates);
 				return dates;
 			}
 
@@ -56039,12 +56252,17 @@ var TrackerOptions = function (_React$Component2) {
 					'div',
 					{ className: 'tracker-props content-section tracker-options-section' },
 					_react2['default'].createElement(
+						'label',
+						{ className: 'block-label' },
+						'Select a Time Period and a Start Date OR End Date'
+					),
+					_react2['default'].createElement(
 						'div',
 						{ className: 'content-block tracker-option-block' },
 						_react2['default'].createElement(
 							'label',
 							{ className: 'block-label' },
-							'Select A Start Date:'
+							'Start Date:'
 						),
 						_react2['default'].createElement(_reactDatetime2['default'], { value: this.props.options.startDate, renderInput: this.renderDateInput, dateFormat: 'MM-DD-YYYY', onChange: this.startDateChange.bind(this) })
 					),
@@ -56054,7 +56272,7 @@ var TrackerOptions = function (_React$Component2) {
 						_react2['default'].createElement(
 							'label',
 							{ className: 'block-label' },
-							'Select A Time Period:'
+							'Time Period:'
 						),
 						_react2['default'].createElement(
 							'select',
@@ -56082,7 +56300,7 @@ var TrackerOptions = function (_React$Component2) {
 						_react2['default'].createElement(
 							'label',
 							{ className: 'block-label' },
-							'OR - Select An End Date:'
+							'End Date:'
 						),
 						_react2['default'].createElement(_reactDatetime2['default'], { value: this.props.options.endDate, renderInput: this.renderDateInput, onChange: this.endDateChange.bind(this) })
 					)

@@ -2,7 +2,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+/**
+	TODO:
+		create login/logout/register routes and components in React. Update Nav.props.user prop whenever something changes
+**/
 class Nav extends React.Component {
+	
+	
+	renderUserNav() {
+		return (
+			<ul className="navbar-nav mr-auto mt-2 mt-md-0">
+				<li className="nav-item active">
+					<a className="nav-link pointer-cursor" onClick={this.navToUserHome.bind(this)}>
+						<span className='bold-text'>{this.props.user.username}'s Home</span></a>
+				</li>
+				<li className="nav-item">
+					<a className="nav-link pointer-cursor" onClick={this.navToTracker.bind(this)}>Tracker</a>
+				</li>
+
+
+				<li className="nav-item">
+					<a className="nav-link pointer-cursor" onClick={this.navToPlanner.bind(this)}>Planner</a>
+				</li>
+				
+
+				<li className="nav-item">
+					<a className="nav-link pointer-cursor" onClick={this.navToMeals.bind(this)}>Meals</a>
+				</li>
+			</ul>
+		);
+	}
+	
+	renderProfileNav() {
+		return (
+			<ul className="navbar-nav pull-right">
+				<li className="nav-item">
+					<a className="nav-link mx-2 bold-text pointer-cursor" onClick={this.navToProfile.bind(this)}>		
+						{this.props.user.username}
+					</a>
+				</li>
+				<li className="nav-item">	
+					<a className="nav-link mx-2" href="/users/logout">Logout</a>
+				</li>
+			</ul>
+		)
+	}
 	
 	render() {
 		return (
@@ -10,9 +54,11 @@ class Nav extends React.Component {
 				<div className="row row-leftFix">
 
 					<div className="col-sm-2 p-3 nav-corner d-flex align-content-center justify-content-center">
-						<span className="nav-title align-self-center justify-self-center">
-							NuTrack
-						</span>
+						<a className="pointer-cursor" onClick={this.navToHome.bind(this)}>
+							<span className="nav-title align-self-center justify-self-center">
+								NuTrack
+							</span>
+						</a>
 					</div>
 					
 					<div className="col-sm-10 p-0">
@@ -22,36 +68,37 @@ class Nav extends React.Component {
 									<i className="fa fa-list nav-toggle-icon"></i>
 								</span>
 							</button>
-							<a className="navbar-brand" href="#">NuTrack</a>
 
 							<div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-								<ul className="navbar-nav mr-auto mt-2 mt-md-0">
-									<li className="nav-item active">
-										<a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
-									</li>
+								
+									
+								{
+									(this.props.user == null) 
+									? 
+										<ul className="navbar-nav mr-auto mt-2 mt-md-0">
+											<li className="nav-item active faded-white">not logged in</li> 
+										</ul>
+									:
+										this.renderUserNav()
+								}
+									
 
-										<li className="nav-item">
-											<a className="nav-link" href="/user/tracker">Tracker</a>
-										</li>
-
-									<li className="nav-item">
-										<a className="nav-link" href="/user/home">
-										not logged in
-										</a>
-									</li>
-
-								</ul>
-
-								<ul className="navbar-nav pull-right">
-
-									<li className="nav-item">
-										<a className="nav-link mx-2" href="/users/login">Login</a>
-									</li>
-									<li className="nav-item">	
-										<a className="nav-link mx-2" href="#">Register</a>
-									</li>
-
-								</ul>
+								{
+									(this.props.user == null) 
+									? 
+										<ul className="navbar-nav pull-right">
+											<li className="nav-item">
+												<a className="nav-link mx-2" href="/users/login">Login</a>
+											</li>
+											<li className="nav-item">	
+												<a className="nav-link mx-2" href="/users/register">Register</a>
+											</li>
+										</ul>
+									:
+										this.renderProfileNav()
+								}
+								
+								
 
 								<form className="form-inline my-2 my-lg-0" id="nav-search-form">
 
@@ -66,13 +113,29 @@ class Nav extends React.Component {
 		)
 	}
 	
-	homeLinkHandler() {
-		this.props.history.push('/');
+	navToHome() {
+		this.props.history.push("/");
+	}
+	navToUserHome() {
+		this.props.history.push("/user");
+	}
+	navToProfile() {
+		this.props.history.push("/users/profile");
+	}
+	navToTracker() {
+		this.props.history.push('/user/tracker/show');
+	}
+	navToPlanner() {
+		this.props.history.push("/user/planner/show");
+	}
+	navToMeals() {
+		this.props.history.push("/user/meals/show");
 	}
 	
-	searchLinkHandler() {
-		this.props.history.push('user/search');
+	searchHandler() {
+		
 	}
+	
 	
 	
 }

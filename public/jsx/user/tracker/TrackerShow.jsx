@@ -56,7 +56,15 @@ class TrackerShow extends React.Component {
 	
 	
 	componentDidMount() {
-		fetch('../../user/tracker/showtracker', {
+		if (this.props.type == "tracker") {
+			var route = "../../user/tracker/showtracker";
+		} else if (this.props.type == "planner") {
+			var route = "../../user/planner/showplanner";
+		} else {
+			console.warn("ERROR, showTracker props.type isn't equal to 'tracker' or 'planner'. this:", this);
+		}
+		
+		fetch(route, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
@@ -66,6 +74,7 @@ class TrackerShow extends React.Component {
 		})
 		.then((response) => response.json())
 		.then((res) => {
+			console.log("RES:", res);
 			res.endDate = new Date(res.endDate);
 			
 			//create dates here, so it can be used to sate state.dates and also to set state.sortedMeals via this.createMealDates(dates, meals), dates needs to be defined before the call to setState so it can be used, or I'd have to call createDateArray again
@@ -90,15 +99,20 @@ class TrackerShow extends React.Component {
 		if (length == 'week') length = 6; 
 		if (length == 'month') length = 30;
 		length = Number(length);//because the html <select> element sets a string instead of a number. TODO: convert this right away on prop update instead
-		
+		console.log("\n\n\n\n\n\ncreate date array. length=" + length);
+		console.log("end date = ", end);
 		var dates = [];
 		
 		for (let i = 0; i <= length; i++) {
 			let d = new Date();
 			d.setDate(end.getDate() - i);
+			console.log("adding date #" + i + ": ", d);
 			
+			d = new Date(end.getTime() - (i * 86400000));
 			dates.unshift(d);
 		}
+		
+		console.log('returning dates', dates);
 		return dates;
 	}
 	
@@ -278,13 +292,14 @@ class TrackerOptions extends React.Component {
 		console.log('rendering options. this:', this);
 		return (
 			<div className='tracker-props content-section tracker-options-section'>
+				<label className="block-label">Select a Time Period and a Start Date OR End Date</label>
 				<div className='content-block tracker-option-block'>
-					<label className='block-label'>Select A Start Date:</label>
+					<label className='block-label'>Start Date:</label>
 					<Datetime value={this.props.options.startDate} renderInput={this.renderDateInput} dateFormat="MM-DD-YYYY" onChange={this.startDateChange.bind(this)} />
 				</div>
 
 				<div className='content-block tracker-option-block'>
-					<label className='block-label'>Select A Time Period:</label>
+					<label className='block-label'>Time Period:</label>
 					<select defaultValue='6' className='tracker-option-input' onChange={this.timePeriodChange.bind(this)}>
 						<option value='0'>Day</option>
 						<option value='6'>Week</option>
@@ -293,7 +308,7 @@ class TrackerOptions extends React.Component {
 				</div>
 
 				<div className='content-block tracker-option-block'>
-					<label className='block-label'>OR - Select An End Date:</label>
+					<label className='block-label'>End Date:</label>
 					<Datetime value={this.props.options.endDate} renderInput={this.renderDateInput} onChange={this.endDateChange.bind(this)} />
 				</div>
 			</div>

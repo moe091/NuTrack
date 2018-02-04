@@ -14,9 +14,9 @@ class TrackerAdd extends React.Component {
 		var date = new Date();
 		var msg =
 				(this.props.meal == null) ?
-					"Create Meal Below Before Adding Items to Tracker"
+					"Create Meal Below Before Adding Items to " + this.props.type
 				:
-					"Add Meal '" + this.props.meal.name + "' to Tracker on " + date.toDateString() + " at " + (date.toTimeString().split(':')[0] + ':' + date.toTimeString().split(':')[1]);
+					"Add Meal '" + this.props.meal.name + "' to " + this.props.type + " on " + date.toDateString() + " at " + (date.toTimeString().split(':')[0] + ':' + date.toTimeString().split(':')[1]);
 		
 		
 		this.state = {
@@ -72,9 +72,13 @@ class TrackerAdd extends React.Component {
 						
 						{this.renderBuilderIfNeeded()}
 					
-						<button className={'btn header-bg ' + (this.state.isMealSelected ? '' : 'btn-disabled')} onClick={(this.state.isMealSelected ? this.trackMeal.bind(this) : null)}>Add To Tracker</button>
+						<button className={'btn header-bg ' + (this.state.isMealSelected ? '' : 'btn-disabled')} onClick={(this.state.isMealSelected ? this.trackMeal.bind(this) : null)}>
+							{
+								(this.type == "tracker") ? "Add To Tracker" : "Add To Planner"
+							}
+						</button>
 						
-						<div className="text-center text-danger small">{(this.state.isMealSelected ? '' : "Click 'Create Meal' button above to create a meal before adding to tracker")}</div>
+						<div className="text-center text-danger small">{(this.state.isMealSelected ? '' : "Click 'Create Meal' button above to create a meal before adding to " + this.props.type)}</div>
 					</div>
 				
 			</div>
@@ -134,7 +138,9 @@ class TrackerAdd extends React.Component {
 	//calls the trackMealHandler function prop passed down from <Tracker> component and passes in this.state.date(set by the datetime picker rendered in this component) and this.props.meal(passed down from <UserApp> to <Tracker> to this <TrackerAdd> component, contains the selected meal from which the 'Add To Tracker' button was clicked)
 	trackMeal() {
 		console.log('this', this);
-		this.props.trackMealHandler(this.state.meal, this.state.date);
+		
+		//type('planner' or 'tracker') will tell the trackMealHandler function in <Tracker> component whether to post new meal to the /planner/create or /tracker/create route
+		this.props.trackMealHandler(this.state.meal, this.state.date, this.props.type);
 	}
 	
 	

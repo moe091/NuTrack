@@ -85,7 +85,7 @@ class ShowMeal extends React.Component {
 						
 						<span className="link-span right">
 							<a onClick={this.props.trackerAdd(meal)} className='pointer-cursor'><i className="fa fa-calendar-plus-o" aria-hidden="true"></i> Tracker</a>
-							<a onClick={this.props.trackerAdd(meal)} className='pointer-cursor'><i className="fa fa-plus-square" aria-hidden="true"></i> Planner</a>
+							<a onClick={this.props.plannerAdd(meal)} className='pointer-cursor'><i className="fa fa-plus-square" aria-hidden="true"></i> Planner</a>
 						</span>
 						
 					</div>

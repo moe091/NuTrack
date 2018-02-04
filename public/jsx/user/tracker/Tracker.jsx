@@ -9,6 +9,7 @@ import TrackerShow from './TrackerShow.jsx';
 class Tracker extends React.Component {
 	constructor(props) {
 		super(props);
+		
 		this.state = {
 			meals: []
 		}
@@ -25,26 +26,67 @@ class Tracker extends React.Component {
 								trackMealHandler={this.trackMealHandler.bind(this)}
 								isMealSelected={this.props.isMealSelected}
 								checkedItems={this.props.checkedItems}
+								type="tracker"
 							/>
 						)
 					}}
 				/>
 				
+				<Route path='/user/planner/add' render={() => {
+						return (
+							<TrackerAdd 
+								meal={this.props.meal}
+								trackerAddHandler={this.props.plannerAddHandler}
+								
+								//props.type will be passed to trackMealHandler when called, if type is planner it post to the planner/create route, if type is 'tracker' it will post to tracker/create
+								trackMealHandler={this.trackMealHandler.bind(this)}
+								isMealSelected={this.props.isMealSelected}
+								checkedItems={this.props.checkedItems}
+								type="planner"
+							/>
+						)
+					}}
+				/>
+				
+				
+				
+				
 				<Route path='/user/tracker/show' render={() => {
 						return (
-							<TrackerShow />
+							<TrackerShow type="tracker" />
 						)	
 					}}
 				/>
+				
+				<Route path='/user/planner/show' render={() => {
+						return (
+							<TrackerShow type="planner" />
+						)	
+					}}
+				/>
+				
+				
 			</div>
 		)
 	}
 	
-	trackMealHandler(meal, time) {
+	
+	//type = 'planner' or 'tracker'
+	trackMealHandler(meal, time, type) {
 		console.log("track meal:", meal);
 		console.log("time: ", time);
 		
-		fetch('../../user/tracker/create', {
+		var route;
+		if (type == "tracker") {
+			route = "../../user/tracker/create";
+		} else if (type == "planner") {
+			route = "../../user/planner/create";
+		} else {
+			console.warn("<Tracker>, trackMealHandler() - type is not equal to 'tracker' or 'planner', something is wrong. this:", this);
+		}
+		
+		
+		fetch(route, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -59,7 +101,13 @@ class Tracker extends React.Component {
 		.then((response) => response.json())
 		.then((res) => {
 			console.log("tracker/create response:", res);
-			this.props.history.push("../../user/tracker/show");
+			if (type == "tracker") {
+				this.props.history.push("../../user/tracker/show");
+			} else if (type == "planner") {
+				this.props.history.push("../../user/planner/show");
+			} else {
+				console.warn("type not 'planner' or 'tracker', this:", this);
+			}
 		}).catch((err) => {
 			console.log("error fetching tracker/create: ", err);
 		})

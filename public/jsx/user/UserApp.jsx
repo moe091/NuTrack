@@ -40,20 +40,20 @@ class UserApp extends React.Component {
 	render() {
 		return (
 			<div className="app-wrapper">
-				<Nav />
+				<Nav user={window.user} history={this.props.history} />
 				<div className="container-fixed fill-height no-gap">
 					<div className="row row-leftFix min-height-fill">
 
 						<div className="col-sm-2 p-0">
 							<SideBar 
-								newMealHandler={this.newMealHandler.bind(this)} 
+								history={this.props.history} 
+								
 								checkedItems={this.state.checkedItems} 
 								checkItemHandler={this.checkItemHandler.bind(this)}
-								showMealHandler={this.showMealHandler.bind(this)} 
 								plusEnabled={(this.state.checkedItems.length > 0)} 
-								trackerShowHandler={this.trackerShowHandler.bind(this)}
+								
 								trackerAddHandler={this.trackerAddItemsHandler.bind(this)} 
-								plannerAddHandler={this.plannerAddHandler.bind(this)} 
+								plannerAddHandler={this.plannerAddItemsHandler.bind(this)} 
 							/>
 						</div>
 							
@@ -71,7 +71,7 @@ class UserApp extends React.Component {
 								return (
 									<SearchArea 
 										searchHandler={this.search.bind(this)} 
-										newMealHandler={this.newMealHandler.bind(this)} checkItemHandler={this.checkItemHandler.bind(this)} 
+										checkItemHandler={this.checkItemHandler.bind(this)} 
 										query={this.state.query[this.state.query.length - 1]} 
 										checkedItems={this.state.checkedItems}
 									/> 	
@@ -85,8 +85,26 @@ class UserApp extends React.Component {
 										history={this.props.history} 
 										checkedItems={this.state.checkedItems} 
 										trackerAddHandler={this.trackerAddHandler.bind(this)}
+										plannerAddHandler={this.plannerAddHandler.bind(this)}
 										meal={this.state.selectedMeal}
 										isMealSelected={this.isMealSelected}
+										type="tracker"
+									/>
+								)	
+							}}
+							/>
+							
+							 
+							<Route path='/user/planner' render={() => {
+								return (
+									<Tracker 
+										history={this.props.history} 
+										checkedItems={this.state.checkedItems} 
+										trackerAddHandler={this.trackerAddHandler.bind(this)}
+										plannerAddHandler={this.plannerAddHandler.bind(this)}
+										meal={this.state.selectedMeal}
+										isMealSelected={this.isMealSelected}
+										type="planner"
 									/>
 								)	
 							}}
@@ -117,6 +135,16 @@ class UserApp extends React.Component {
 		}
 	}
 	
+	plannerAddItemsHandler() {
+		this.isMealSelected = false;
+		if (this.state.checkedItems.length > 0) {
+			this.props.history.push("../../user/planner/add");
+		} else {
+			console.warn("plannerAddItemsHandler (SideBar's PlannerAdd callback) was called when checkedItems was empty!. this=", this);
+		}
+	}
+	
+	
 	/**
 		renders the <TrackerAdd> component, passing in the appropriate props. This function renders <TrackerAdd> with isMealSelected true, which just renders the component in it's ready-to-add state since it has a selected meal to add to Tracker and doesn't need to create one first
 	**/
@@ -132,29 +160,18 @@ class UserApp extends React.Component {
 		}
 	}
 	
+	plannerAddHandler(meal) {
+		if (meal != null) {
+			this.isMealSelected = true;
+			this.setState({
+				selectedMeal: meal
+			});
+			this.props.history.push("../../user/planner/add");
+		}
+	}
+	
 	//simply updates route, will trigger a re-render in which UserApp will render the <TrackerShow> component in the main area
-	trackerShowHandler() {
-		this.props.history.push("../../user/tracker/show");
-	}
-
-	//update route, causes re-render with <PlannerAdd> component in main area of page, passes in appropriate props
-	plannerAddHandler(e) {
-		
-	}
 	
-	//update route, cause re-render with <ShowMeal> component in main section of page.
-	showMealHandler(e) {
-		console.log("SHOW MEAL HANDLER - UserApp");
-		this.props.history.push("../../user/meals/show");
-	}
-	
-	//update route, cause re-render with <NewMeal> component in main section of page
-	newMealHandler(e) {
-		console.log("new meal click"); 
-		console.log(e.target);
-		console.log("this = ", this); 
-		this.props.history.push("../../user/meals/new");
-	}
 	
 	
 	/**

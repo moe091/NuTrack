@@ -42,6 +42,7 @@ router.post('/create', (req, res, next) => {
 });
 
 router.get('/showtracker', (req, res, next) => {
+	console.log('tracker.js /showtracker');
 	if (req.user) {
 		res.send({tracker: req.user.tracker, endDate: new Date(), term: 'week', watchedNutrients: req.user.watchedNutrients, message: "TRACKER(week):"});
 	} else {
