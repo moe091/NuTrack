@@ -7213,6 +7213,7 @@ var SearchArea = function (_React$Component) {
 		value: function () {
 			function componentWillUpdate(nextProps, nextState) {
 				console.log("updating component");
+				console.log("pquery:", this.props.pathQuery);
 			}
 
 			return componentWillUpdate;
@@ -7222,8 +7223,10 @@ var SearchArea = function (_React$Component) {
 		value: function () {
 			function componentWillReceiveProps(nextProps) {
 				console.log("updating searchArea");
+				console.log("pquery:", this.props.pathQuery);
 
 				if (nextProps.query != this.props.query) {
+					console.log("\n\n\n-CALLING SEARCH FROM NEWPROPS-\n\n\n");
 					console.log("query changed:", nextProps.query);
 					this.search(nextProps.query);
 				}
@@ -7262,7 +7265,7 @@ var SearchArea = function (_React$Component) {
 								'"'
 							)
 						),
-						_react2['default'].createElement(SearchTable, { nutNames: this.state.nutNames, items: this.state.items, nutrients: this.state.nutrients, checkedItems: this.props.checkedItems, checkItemHandler: this.props.checkItemHandler })
+						_react2['default'].createElement(SearchTable, { nutNames: this.props.searchNutNames, items: this.props.searchItems, nutrients: this.props.searchNutrients, checkedItems: this.props.checkedItems, checkItemHandler: this.props.checkItemHandler })
 					)
 				);
 			}
@@ -7273,8 +7276,19 @@ var SearchArea = function (_React$Component) {
 		key: 'componentDidMount',
 		value: function () {
 			function componentDidMount() {
-				console.log("SEARCH AREA MOUNTED");
-				this.search(this.props.query);
+				console.log("\n\n\n\n\nMOUNTING");
+				console.log("pquery:", this.props.pathQuery);
+				console.log("q: ", this.props.query);
+				if (this.props.query == this.props.pathQuery) {
+					console.log("Queries match, update results");
+					if (this.props.searchNutrients.length == 0) {
+						console.log("\n\n\n-CALLING SEARCH FROM MOUNT-\n\n\n", this.props);
+						this.search(this.props.query);
+					}
+				} else {
+					console.log("Queries don't match, SET QUERY");
+					this.props.setQuery(this.props.pathQuery);
+				}
 			}
 
 			return componentDidMount;
@@ -7285,17 +7299,22 @@ var SearchArea = function (_React$Component) {
 			function search(query) {
 				var _this2 = this;
 
+				var newResults = {};
+
 				this.setState({
 					items: [],
 					nutrients: []
 				});
 				this.getSearchResults(query).then(function (data) {
-
-					_this2.setState({
-						nutNames: data.nutNames,
-						items: data.items.item
-					});
-					_this2.getItemInfos();
+					/**
+     this.setState({
+     	nutNames: data.nutNames,
+     	items: data.items.item,
+     });
+     **/
+					newResults.nutNames = data.nutNames;
+					newResults.items = data.items.item;
+					_this2.getItemInfos(newResults);
 				})['catch'](function (err) {
 					console.log('error getting search results. err:', err);
 				});
@@ -7328,18 +7347,18 @@ var SearchArea = function (_React$Component) {
 	}, {
 		key: 'getItemInfos',
 		value: function () {
-			function getItemInfos() {
+			function getItemInfos(newResults) {
 				var _this3 = this;
 
 				console.log("getItemInfos() - this:", this);
-				var ndbArr = this.state.items.map(function (item) {
+				console.log('newResults', newResults);
+				var ndbArr = newResults.items.map(function (item) {
 					return item.ndbno;
 				});
 				var reqData = JSON.stringify({
 					ndbs: ndbArr,
 					type: 'b'
 				});
-				console.log("ndbArr: ", ndbArr);
 
 				fetch('../../user/item/list', {
 					method: 'POST',
@@ -7354,10 +7373,16 @@ var SearchArea = function (_React$Component) {
 				}).then(function (res) {
 					console.log("getItemInfos response:", res);
 					//instead of setting state, set a callback reaching back up to UserApp to set search results, allowing results to be stored when navigating to different components
-					_this3.setState({
-						nutrients: res.nutrients,
-						sample: "sample string"
-					});
+
+					/**
+     this.setState({
+     	nutrients: res.nutrients,
+     	sample: "sample string"
+     }); 
+     **/
+					newResults.nutrients = res.nutrients;
+					console.log("THIS:", _this3);
+					_this3.props.searchUpdateHandler(newResults);
 				})['catch'](function (err) {
 					console.log("catch error:", err);
 				});
@@ -52977,6 +53002,12 @@ var UserApp = function (_React$Component) {
 							_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/search', render: function () {
 									function render() {
 										return _react2['default'].createElement(_SearchArea.SearchArea, {
+											searchItems: _this2.state.searchItems,
+											searchNutrients: _this2.state.searchNutrients,
+											searchNutNames: _this2.state.searchNutNames,
+											searchUpdateHandler: _this2.searchUpdateHandler.bind(_this2),
+											pathQuery: _this2.getQueryFromPath(_this2.props.location.pathname.split('/')),
+
 											setQuery: _this2.setQuery.bind(_this2),
 											checkItemHandler: _this2.checkItemHandler.bind(_this2),
 											query: _this2.state.query,
@@ -53198,12 +53229,42 @@ var UserApp = function (_React$Component) {
 		value: function () {
 			function setQuery(q) {
 				console.log("set query. q=", q);
-				this.setState({
-					query: q
-				});
+				console.log("HISTORY: ", this.props.history.location.pathname.split("/")[2]);
+				if (this.props.history.location.pathname.split("/")[2] != "search") {
+					console.log("pushing history: ", q);
+					this.props.history.push("/user/search/" + q);
+				} else {
+					if (this.state.query != q) {
+						console.log("update query:");
+						this.setState({
+							query: q,
+							searchNutrients: [],
+							searchItems: []
+						});
+					} else {
+						console.log("QUERY SAME AS BEFORE");
+					}
+				}
 			}
 
 			return setQuery;
+		}()
+
+		//search callback to update search component all at once
+
+	}, {
+		key: 'searchUpdateHandler',
+		value: function () {
+			function searchUpdateHandler(newResults) {
+				console.log("searchUpdateHandler:", newResults);
+				this.setState({
+					searchItems: newResults.items,
+					searchNutrients: newResults.nutrients,
+					searchNutNames: newResults.nutNames
+				});
+			}
+
+			return searchUpdateHandler;
 		}()
 	}]);
 

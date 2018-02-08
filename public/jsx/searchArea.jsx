@@ -19,11 +19,14 @@ class SearchArea extends React.Component {
 	
 	componentWillUpdate(nextProps, nextState) {
 		console.log("updating component");
+		console.log("pquery:", this.props.pathQuery);
 	}
 	componentWillReceiveProps(nextProps) {
 		console.log("updating searchArea");
+		console.log("pquery:", this.props.pathQuery);
 		
 		if (nextProps.query != this.props.query) {
+			console.log("\n\n\n-CALLING SEARCH FROM NEWPROPS-\n\n\n");
 			console.log("query changed:", nextProps.query);
 			this.search(nextProps.query);
 		}
@@ -45,30 +48,46 @@ class SearchArea extends React.Component {
 							Results For "{this.props.query}"
 						</div>
 					</div>
-					<SearchTable nutNames={this.state.nutNames} items={this.state.items} nutrients={this.state.nutrients} checkedItems={this.props.checkedItems} checkItemHandler={this.props.checkItemHandler}/>
+					<SearchTable nutNames={this.props.searchNutNames} items={this.props.searchItems} nutrients={this.props.searchNutrients} checkedItems={this.props.checkedItems} checkItemHandler={this.props.checkItemHandler}/>
 				</div>
 			</div>
 		)
 	}
 	
 	componentDidMount() {
-		console.log("SEARCH AREA MOUNTED");
-		this.search(this.props.query);
+		console.log("\n\n\n\n\nMOUNTING");
+		console.log("pquery:", this.props.pathQuery);
+		console.log("q: ", this.props.query);
+		if (this.props.query == this.props.pathQuery) {
+			console.log("Queries match, update results");
+			if (this.props.searchNutrients.length == 0) {
+				console.log("\n\n\n-CALLING SEARCH FROM MOUNT-\n\n\n", this.props);
+				this.search(this.props.query);
+			}
+		} else {
+			console.log("Queries don't match, SET QUERY");
+			this.props.setQuery(this.props.pathQuery);
+		}
 		
 	}
 	
 	search(query) {
+		var newResults = {};
+		
 		this.setState({
 			items: [],
 			nutrients: []
 		})
 		this.getSearchResults(query).then((data) => {
-			
+			/**
 			this.setState({
 				nutNames: data.nutNames,
 				items: data.items.item,
 			});
-			this.getItemInfos();
+			**/
+			newResults.nutNames = data.nutNames;
+			newResults.items = data.items.item;
+			this.getItemInfos(newResults);
 			
 		}).catch((err) => {
 			console.log('error getting search results. err:', err);
@@ -88,16 +107,16 @@ class SearchArea extends React.Component {
 	
 	
 	//requests full nutrient data on each item in this.state.items from the backend. Update's state(causing full search results to render) when complete, returns nothing
-	getItemInfos() {
+	getItemInfos(newResults) {
 		console.log("getItemInfos() - this:", this);
-		var ndbArr = this.state.items.map((item) => { 
+		console.log('newResults', newResults);
+		var ndbArr = newResults.items.map((item) => { 
 				return item.ndbno 
 			});
 		var reqData = JSON.stringify({
 			ndbs: ndbArr,
 			type: 'b'
-		});
-		console.log("ndbArr: ", ndbArr);
+		}); 
 		
 		fetch('../../user/item/list', {
 			method: 'POST',
@@ -112,10 +131,16 @@ class SearchArea extends React.Component {
 		.then((res) => {
 			console.log("getItemInfos response:", res);
 			//instead of setting state, set a callback reaching back up to UserApp to set search results, allowing results to be stored when navigating to different components
+			
+			/**
 			this.setState({
 				nutrients: res.nutrients,
 				sample: "sample string"
 			}); 
+			**/
+			newResults.nutrients = res.nutrients;
+			console.log("THIS:", this);
+			this.props.searchUpdateHandler(newResults);
 		}).catch((err) => {
 			console.log("catch error:", err);
 		});

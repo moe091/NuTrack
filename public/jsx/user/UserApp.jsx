@@ -98,6 +98,12 @@ class UserApp extends React.Component {
 							<Route path='/user/search' render={() => {
 								return (
 									<SearchArea 
+										searchItems={this.state.searchItems}
+										searchNutrients={this.state.searchNutrients}
+										searchNutNames={this.state.searchNutNames}
+										searchUpdateHandler={this.searchUpdateHandler.bind(this)}
+										pathQuery={this.getQueryFromPath(this.props.location.pathname.split('/'))}
+										
 										setQuery={this.setQuery.bind(this)}
 										checkItemHandler={this.checkItemHandler.bind(this)} 
 										query={this.state.query} 
@@ -283,9 +289,33 @@ class UserApp extends React.Component {
 	
 	setQuery(q) {
 		console.log("set query. q=", q);
+		console.log("HISTORY: ", this.props.history.location.pathname.split("/")[2]);
+		if (this.props.history.location.pathname.split("/")[2] != "search") {
+			console.log("pushing history: ", q);
+			this.props.history.push("/user/search/" + q);
+		} else {
+			if (this.state.query != q) {
+				console.log("update query:");
+				this.setState({
+					query: q,
+					searchNutrients: [],
+					searchItems: []
+				});
+			} else {
+				console.log("QUERY SAME AS BEFORE");
+			}
+		}
+	}
+	
+	
+	//search callback to update search component all at once
+	searchUpdateHandler(newResults) {
+		console.log("searchUpdateHandler:", newResults);
 		this.setState({
-			query: q
-		});
+			searchItems: newResults.items,
+			searchNutrients: newResults.nutrients,
+			searchNutNames: newResults.nutNames
+		})
 	}
 	
 	
