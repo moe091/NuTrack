@@ -95,10 +95,10 @@ for now, edit/view links to edit meal page, eventually replace with a modal or a
 
 **/
 router.get('/show', (req, res, next) => {
-	res.render('index');
+	res.render('index', {user: req.user});
 });
 router.get('/new', (req, res, next) => {
-	res.render('index');
+	res.render('index', {user: req.user});
 });
 
 router.get('/showmeals', (req, res, next) => {

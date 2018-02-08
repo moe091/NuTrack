@@ -20,11 +20,21 @@ class UserApp extends React.Component {
 		this.state = {
 			query: this.props.location.pathname.split('/'),
 			checkedItems: [],
-			selectedMeal: null
+			selectedMeal: null,
+            user: this.props.user
 		}
 		this.isMealSelected = false;
 	}
 	
+  
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.user != this.state.user) {
+        this.setState({
+          user: nextProps.user
+        })
+      }
+    }
+  
 	//callback for searches, passed into components that have a search input, calls search route via Ajax then return response, allowing component calling search to either update route to search page or use the results in whatever other way is needed
 	//TODO write function
 	search(param) {

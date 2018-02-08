@@ -10,7 +10,7 @@ var meals = require('./user/meals');
 var tracker = require('./user/tracker');
 
 /* GET users listing. */
-//​ saving this
+//​
 
 router.use('/meals', meals);
 router.use('/tracker', tracker);
@@ -21,7 +21,7 @@ router.get('/item/:no', function(req, res, next) {
         res.render('food', { data: val, user: req.user });
     }).catch(function(err) {
         console.log('ERROR:', err);
-        res.render('index', {title: err}); 
+        res.render('index', {title: err, user: req.user}); 
     });
 });
 
@@ -101,8 +101,8 @@ router.get('/search/', function(req, res, next) {
             	res.render('food/search', {data: val, user: req.user, infos: infos });
 						});
 						**/
-							console.log("RESPONDING - this is the old route");
-            	res.render('food/search', {data: val, user: req.user, message: "Search Results", nutList: nutrientList });
+		  console.log("RESPONDING - this is the old route");
+          res.render('food/search', {data: val, user: req.user, message: "Search Results", nutList: nutrientList });
         });
             
         
@@ -133,7 +133,7 @@ router.get('/:no', function(req, res, next) {
         res.render('food', { data: val, user: req.user });
     }).catch(function(err) {
         console.log('ERROR:', err);
-        res.render('index', {title: err}); 
+        res.render('index', {title: err, user: req.user }); 
     });
 });
 

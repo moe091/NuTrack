@@ -20,7 +20,7 @@ router.use('/meals', meals);
 router.get('/home', function(req, res, next) {
 	if (req.isAuthenticated()) {
 		
-		res.render('user/home');
+		res.render('user/home', {user: req.user});
 		console.log('rendered user/home, is authenticated');
 		console.log('\n\n');
 		
@@ -40,7 +40,7 @@ router.get('/home', function(req, res, next) {
 router.get('/search/:q', function(req, res, next) {  
  	console.log("user.js /search/:q");
 	
-	res.render('index', {title: req.params.q, data: req.params.q}); 
+	res.render('index', {title: req.params.q, data: req.params.q, user: req.user}); 
 	
 	console.log('rendered index, title and data = ', req.params.q);
 	console.log('\n\n');
@@ -53,7 +53,7 @@ router.get('/search/:q', function(req, res, next) {
 router.get('/search', function(req, res, next) {  
  	console.log("user.js /search");
 	
-	res.render('index', {title: "Search", data: null}); 
+	res.render('index', {title: "Search", data: null, user: req.user}); 
 	
 	console.log('rendered index, title: Search and data: null');
 	console.log('\n\n');

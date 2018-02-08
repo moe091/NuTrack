@@ -10,7 +10,7 @@ var food = require('../../foods');
 
 
 router.get('/new', (req, res, next) => {
-	res.render('index');
+	res.render('index', {user: req.user});
 });
 
 router.post('/create', (req, res, next) => {
