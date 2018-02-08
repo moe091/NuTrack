@@ -45,29 +45,32 @@ class MealBuilder extends React.Component {
 		}
 	}
 	
+	componentWillReceiveProps(nextProps) {
+		if (this.props != nextProps) {
+			console.log("MEALBUILDER, NEWPROPS: ", nextProps);
+			this.getItemInfos(nextProps.checkedItems);
+		}
+	}
+	
 	render() {
 		return (
-				<div className="row h-100 newMeal-item-row">
-					
-					{this.renderItems()}
-					
-				</div>
-				
-				
+			<div className="row h-100 newMeal-item-row">
+				{this.renderItems()}
+			</div>			
 		)
 	}
 	
 	
 	componentDidMount() {
 		//pass props.items(array of Numbers containing ndbno's) to user/item/list route via ajax, recieve watchedNutrients and full nutrient objects for each ndb, and then calls setState to update this.state.watched and this.state.nutrients
-		this.getItemInfos();
+		this.getItemInfos(this.props.checkedItems);
 	}
 	
 	
 	//Ajax function, pass in the list of ndbs and receive 'nutrients': an array containing full nutrient info for each item from the list of ndbs passed on. also receive 'watched', a Number array containing the nutrient_id of the current users watched_nutrients
-	getItemInfos() {
+	getItemInfos(chkdItems) {
 		var reqBody = {
-			ndbs: this.props.checkedItems.map((item) => {
+			ndbs: chkdItems.map((item) => {
 				return item.ndb;
 			}),
 			type: 'f'
@@ -84,8 +87,7 @@ class MealBuilder extends React.Component {
 		.then((resp) => resp.json())
 		.then((res) => {
 			//AJAX response for nutrient data
-			
-			console.log("getItemInfos response:", res);
+			 
 			var amounts = [];
 			for (var i = 0; i < res.nutrients.length; i++) { //set default amount for each item to 1(serving)
 				res.nutrients[i].amount = 1;
@@ -107,9 +109,7 @@ class MealBuilder extends React.Component {
 		
 		:: Updates the properties of nutVals object - for each property matching a nutrient_id of the item passed in to the nut parameter it adds the value for that nutrient in the nut object times the number of servings(nut.amount). By the end nutVals should be an object containing a property for each watchedNutrient of the current user that is equal to the total for the item the nutVal represents(total is amount of specified nutrient per serving & # of servings)
 	**/
-	addNutrientVals(nut, nutVals) {
-		console.log("nut = ", nut);
-		console.log("display = ", nutVals);
+	addNutrientVals(nut, nutVals) { 
 		
 		var itemTotal = 0;
 		nut.report.food.nutrients.forEach((n) => {
@@ -123,18 +123,13 @@ class MealBuilder extends React.Component {
 				});
 			}
 			
-			itemTotal = nut.amount * Number(n.measures[0].value); 
-			if (this.state.nutrientMap.has(Number(n.nutrient_id))) {
-				console.log("\n\nmap units = " + this.state.nutrientMap.get(Number(n.nutrient_id).unit));	
-				console.log("nutrient units = " + n.unit);
-			}
+			itemTotal = nut.amount * Number(n.measures[0].value);  
 			
 			if (typeof nutVals["nut_" + n.nutrient_id] == "undefined") {
 				nutVals["nut_" + n.nutrient_id] = itemTotal;
 			} else {
 				nutVals["nut_" + n.nutrient_id]+= itemTotal;
-			}
-			console.log("new total(" + n.nutrient_id + "): " + nutVals["nut_" + n.nutrient_id]);
+			} 
 			
 		});
 	}
@@ -168,8 +163,7 @@ class MealBuilder extends React.Component {
 				}
 			}
 		});
-		
-		console.log("WATCHED NUTS:", watchedNuts);
+		 
 		
 		return watchedNuts;
 	}
@@ -242,16 +236,11 @@ class MealBuilder extends React.Component {
 	
 	
 	//creates a function to be used as the onInput callback for each meals serving amount slider. Takes the item corresponding to the slider as a parameter and returns a function that changes the .amount prop of that item and updates state
-	createAmountUpdate(item) {
-		console.log("Create Amount Update. item: ", item);
-		console.log("this = ", this);
+	createAmountUpdate(item) { 
 		item.amount = item.amount ? item.amount : 1;
 		var index = this.state.nutrients.indexOf(item);
-		return (function(e) {
-			console.log("slider Val: ", e.target.value);
-			item.amount = Number(e.target.value).toFixed(2);
-			console.log("item = ", item);
-			
+		return (function(e) { 
+			item.amount = Number(e.target.value).toFixed(2); 
 			this.setState({ //workaround for updating array of objs in state. Shoulda used redux..
 				nutrients: [
 					...this.state.nutrients.slice(0, index),

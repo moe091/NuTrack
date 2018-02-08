@@ -38,6 +38,7 @@ class Meal extends React.Component {
 			this.setState({
 				checkedItems: newProps.checkedItems
 			});
+			console.log("UPDATED MEAL STATE");
 		}
 	}
 	

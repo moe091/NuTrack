@@ -55,6 +55,13 @@ class SideBar extends React.Component {
 					</button>
 				</div>
 				
+					<div className="sidebar-section sidebar-main-section row m-0">
+						<a onClick={this.backToSearchHandler.bind(this)} className="col-sm-12 sidebar-item-main p-1">
+							Results For {this.props.query}
+						</a>
+					</div>
+					
+				
 				<label>{this.props.checkedItems.length} Selected Items:</label>
 				<div className="sidebar-section container-fixed sidebar-list-section">
 					{
@@ -120,6 +127,10 @@ class SideBar extends React.Component {
 		}
 	}
 	
+	backToSearchHandler() {
+		console.log("back to search, query=" + this.props.query);
+		this.props.history.push("../../user/search/" + this.props.query);
+	}
 	
 	trackerShowHandler() {
 		this.props.history.push("../../user/tracker/show");

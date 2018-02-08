@@ -17,8 +17,7 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			view: "home",
-			query: null,
-            user: this.window.user || this.state.user
+			query: null
 		}
 	}
 	

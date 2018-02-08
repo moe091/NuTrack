@@ -17,28 +17,45 @@ import Tracker from './tracker/Tracker.jsx';
 class UserApp extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log("USER:", window.user);
 		this.state = {
-			query: this.props.location.pathname.split('/'),
-			checkedItems: [],
-			selectedMeal: null,
-            user: this.props.user
+			searchItems: [],
+			searchNutrients: [],
+			searchNutNames: [],
+			query: this.getQueryFromPath(this.props.location.pathname.split('/')),
+			checkedItems: window.user.checkedItems || [],
+			selectedMeal: null
 		}
 		this.isMealSelected = false;
 	}
 	
   
-    componentWillReceiveProps(nextProps) {
-      if (nextProps.user != this.state.user) {
-        this.setState({
-          user: nextProps.user
-        })
-      }
-    }
+
   
-	//callback for searches, passed into components that have a search input, calls search route via Ajax then return response, allowing component calling search to either update route to search page or use the results in whatever other way is needed
-	//TODO write function
-	search(param) {
-		console.log("USER APP SEARCH", param);
+	
+	componentWillUpdate(nextProps, nextState) {
+		if (this.state.checkedItems != nextState.checkedItems) {
+			this.updateCheckedItems(nextState.checkedItems);
+		}
+	}
+	
+	updateCheckedItems(chkdItems) {
+		console.log("updating checked items!", chkdItems);
+		fetch('../../user/updateCheckedItems', {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(chkdItems)
+		})
+		.then((response) => response.json())
+		.then((res) => {
+			console.log("user/updateCheckedItems SUCCESS. response: ", res);
+		}).catch((err) => {
+			console.log("updateCheckedItems ERROR:", err);
+		});
 	}
 	
 	/**
@@ -50,12 +67,13 @@ class UserApp extends React.Component {
 	render() {
 		return (
 			<div className="app-wrapper">
-				<Nav user={window.user} history={this.props.history} />
+				<Nav user={window.user} history={this.props.history} setQueryHandler={this.setQuery.bind(this)}/>
 				<div className="container-fixed fill-height no-gap">
 					<div className="row row-leftFix min-height-fill">
 
 						<div className="col-sm-2 p-0">
 							<SideBar 
+							 	query={this.state.query} 
 								history={this.props.history} 
 								
 								checkedItems={this.state.checkedItems} 
@@ -80,9 +98,9 @@ class UserApp extends React.Component {
 							<Route path='/user/search' render={() => {
 								return (
 									<SearchArea 
-										searchHandler={this.search.bind(this)} 
+										setQuery={this.setQuery.bind(this)}
 										checkItemHandler={this.checkItemHandler.bind(this)} 
-										query={this.state.query[this.state.query.length - 1]} 
+										query={this.state.query} 
 										checkedItems={this.state.checkedItems}
 									/> 	
 								)
@@ -224,6 +242,7 @@ class UserApp extends React.Component {
 				console.warn("itemIndex = " + itemIndex);
 			}
 			
+			
 		}
 		
 		//if newArr was set, checkedItems has changed. update state
@@ -250,6 +269,24 @@ class UserApp extends React.Component {
 		return -1;
 	}
 	
+	
+	getQueryFromPath(path) {
+		console.log("setQuery() path=", path);
+		
+		if (path[1] == "user" && path[2] == "search") {
+			console.log('setting query:', path[3]);
+			return path[3];
+		}
+		console.log('returning null');
+		return null;
+	}
+	
+	setQuery(q) {
+		console.log("set query. q=", q);
+		this.setState({
+			query: q
+		});
+	}
 	
 	
 }

@@ -5578,10 +5578,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Nav = function (_React$Component) {
 	_inherits(Nav, _React$Component);
 
-	function Nav() {
+	function Nav(props) {
 		_classCallCheck(this, Nav);
 
-		return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
+
+		_this.state = {
+			searchQuery: ''
+		};
+		return _this;
 	}
 
 	_createClass(Nav, [{
@@ -5742,10 +5747,10 @@ var Nav = function (_React$Component) {
 									_react2['default'].createElement(
 										'form',
 										{ className: 'form-inline my-2 my-lg-0', id: 'nav-search-form' },
-										_react2['default'].createElement('input', { className: 'form-control mx-sm-2', type: 'text', placeholder: 'Search' }),
+										_react2['default'].createElement(SearchBox, { value: this.state.searchQuery, onChangeHandler: this.searchInput.bind(this) }),
 										_react2['default'].createElement(
 											'button',
-											{ className: 'btn btn-outline-success my-2 my-sm-0', type: 'submit' },
+											{ type: 'button', className: 'btn btn-outline-success my-2 my-sm-0', onClick: this.searchBtnClick.bind(this) },
 											'Search'
 										)
 									)
@@ -5757,6 +5762,26 @@ var Nav = function (_React$Component) {
 			}
 
 			return render;
+		}()
+	}, {
+		key: 'searchInput',
+		value: function () {
+			function searchInput(e) {
+				this.setState({
+					searchQuery: e.target.value
+				});
+			}
+
+			return searchInput;
+		}()
+	}, {
+		key: 'searchBtnClick',
+		value: function () {
+			function searchBtnClick(e) {
+				this.props.setQueryHandler(this.state.searchQuery);
+			}
+
+			return searchBtnClick;
 		}()
 	}, {
 		key: 'navToHome',
@@ -5823,6 +5848,11 @@ var Nav = function (_React$Component) {
 
 	return Nav;
 }(_react2['default'].Component);
+
+function SearchBox(props) {
+
+	return _react2['default'].createElement('input', { className: 'form-control mx-sm-2', type: 'text', placeholder: 'Search', value: props.value, onChange: props.onChangeHandler });
+}
 
 exports['default'] = Nav;
 
@@ -6003,6 +6033,16 @@ var SideBar = function (_React$Component) {
 						)
 					),
 					_react2['default'].createElement(
+						'div',
+						{ className: 'sidebar-section sidebar-main-section row m-0' },
+						_react2['default'].createElement(
+							'a',
+							{ onClick: this.backToSearchHandler.bind(this), className: 'col-sm-12 sidebar-item-main p-1' },
+							'Results For ',
+							this.props.query
+						)
+					),
+					_react2['default'].createElement(
 						'label',
 						null,
 						this.props.checkedItems.length,
@@ -6105,6 +6145,16 @@ var SideBar = function (_React$Component) {
 			}
 
 			return createDeselectHandler;
+		}()
+	}, {
+		key: 'backToSearchHandler',
+		value: function () {
+			function backToSearchHandler() {
+				console.log("back to search, query=" + this.props.query);
+				this.props.history.push("../../user/search/" + this.props.query);
+			}
+
+			return backToSearchHandler;
 		}()
 	}, {
 		key: 'trackerShowHandler',
@@ -7140,6 +7190,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+//pull items, nutrients, and nutNames up to UserApp
 var SearchArea = function (_React$Component) {
 	_inherits(SearchArea, _React$Component);
 
@@ -7152,17 +7203,35 @@ var SearchArea = function (_React$Component) {
 			query: null,
 			nutNames: ["a", "2", "III", "4th", "last"],
 			items: [],
-			nutrients: [{
-				manu: "Big Time Tea Company",
-				name: "Julia's Tropical Tea, Tea+Fruits+Veggies",
-				ndb: 0,
-				nutrients: [{ abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 0 }, { abbr: "Sugar", name: "Calories", unit: "kcal", value: "15", id: 1 }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 2 }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 3 }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 4 }, { abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 5 }]
-			}]
+			nutrients: []
 		};
 		return _this;
 	}
 
 	_createClass(SearchArea, [{
+		key: 'componentWillUpdate',
+		value: function () {
+			function componentWillUpdate(nextProps, nextState) {
+				console.log("updating component");
+			}
+
+			return componentWillUpdate;
+		}()
+	}, {
+		key: 'componentWillReceiveProps',
+		value: function () {
+			function componentWillReceiveProps(nextProps) {
+				console.log("updating searchArea");
+
+				if (nextProps.query != this.props.query) {
+					console.log("query changed:", nextProps.query);
+					this.search(nextProps.query);
+				}
+			}
+
+			return componentWillReceiveProps;
+		}()
+	}, {
 		key: 'render',
 		value: function () {
 			function render() {
@@ -7204,11 +7273,23 @@ var SearchArea = function (_React$Component) {
 		key: 'componentDidMount',
 		value: function () {
 			function componentDidMount() {
+				console.log("SEARCH AREA MOUNTED");
+				this.search(this.props.query);
+			}
+
+			return componentDidMount;
+		}()
+	}, {
+		key: 'search',
+		value: function () {
+			function search(query) {
 				var _this2 = this;
 
-				console.log("SEARCH AREA MOUNTED");
-
-				this.getSearchResults().then(function (data) {
+				this.setState({
+					items: [],
+					nutrients: []
+				});
+				this.getSearchResults(query).then(function (data) {
 
 					_this2.setState({
 						nutNames: data.nutNames,
@@ -7220,7 +7301,7 @@ var SearchArea = function (_React$Component) {
 				});
 			}
 
-			return componentDidMount;
+			return search;
 		}()
 
 		//returns promise that resolves to search results based on props.query(search results is an array of items containing the name and ndbno's but no nutrient info, have to specifically call USDA API for each item to get specific data)
@@ -7228,10 +7309,10 @@ var SearchArea = function (_React$Component) {
 	}, {
 		key: 'getSearchResults',
 		value: function () {
-			function getSearchResults() {
+			function getSearchResults(query) {
 				var that = this; //TODO: figure out why I did it this way(probably forgot a bind somewhere) and fix
 
-				return fetch('/user/search/results/' + this.props.query, {
+				return fetch('/user/search/results/' + query, {
 					method: 'GET',
 					credentials: 'include'
 				}).then(function (resp) {
@@ -7272,9 +7353,9 @@ var SearchArea = function (_React$Component) {
 					return resp.json();
 				}).then(function (res) {
 					console.log("getItemInfos response:", res);
+					//instead of setting state, set a callback reaching back up to UserApp to set search results, allowing results to be stored when navigating to different components
 					_this3.setState({
 						nutrients: res.nutrients,
-						nutrientNames: res.nutrientNames,
 						sample: "sample string"
 					});
 				})['catch'](function (err) {
@@ -7369,27 +7450,27 @@ var SearchTable = function (_React$Component2) {
 							_react2['default'].createElement(
 								'th',
 								null,
-								this.props.nutrients[0].nutrients[0].name
+								this.props.nutrients.length > 0 ? this.props.nutrients[0].nutrients[0].name : ""
 							),
 							_react2['default'].createElement(
 								'th',
 								null,
-								this.props.nutrients[0].nutrients[1].name
+								this.props.nutrients.length > 0 ? this.props.nutrients[0].nutrients[1].name : ""
 							),
 							_react2['default'].createElement(
 								'th',
 								null,
-								this.props.nutrients[0].nutrients[2].name
+								this.props.nutrients.length > 0 ? this.props.nutrients[0].nutrients[2].name : ""
 							),
 							_react2['default'].createElement(
 								'th',
 								null,
-								this.props.nutrients[0].nutrients[3].name
+								this.props.nutrients.length > 0 ? this.props.nutrients[0].nutrients[3].name : ""
 							),
 							_react2['default'].createElement(
 								'th',
 								null,
-								this.props.nutrients[0].nutrients[4].name
+								this.props.nutrients.length > 0 ? this.props.nutrients[0].nutrients[4].name : ""
 							)
 						)
 					),
@@ -7424,7 +7505,7 @@ var SearchTable = function (_React$Component2) {
 						_react2['default'].createElement(
 							'label',
 							{ className: 'fancy-checkbox' },
-							_react2['default'].createElement('input', { type: 'checkbox', className: 'search-result-chk', id: "item-chk-" + item.ndb, name: 'item-chk-1', onClick: this.createCheckHandler(item), num: '1', checked: this.getCheckedVal(item.ndb) }),
+							_react2['default'].createElement('input', { type: 'checkbox', className: 'search-result-chk', id: "item-chk-" + item.ndb, name: 'item-chk-1', onChange: this.createCheckHandler(item), num: '1', checked: this.getCheckedVal(item.ndb) }),
 							_react2['default'].createElement('i', { 'aria-hidden': 'true', className: 'chk-icon fa fa-square-o unchecked' }),
 							_react2['default'].createElement('i', { 'aria-hidden': 'true', className: 'chk-icon fa fa-check-square-o checked' })
 						)
@@ -8626,6 +8707,18 @@ var MealBuilder = function (_React$Component) {
 	}
 
 	_createClass(MealBuilder, [{
+		key: 'componentWillReceiveProps',
+		value: function () {
+			function componentWillReceiveProps(nextProps) {
+				if (this.props != nextProps) {
+					console.log("MEALBUILDER, NEWPROPS: ", nextProps);
+					this.getItemInfos(nextProps.checkedItems);
+				}
+			}
+
+			return componentWillReceiveProps;
+		}()
+	}, {
 		key: 'render',
 		value: function () {
 			function render() {
@@ -8643,7 +8736,7 @@ var MealBuilder = function (_React$Component) {
 		value: function () {
 			function componentDidMount() {
 				//pass props.items(array of Numbers containing ndbno's) to user/item/list route via ajax, recieve watchedNutrients and full nutrient objects for each ndb, and then calls setState to update this.state.watched and this.state.nutrients
-				this.getItemInfos();
+				this.getItemInfos(this.props.checkedItems);
 			}
 
 			return componentDidMount;
@@ -8654,11 +8747,11 @@ var MealBuilder = function (_React$Component) {
 	}, {
 		key: 'getItemInfos',
 		value: function () {
-			function getItemInfos() {
+			function getItemInfos(chkdItems) {
 				var _this2 = this;
 
 				var reqBody = {
-					ndbs: this.props.checkedItems.map(function (item) {
+					ndbs: chkdItems.map(function (item) {
 						return item.ndb;
 					}),
 					type: 'f'
@@ -8676,7 +8769,6 @@ var MealBuilder = function (_React$Component) {
 				}).then(function (res) {
 					//AJAX response for nutrient data
 
-					console.log("getItemInfos response:", res);
 					var amounts = [];
 					for (var i = 0; i < res.nutrients.length; i++) {
 						//set default amount for each item to 1(serving)
@@ -8706,10 +8798,6 @@ var MealBuilder = function (_React$Component) {
 		key: 'addNutrientVals',
 		value: function () {
 			function addNutrientVals(nut, nutVals) {
-				var _this3 = this;
-
-				console.log("nut = ", nut);
-				console.log("display = ", nutVals);
 
 				var itemTotal = 0;
 				nut.report.food.nutrients.forEach(function (n) {
@@ -8724,17 +8812,12 @@ var MealBuilder = function (_React$Component) {
 					}
 
 					itemTotal = nut.amount * Number(n.measures[0].value);
-					if (_this3.state.nutrientMap.has(Number(n.nutrient_id))) {
-						console.log("\n\nmap units = " + _this3.state.nutrientMap.get(Number(n.nutrient_id).unit));
-						console.log("nutrient units = " + n.unit);
-					}
 
 					if (typeof nutVals["nut_" + n.nutrient_id] == "undefined") {
 						nutVals["nut_" + n.nutrient_id] = itemTotal;
 					} else {
 						nutVals["nut_" + n.nutrient_id] += itemTotal;
 					}
-					console.log("new total(" + n.nutrient_id + "): " + nutVals["nut_" + n.nutrient_id]);
 				});
 			}
 
@@ -8747,7 +8830,7 @@ var MealBuilder = function (_React$Component) {
 		key: 'createNutrientDisplayObj',
 		value: function () {
 			function createNutrientDisplayObj(nutrientObj) {
-				var _this4 = this;
+				var _this3 = this;
 
 				var watched = this.state.watched.length == 0 ? [203, 204, 205, 208, 269, 307] : this.state.watched;
 				var nutVals = {};
@@ -8769,15 +8852,13 @@ var MealBuilder = function (_React$Component) {
 					if (typeof nutVals["nut_" + w] != "undefined") {
 						return {
 							id: w,
-							name: _this4.state.nutrientMap.get(w).name,
-							abbr: _this4.state.nutrientMap.get(w).abbr,
-							unit: _this4.state.nutrientMap.get(w).unit,
+							name: _this3.state.nutrientMap.get(w).name,
+							abbr: _this3.state.nutrientMap.get(w).abbr,
+							unit: _this3.state.nutrientMap.get(w).unit,
 							total: nutVals["nut_" + w].toFixed(2)
 						};
 					}
 				});
-
-				console.log("WATCHED NUTS:", watchedNuts);
 
 				return watchedNuts;
 			}
@@ -8815,7 +8896,7 @@ var MealBuilder = function (_React$Component) {
 		key: 'renderItems',
 		value: function () {
 			function renderItems() {
-				var _this5 = this;
+				var _this4 = this;
 
 				return _react2['default'].createElement(
 					'div',
@@ -8873,8 +8954,8 @@ var MealBuilder = function (_React$Component) {
 								item.report.food.nutrients.length > 0 ? item.report.food.nutrients[0].measures[0].qty + ' ' + item.report.food.nutrients[0].measures[0].label : '',
 								')'
 							),
-							_react2['default'].createElement(_RangeSlider2['default'], { minRange: '0', maxRange: '5', defaultVal: item.amount, sliderInput: _this5.createAmountUpdate(item), sliderStep: '0.25', wrapperClass: 'newMeal-item-amount' }),
-							_react2['default'].createElement(_NutrientTable2['default'], { nutrients: _this5.createNutrientDisplayObj(item) })
+							_react2['default'].createElement(_RangeSlider2['default'], { minRange: '0', maxRange: '5', defaultVal: item.amount, sliderInput: _this4.createAmountUpdate(item), sliderStep: '0.25', wrapperClass: 'newMeal-item-amount' }),
+							_react2['default'].createElement(_NutrientTable2['default'], { nutrients: _this4.createNutrientDisplayObj(item) })
 						);
 					})
 				);
@@ -8889,15 +8970,10 @@ var MealBuilder = function (_React$Component) {
 		key: 'createAmountUpdate',
 		value: function () {
 			function createAmountUpdate(item) {
-				console.log("Create Amount Update. item: ", item);
-				console.log("this = ", this);
 				item.amount = item.amount ? item.amount : 1;
 				var index = this.state.nutrients.indexOf(item);
 				return function (e) {
-					console.log("slider Val: ", e.target.value);
 					item.amount = Number(e.target.value).toFixed(2);
-					console.log("item = ", item);
-
 					this.setState({ //workaround for updating array of objs in state. Shoulda used redux..
 						nutrients: [].concat(_toConsumableArray(this.state.nutrients.slice(0, index)), [Object.assign({}, item)], _toConsumableArray(this.state.nutrients.slice(index + 1)))
 					});
@@ -52800,27 +52876,53 @@ var UserApp = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (UserApp.__proto__ || Object.getPrototypeOf(UserApp)).call(this, props));
 
+		console.log("USER:", window.user);
 		_this.state = {
-			query: _this.props.location.pathname.split('/'),
-			checkedItems: [],
+			searchItems: [],
+			searchNutrients: [],
+			searchNutNames: [],
+			query: _this.getQueryFromPath(_this.props.location.pathname.split('/')),
+			checkedItems: window.user.checkedItems || [],
 			selectedMeal: null
 		};
 		_this.isMealSelected = false;
 		return _this;
 	}
 
-	//callback for searches, passed into components that have a search input, calls search route via Ajax then return response, allowing component calling search to either update route to search page or use the results in whatever other way is needed
-	//TODO write function
-
-
 	_createClass(UserApp, [{
-		key: 'search',
+		key: 'componentWillUpdate',
 		value: function () {
-			function search(param) {
-				console.log("USER APP SEARCH", param);
+			function componentWillUpdate(nextProps, nextState) {
+				if (this.state.checkedItems != nextState.checkedItems) {
+					this.updateCheckedItems(nextState.checkedItems);
+				}
 			}
 
-			return search;
+			return componentWillUpdate;
+		}()
+	}, {
+		key: 'updateCheckedItems',
+		value: function () {
+			function updateCheckedItems(chkdItems) {
+				console.log("updating checked items!", chkdItems);
+				fetch('../../user/updateCheckedItems', {
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(chkdItems)
+				}).then(function (response) {
+					return response.json();
+				}).then(function (res) {
+					console.log("user/updateCheckedItems SUCCESS. response: ", res);
+				})['catch'](function (err) {
+					console.log("updateCheckedItems ERROR:", err);
+				});
+			}
+
+			return updateCheckedItems;
 		}()
 
 		/**
@@ -52839,7 +52941,7 @@ var UserApp = function (_React$Component) {
 				return _react2['default'].createElement(
 					'div',
 					{ className: 'app-wrapper' },
-					_react2['default'].createElement(_Nav2['default'], { user: window.user, history: this.props.history }),
+					_react2['default'].createElement(_Nav2['default'], { user: window.user, history: this.props.history, setQueryHandler: this.setQuery.bind(this) }),
 					_react2['default'].createElement(
 						'div',
 						{ className: 'container-fixed fill-height no-gap' },
@@ -52850,6 +52952,7 @@ var UserApp = function (_React$Component) {
 								'div',
 								{ className: 'col-sm-2 p-0' },
 								_react2['default'].createElement(_SideBar2['default'], {
+									query: this.state.query,
 									history: this.props.history,
 
 									checkedItems: this.state.checkedItems,
@@ -52874,9 +52977,9 @@ var UserApp = function (_React$Component) {
 							_react2['default'].createElement(_reactRouterDom.Route, { path: '/user/search', render: function () {
 									function render() {
 										return _react2['default'].createElement(_SearchArea.SearchArea, {
-											searchHandler: _this2.search.bind(_this2),
+											setQuery: _this2.setQuery.bind(_this2),
 											checkItemHandler: _this2.checkItemHandler.bind(_this2),
-											query: _this2.state.query[_this2.state.query.length - 1],
+											query: _this2.state.query,
 											checkedItems: _this2.state.checkedItems
 										});
 									}
@@ -53074,6 +53177,34 @@ var UserApp = function (_React$Component) {
 
 			return isNdbChecked;
 		}()
+	}, {
+		key: 'getQueryFromPath',
+		value: function () {
+			function getQueryFromPath(path) {
+				console.log("setQuery() path=", path);
+
+				if (path[1] == "user" && path[2] == "search") {
+					console.log('setting query:', path[3]);
+					return path[3];
+				}
+				console.log('returning null');
+				return null;
+			}
+
+			return getQueryFromPath;
+		}()
+	}, {
+		key: 'setQuery',
+		value: function () {
+			function setQuery(q) {
+				console.log("set query. q=", q);
+				this.setState({
+					query: q
+				});
+			}
+
+			return setQuery;
+		}()
 	}]);
 
 	return UserApp;
@@ -53174,6 +53305,7 @@ var Meal = function (_React$Component) {
 					this.setState({
 						checkedItems: newProps.checkedItems
 					});
+					console.log("UPDATED MEAL STATE");
 				}
 			}
 
@@ -53292,6 +53424,15 @@ var NewMeal = function (_React$Component) {
 	}
 
 	_createClass(NewMeal, [{
+		key: 'componentWillReceiveProps',
+		value: function () {
+			function componentWillReceiveProps(nextProps) {
+				console.log("NewMeal receiving props!", nextProps);
+			}
+
+			return componentWillReceiveProps;
+		}()
+	}, {
 		key: 'render',
 		value: function () {
 			function render() {

@@ -7,7 +7,12 @@ import ReactDOM from 'react-dom';
 		create login/logout/register routes and components in React. Update Nav.props.user prop whenever something changes
 **/
 class Nav extends React.Component {
-	
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchQuery: ''
+		}
+	}
 	
 	renderUserNav() {
 		return (
@@ -102,8 +107,8 @@ class Nav extends React.Component {
 
 								<form className="form-inline my-2 my-lg-0" id="nav-search-form">
 
-									<input className="form-control mx-sm-2" type="text" placeholder="Search"></input>
-									<button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+									<SearchBox value={this.state.searchQuery} onChangeHandler={this.searchInput.bind(this)} />
+									<button type="button" className="btn btn-outline-success my-2 my-sm-0" onClick={this.searchBtnClick.bind(this)}>Search</button>
 								</form>
 							</div>
 						</nav>
@@ -112,6 +117,17 @@ class Nav extends React.Component {
 			</div>
 		)
 	}
+	
+	searchInput(e) {
+		this.setState({
+			searchQuery: e.target.value
+		});
+	}
+	
+	searchBtnClick(e) {
+		this.props.setQueryHandler(this.state.searchQuery);
+	}
+	
 	
 	navToHome() {
 		this.props.history.push("/");
@@ -140,6 +156,12 @@ class Nav extends React.Component {
 	
 }
 
+function SearchBox(props) {
+	
+	return (
+		<input className="form-control mx-sm-2" type="text" placeholder="Search" value={props.value} onChange={props.onChangeHandler} ></input>
+	)
+}
 
 
 

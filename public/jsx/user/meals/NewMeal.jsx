@@ -19,6 +19,9 @@ class NewMeal extends React.Component {
 		}
 	}
 	
+	componentWillReceiveProps(nextProps) {
+		console.log("NewMeal receiving props!", nextProps);
+	}
 	render() {
 		return (
 			<MealBuilder checkedItems={this.props.checkedItems} createMealHandler={this.createMealHandler.bind(this)} />

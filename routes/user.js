@@ -5,6 +5,7 @@ var food = require('../foods');
 var foodHelper = require('../helpers/foodhelper');
 
 var User = require('../models/user');
+var Checkeditem = require('../models/checkeditem');
 var tracker = require('./user/tracker');
 var planner = require('./user/planner');
 var meals = require('./user/meals');
@@ -34,6 +35,43 @@ router.get('/home', function(req, res, next) {
 });
 
 
+
+//used to update checkedItems - saving them on server so that they can persist during page refreshes and stay the same even when uesr logs out and back in
+router.post('/updateCheckedItems', function(req, res, next) {
+	console.log("\n\nupdateCheckedItems:");
+	console.log("username: " + req.user.username);
+	console.log("newItems:", req.body);
+	if (req.user && req.user.checkedItems != req.body) {
+		console.log("updating checked items");
+		
+		User.findById(req.user.id, (err, user) => {
+			if (!err) {
+				var newChecked = req.body.map((item) => {
+					return Checkeditem(item)
+				});
+				console.log("newChecked = ", newChecked);
+			} else {
+				console.log("User.findById error:", err);
+			}
+			
+			user.checkedItems = newChecked;
+			
+			user.save((err) => {
+				if (!err) {
+					console.log("success:", user.checkedItems);
+					res.send({success: true, checkedItems: user.checkedItems});
+				} else {
+					console.log("error saving user:", err);
+					res.send({success: false});
+				}
+			});
+			
+		});
+	} else {
+		console.log("no update");
+		res.send({checkedItems: 'else'})
+	}
+});
 
 
 

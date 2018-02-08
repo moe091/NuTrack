@@ -4,7 +4,7 @@ import {$,jQuery} from 'jquery';
 
 
 
-
+//pull items, nutrients, and nutNames up to UserApp
 class SearchArea extends React.Component {
 	constructor(props) {
 		super(props);
@@ -12,24 +12,22 @@ class SearchArea extends React.Component {
 			query: null,
 			nutNames: ["a", "2", "III", "4th", "last"],
 			items: [],
-			nutrients: [
-				{
-					manu: "Big Time Tea Company", 
-					name: "Julia's Tropical Tea, Tea+Fruits+Veggies", 
-					ndb: 0,
-					nutrients: [
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 0},
-						{abbr: "Sugar", name: "Calories", unit: "kcal", value: "15", id: 1},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 2},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 3},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 4},
-						{abbr: "Cals", name: "Calories", unit: "kcal", value: "15", id: 5}
-					]
-				}
-			]
+			nutrients: []
 		}
 	}
 	
+	
+	componentWillUpdate(nextProps, nextState) {
+		console.log("updating component");
+	}
+	componentWillReceiveProps(nextProps) {
+		console.log("updating searchArea");
+		
+		if (nextProps.query != this.props.query) {
+			console.log("query changed:", nextProps.query);
+			this.search(nextProps.query);
+		}
+	}
 	
 	render() {
 		return(
@@ -55,12 +53,20 @@ class SearchArea extends React.Component {
 	
 	componentDidMount() {
 		console.log("SEARCH AREA MOUNTED");
+		this.search(this.props.query);
 		
-		this.getSearchResults().then((data) => {
+	}
+	
+	search(query) {
+		this.setState({
+			items: [],
+			nutrients: []
+		})
+		this.getSearchResults(query).then((data) => {
 			
 			this.setState({
 				nutNames: data.nutNames,
-				items: data.items.item
+				items: data.items.item,
 			});
 			this.getItemInfos();
 			
@@ -70,10 +76,10 @@ class SearchArea extends React.Component {
 	}
 	
 	//returns promise that resolves to search results based on props.query(search results is an array of items containing the name and ndbno's but no nutrient info, have to specifically call USDA API for each item to get specific data)
-	getSearchResults() {
+	getSearchResults(query) {
 		let that = this; //TODO: figure out why I did it this way(probably forgot a bind somewhere) and fix
 		
-		return fetch('/user/search/results/' + this.props.query, {
+		return fetch('/user/search/results/' + query, {
 			method: 'GET',
 			credentials: 'include'
 		})
@@ -105,11 +111,11 @@ class SearchArea extends React.Component {
 		.then((resp) => resp.json())
 		.then((res) => {
 			console.log("getItemInfos response:", res);
+			//instead of setting state, set a callback reaching back up to UserApp to set search results, allowing results to be stored when navigating to different components
 			this.setState({
 				nutrients: res.nutrients,
-				nutrientNames: res.nutrientNames,
 				sample: "sample string"
-			});
+			}); 
 		}).catch((err) => {
 			console.log("catch error:", err);
 		});
@@ -164,11 +170,55 @@ class SearchTable extends React.Component {
 						<th>Select</th>
 						<th>Name</th>
 						<th>Manufacturer</th>
-						<th>{this.props.nutrients[0].nutrients[0].name}</th>
-						<th>{this.props.nutrients[0].nutrients[1].name}</th>
-						<th>{this.props.nutrients[0].nutrients[2].name}</th>
-						<th>{this.props.nutrients[0].nutrients[3].name}</th>
-						<th>{this.props.nutrients[0].nutrients[4].name}</th> 
+							<th>
+								{
+									(this.props.nutrients.length > 0) 
+									? 
+										this.props.nutrients[0].nutrients[0].name
+									:
+										""
+								}
+							</th>
+						
+							<th>
+								{
+									(this.props.nutrients.length > 0) 
+									? 
+										this.props.nutrients[0].nutrients[1].name
+									:
+										""
+								}
+							</th>
+						
+							<th>
+								{
+									(this.props.nutrients.length > 0) 
+									? 
+										this.props.nutrients[0].nutrients[2].name
+									:
+										""
+								}
+							</th>
+						
+							<th>
+								{
+									(this.props.nutrients.length > 0) 
+									? 
+										this.props.nutrients[0].nutrients[3].name
+									:
+										""
+								}
+							</th>
+						
+							<th>
+							{
+									(this.props.nutrients.length > 0) 
+								? 
+									this.props.nutrients[0].nutrients[4].name
+								:
+									""
+							}
+							</th> 
 					</tr>
 				</thead>
 				
@@ -192,7 +242,7 @@ class SearchTable extends React.Component {
 			<tr key={item.ndb}>
 				<td>
 					<label className="fancy-checkbox">
-						<input type="checkbox" className="search-result-chk" id={"item-chk-" + item.ndb}  name="item-chk-1" onClick={this.createCheckHandler(item)} num="1" checked={this.getCheckedVal(item.ndb)} ></input>
+						<input type="checkbox" className="search-result-chk" id={"item-chk-" + item.ndb}  name="item-chk-1" onChange={this.createCheckHandler(item)} num="1" checked={this.getCheckedVal(item.ndb)} ></input>
 						<i aria-hidden="true" className="chk-icon fa fa-square-o unchecked"></i>
 						<i aria-hidden="true" className="chk-icon fa fa-check-square-o checked"></i>
 					</label>	
