@@ -20,9 +20,19 @@ router.post('/create', (req, res, next) => {
 	console.log("meal date:", req.body.meal.date);
 	if (req.user) {
 		User.findById(req.user.id, (err, user) => {
+			//create tracker if user doesn't have one yet
+			if (typeof user.tracker == "undefined") {
+				user.tracker= {
+					meals: []
+				}
+				console.log("created tracker for user:", user);
+			}
+			
+			//create meal to add to tracker
 			var trackerMeal = {
 				meal: req.body.meal
 			}
+			//a fix to update any existing meals in tracker, if tracker meal has it's own date property separate from meal, replace tracker meal with just the meal object(which should have it's own date inside)
 			for (var i = 0; i < user.tracker.meals.length; i++) {
 				if (user.tracker.meals[i].hasOwnProperty('date')) {
 					user.tracker.meals[i] = user.tracker.meals[i].meal;

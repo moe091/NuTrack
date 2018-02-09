@@ -23,7 +23,7 @@ class HomePage extends React.Component {
 		return (
 		
 			<section className="bottom-slant masthead">	
-			<Nav user={window.user} history={this.props.history} />
+			<Nav user={window.user} history={this.props.history} loginRedirect={this.loginRedirect.bind(this)} />
 				<div className="d-flex align-items-center justify-content-center my-5">
 					<div className="center-block d-flex justify-content-center flex-column align-self-center pb-3" id="home-searchdiv">
 						<div className="container">
@@ -56,7 +56,11 @@ class HomePage extends React.Component {
 			</section>
 		)
 	}
-
+	
+	
+	loginRedirect() { 
+		this.props.history.push("/users/login");
+	}
 	
 }
 

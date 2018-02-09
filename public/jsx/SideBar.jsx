@@ -17,6 +17,12 @@ import ReactDOM from 'react-dom';
 **/
 class SideBar extends React.Component {
 	
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchText: ""
+		}
+	}
 	/**
 		Top: checkedItems:
 			label-'Selected Items'
@@ -49,8 +55,8 @@ class SideBar extends React.Component {
 				
 				<label className="sidebar-search-label">Search</label>	
 				<div className="sidebar-section sidebar-search-section">
-					<input type="text" className="sidebar-search-text sidebar-input"></input>
-					<button className="sidebar-search-btn sidebar-input">
+					<input type="text" className="sidebar-search-text sidebar-input" value={this.state.searchText} onChange={this.searchTextInput.bind(this)} ></input>
+					<button className="sidebar-search-btn sidebar-input" onClick={this.searchBtnClick.bind(this)} >
 						<i className="fa fa-search sidebar-icon"></i>
 					</button>
 				</div>
@@ -127,6 +133,14 @@ class SideBar extends React.Component {
 		}
 	}
 	
+	
+	searchTextInput(e) {
+		this.setState({
+			searchText: e.target.value
+		});
+	}
+	
+	
 	backToSearchHandler() {
 		console.log("back to search, query=" + this.props.query);
 		this.props.history.push("../../user/search/" + this.props.query);
@@ -151,6 +165,9 @@ class SideBar extends React.Component {
 		this.props.history.push("../../user/meals/new");
 	}
 	
+	searchBtnClick(e) {
+		this.props.setQueryHandler(this.state.searchText);
+	}
 	
 }
 

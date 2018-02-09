@@ -12,7 +12,8 @@ class SearchArea extends React.Component {
 			query: null,
 			nutNames: ["a", "2", "III", "4th", "last"],
 			items: [],
-			nutrients: []
+			nutrients: [],
+			searchText: ""
 		}
 	}
 	
@@ -40,8 +41,8 @@ class SearchArea extends React.Component {
 						
 						<div className="input-group">
 							
-							<input className="form-control search-input" placeholder="Search" name="srch-term" id="srch-term" type="text"></input>
-							<button className="btn btn-default" type="submit"><i className="fa fa-search"></i></button>
+							<input className="form-control search-input" placeholder="Search" name="srch-term" id="srch-term" type="text" value={this.state.searchText} onChange={this.searchTextInput.bind(this)} ></input>
+							<button className="btn btn-default" type="submit" onClick={this.searchBtnClick.bind(this)} ><i className="fa fa-search"></i></button>
 							
 						</div>
 						<div className="search-query">
@@ -166,7 +167,15 @@ class SearchArea extends React.Component {
 			});
 		});
 		**/
+	searchTextInput(e) {
+		this.setState({
+			searchText: e.target.value
+		});
+	}
 	
+	searchBtnClick() {
+		this.props.setQueryHandler(this.state.searchText);
+	}
 	
 }
 

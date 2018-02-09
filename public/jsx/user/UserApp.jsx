@@ -9,6 +9,9 @@ import SideBar from '../SideBar.jsx';
 import Meal from './meals/Meal.jsx';
 import Tracker from './tracker/Tracker.jsx';
 
+import Login from './Login.jsx';
+import Register from './Register.jsx';
+
 /**
 	::UserApp - Wraps the entire user area of website. Always displayes top bar, sidebar(which changes dynamically depending on state), and a main content area that represents the current page of the app and renders a different component depending on the route.
 	
@@ -23,8 +26,9 @@ class UserApp extends React.Component {
 			searchNutrients: [],
 			searchNutNames: [],
 			query: this.getQueryFromPath(this.props.location.pathname.split('/')),
-			checkedItems: window.user.checkedItems || [],
-			selectedMeal: null
+			checkedItems: (window.user) ? window.user.checkedItems : [],
+			selectedMeal: null,
+			user: window.user
 		}
 		this.isMealSelected = false;
 	}
@@ -67,13 +71,14 @@ class UserApp extends React.Component {
 	render() {
 		return (
 			<div className="app-wrapper">
-				<Nav user={window.user} history={this.props.history} setQueryHandler={this.setQuery.bind(this)}/>
+				<Nav user={this.state.user} history={this.props.history} setQueryHandler={this.setQuery.bind(this)} loginRedirect={this.loginRedirect.bind(this)} />
 				<div className="container-fixed fill-height no-gap">
 					<div className="row row-leftFix min-height-fill">
 
 						<div className="col-sm-2 p-0">
 							<SideBar 
 							 	query={this.state.query} 
+							 	setQueryHandler={this.setQuery.bind(this)}
 								history={this.props.history} 
 								
 								checkedItems={this.state.checkedItems} 
@@ -103,6 +108,7 @@ class UserApp extends React.Component {
 										searchNutNames={this.state.searchNutNames}
 										searchUpdateHandler={this.searchUpdateHandler.bind(this)}
 										pathQuery={this.getQueryFromPath(this.props.location.pathname.split('/'))}
+										setQueryHandler={this.setQuery.bind(this)}
 										
 										setQuery={this.setQuery.bind(this)}
 										checkItemHandler={this.checkItemHandler.bind(this)} 
@@ -143,7 +149,20 @@ class UserApp extends React.Component {
 								)	
 							}}
 							/>
-							 
+							
+							<Route path='/users/login' render={() => {
+								return (
+									<Login loginSuccess={this.loginSuccess.bind(this)} />
+								)
+							}}
+							/>
+							
+							<Route path='/users/register' render={() => {
+								return (
+									<Register loginSuccess={this.loginSuccess.bind(this)} />
+								)
+							}}
+							/>
 							
 
 					</div>
@@ -318,6 +337,19 @@ class UserApp extends React.Component {
 		})
 	}
 	
+	
+	loginRedirect() {
+		this.props.history.push("/users/login");
+	}
+	
+	loginSuccess(user) {
+		console.log("loginSuccess route. user:", user);
+		this.setState({
+			user: user
+		});
+		this.props.history.goBack(2);
+	}
+	  
 	
 }
 

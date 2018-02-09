@@ -93,7 +93,7 @@ class Nav extends React.Component {
 									? 
 										<ul className="navbar-nav pull-right">
 											<li className="nav-item">
-												<a className="nav-link mx-2" href="/users/login">Login</a>
+												<a className="nav-link mx-2 pointer-cursor" onClick={this.navToLogin.bind(this)} >Login</a>
 											</li>
 											<li className="nav-item">	
 												<a className="nav-link mx-2" href="/users/register">Register</a>
@@ -146,6 +146,11 @@ class Nav extends React.Component {
 	}
 	navToMeals() {
 		this.props.history.push("/user/meals/show");
+	}
+	
+	navToLogin() {
+		console.log("navToLogin");
+		this.props.loginRedirect();
 	}
 	
 	searchHandler() {

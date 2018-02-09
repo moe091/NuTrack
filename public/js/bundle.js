@@ -5730,7 +5730,7 @@ var Nav = function (_React$Component) {
 											{ className: 'nav-item' },
 											_react2['default'].createElement(
 												'a',
-												{ className: 'nav-link mx-2', href: '/users/login' },
+												{ className: 'nav-link mx-2 pointer-cursor', onClick: this.navToLogin.bind(this) },
 												'Login'
 											)
 										),
@@ -5836,6 +5836,16 @@ var Nav = function (_React$Component) {
 			}
 
 			return navToMeals;
+		}()
+	}, {
+		key: 'navToLogin',
+		value: function () {
+			function navToLogin() {
+				console.log("navToLogin");
+				this.props.loginRedirect();
+			}
+
+			return navToLogin;
 		}()
 	}, {
 		key: 'searchHandler',
@@ -5976,40 +5986,44 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var SideBar = function (_React$Component) {
 	_inherits(SideBar, _React$Component);
 
-	function SideBar() {
+	function SideBar(props) {
 		_classCallCheck(this, SideBar);
 
-		return _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+
+		_this.state = {
+			searchText: ""
+		};
+		return _this;
 	}
+	/**
+ 	Top: checkedItems:
+ 		label-'Selected Items'
+ 		each item(i): 
+ 			item[i].name		-
+ 		;
+ 		
+ 		Tracker/Planner/Meal
+ 		each type(i):
+ 			type[i].name		+
+ 		;
+ 		
+ 		LINK:
+ 			Compare Selected Items
+ 		; {FUTURE TASK - implement comparisons later}
+ **/
+
+	/**
+ 	TODO:/Idea: Tracker, Meal, and Planner, split the right section into two halves(also make it a lil wider, col-4 instead of col-3). Right section will be a dropdown button icon, left section will be the +/add btn. The dropdown will cause a section to slide out under the button that displays extra info.
+ 	
+ 	For Meals it will display 4-6 most recent meal names as links that lead to that meals page
+ 	
+ 	For Tracker/Planner it will dispaly a NutrientTable for the last day/week/month/etc based on your default settings(default default is week). Or maybe have it display all 3 on top of eachother.
+ **/
+
 
 	_createClass(SideBar, [{
 		key: 'render',
-
-
-		/**
-  	Top: checkedItems:
-  		label-'Selected Items'
-  		each item(i): 
-  			item[i].name		-
-  		;
-  		
-  		Tracker/Planner/Meal
-  		each type(i):
-  			type[i].name		+
-  		;
-  		
-  		LINK:
-  			Compare Selected Items
-  		; {FUTURE TASK - implement comparisons later}
-  **/
-
-		/**
-  	TODO:/Idea: Tracker, Meal, and Planner, split the right section into two halves(also make it a lil wider, col-4 instead of col-3). Right section will be a dropdown button icon, left section will be the +/add btn. The dropdown will cause a section to slide out under the button that displays extra info.
-  	
-  	For Meals it will display 4-6 most recent meal names as links that lead to that meals page
-  	
-  	For Tracker/Planner it will dispaly a NutrientTable for the last day/week/month/etc based on your default settings(default default is week). Or maybe have it display all 3 on top of eachother.
-  **/
 		value: function () {
 			function render() {
 				var _this2 = this;
@@ -6025,10 +6039,10 @@ var SideBar = function (_React$Component) {
 					_react2['default'].createElement(
 						'div',
 						{ className: 'sidebar-section sidebar-search-section' },
-						_react2['default'].createElement('input', { type: 'text', className: 'sidebar-search-text sidebar-input' }),
+						_react2['default'].createElement('input', { type: 'text', className: 'sidebar-search-text sidebar-input', value: this.state.searchText, onChange: this.searchTextInput.bind(this) }),
 						_react2['default'].createElement(
 							'button',
-							{ className: 'sidebar-search-btn sidebar-input' },
+							{ className: 'sidebar-search-btn sidebar-input', onClick: this.searchBtnClick.bind(this) },
 							_react2['default'].createElement('i', { className: 'fa fa-search sidebar-icon' })
 						)
 					),
@@ -6147,6 +6161,17 @@ var SideBar = function (_React$Component) {
 			return createDeselectHandler;
 		}()
 	}, {
+		key: 'searchTextInput',
+		value: function () {
+			function searchTextInput(e) {
+				this.setState({
+					searchText: e.target.value
+				});
+			}
+
+			return searchTextInput;
+		}()
+	}, {
 		key: 'backToSearchHandler',
 		value: function () {
 			function backToSearchHandler() {
@@ -6200,6 +6225,15 @@ var SideBar = function (_React$Component) {
 			}
 
 			return newMealHandler;
+		}()
+	}, {
+		key: 'searchBtnClick',
+		value: function () {
+			function searchBtnClick(e) {
+				this.props.setQueryHandler(this.state.searchText);
+			}
+
+			return searchBtnClick;
 		}()
 	}]);
 
@@ -7203,7 +7237,8 @@ var SearchArea = function (_React$Component) {
 			query: null,
 			nutNames: ["a", "2", "III", "4th", "last"],
 			items: [],
-			nutrients: []
+			nutrients: [],
+			searchText: ""
 		};
 		return _this;
 	}
@@ -7250,10 +7285,10 @@ var SearchArea = function (_React$Component) {
 							_react2['default'].createElement(
 								'div',
 								{ className: 'input-group' },
-								_react2['default'].createElement('input', { className: 'form-control search-input', placeholder: 'Search', name: 'srch-term', id: 'srch-term', type: 'text' }),
+								_react2['default'].createElement('input', { className: 'form-control search-input', placeholder: 'Search', name: 'srch-term', id: 'srch-term', type: 'text', value: this.state.searchText, onChange: this.searchTextInput.bind(this) }),
 								_react2['default'].createElement(
 									'button',
-									{ className: 'btn btn-default', type: 'submit' },
+									{ className: 'btn btn-default', type: 'submit', onClick: this.searchBtnClick.bind(this) },
 									_react2['default'].createElement('i', { className: 'fa fa-search' })
 								)
 							),
@@ -7412,6 +7447,26 @@ var SearchArea = function (_React$Component) {
   	});
   	**/
 
+	}, {
+		key: 'searchTextInput',
+		value: function () {
+			function searchTextInput(e) {
+				this.setState({
+					searchText: e.target.value
+				});
+			}
+
+			return searchTextInput;
+		}()
+	}, {
+		key: 'searchBtnClick',
+		value: function () {
+			function searchBtnClick() {
+				this.props.setQueryHandler(this.state.searchText);
+			}
+
+			return searchBtnClick;
+		}()
 	}]);
 
 	return SearchArea;
@@ -21271,6 +21326,7 @@ var App = function (_React$Component) {
 						null,
 						_react2['default'].createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _HomePage.HomePage }),
 						_react2['default'].createElement(_reactRouterDom.Route, { path: '/user', component: _UserApp2['default'] }),
+						_react2['default'].createElement(_reactRouterDom.Route, { path: '/users', component: _UserApp2['default'] }),
 						_react2['default'].createElement(_reactRouterDom.Route, { path: '/food', component: _UserApp2['default'] })
 					)
 				);
@@ -42398,7 +42454,7 @@ var HomePage = function (_React$Component) {
 				return _react2['default'].createElement(
 					'section',
 					{ className: 'bottom-slant masthead' },
-					_react2['default'].createElement(_Nav2['default'], { user: window.user, history: this.props.history }),
+					_react2['default'].createElement(_Nav2['default'], { user: window.user, history: this.props.history, loginRedirect: this.loginRedirect.bind(this) }),
 					_react2['default'].createElement(
 						'div',
 						{ className: 'd-flex align-items-center justify-content-center my-5' },
@@ -42447,6 +42503,15 @@ var HomePage = function (_React$Component) {
 			}
 
 			return render;
+		}()
+	}, {
+		key: 'loginRedirect',
+		value: function () {
+			function loginRedirect() {
+				this.props.history.push("/users/login");
+			}
+
+			return loginRedirect;
 		}()
 	}]);
 
@@ -52880,6 +52945,14 @@ var _Tracker = __webpack_require__(213);
 
 var _Tracker2 = _interopRequireDefault(_Tracker);
 
+var _Login = __webpack_require__(225);
+
+var _Login2 = _interopRequireDefault(_Login);
+
+var _Register = __webpack_require__(226);
+
+var _Register2 = _interopRequireDefault(_Register);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -52907,8 +52980,9 @@ var UserApp = function (_React$Component) {
 			searchNutrients: [],
 			searchNutNames: [],
 			query: _this.getQueryFromPath(_this.props.location.pathname.split('/')),
-			checkedItems: window.user.checkedItems || [],
-			selectedMeal: null
+			checkedItems: window.user ? window.user.checkedItems : [],
+			selectedMeal: null,
+			user: window.user
 		};
 		_this.isMealSelected = false;
 		return _this;
@@ -52966,7 +53040,7 @@ var UserApp = function (_React$Component) {
 				return _react2['default'].createElement(
 					'div',
 					{ className: 'app-wrapper' },
-					_react2['default'].createElement(_Nav2['default'], { user: window.user, history: this.props.history, setQueryHandler: this.setQuery.bind(this) }),
+					_react2['default'].createElement(_Nav2['default'], { user: this.state.user, history: this.props.history, setQueryHandler: this.setQuery.bind(this), loginRedirect: this.loginRedirect.bind(this) }),
 					_react2['default'].createElement(
 						'div',
 						{ className: 'container-fixed fill-height no-gap' },
@@ -52978,6 +53052,7 @@ var UserApp = function (_React$Component) {
 								{ className: 'col-sm-2 p-0' },
 								_react2['default'].createElement(_SideBar2['default'], {
 									query: this.state.query,
+									setQueryHandler: this.setQuery.bind(this),
 									history: this.props.history,
 
 									checkedItems: this.state.checkedItems,
@@ -53007,6 +53082,7 @@ var UserApp = function (_React$Component) {
 											searchNutNames: _this2.state.searchNutNames,
 											searchUpdateHandler: _this2.searchUpdateHandler.bind(_this2),
 											pathQuery: _this2.getQueryFromPath(_this2.props.location.pathname.split('/')),
+											setQueryHandler: _this2.setQuery.bind(_this2),
 
 											setQuery: _this2.setQuery.bind(_this2),
 											checkItemHandler: _this2.checkItemHandler.bind(_this2),
@@ -53045,6 +53121,22 @@ var UserApp = function (_React$Component) {
 											isMealSelected: _this2.isMealSelected,
 											type: 'planner'
 										});
+									}
+
+									return render;
+								}()
+							}),
+							_react2['default'].createElement(_reactRouterDom.Route, { path: '/users/login', render: function () {
+									function render() {
+										return _react2['default'].createElement(_Login2['default'], { loginSuccess: _this2.loginSuccess.bind(_this2) });
+									}
+
+									return render;
+								}()
+							}),
+							_react2['default'].createElement(_reactRouterDom.Route, { path: '/users/register', render: function () {
+									function render() {
+										return _react2['default'].createElement(_Register2['default'], { loginSuccess: _this2.loginSuccess.bind(_this2) });
 									}
 
 									return render;
@@ -53265,6 +53357,28 @@ var UserApp = function (_React$Component) {
 			}
 
 			return searchUpdateHandler;
+		}()
+	}, {
+		key: 'loginRedirect',
+		value: function () {
+			function loginRedirect() {
+				this.props.history.push("/users/login");
+			}
+
+			return loginRedirect;
+		}()
+	}, {
+		key: 'loginSuccess',
+		value: function () {
+			function loginSuccess(user) {
+				console.log("loginSuccess route. user:", user);
+				this.setState({
+					user: user
+				});
+				this.props.history.goBack(2);
+			}
+
+			return loginSuccess;
 		}()
 	}]);
 
@@ -54123,7 +54237,7 @@ var TrackerAdd = function (_React$Component) {
 						_react2['default'].createElement(
 							'button',
 							{ className: 'btn header-bg ' + (this.state.isMealSelected ? '' : 'btn-disabled'), onClick: this.state.isMealSelected ? this.trackMeal.bind(this) : null },
-							this.type == "tracker" ? "Add To Tracker" : "Add To Planner"
+							this.props.type == "tracker" ? "Add To Tracker" : "Add To Planner"
 						),
 						_react2['default'].createElement(
 							'div',
@@ -56731,6 +56845,385 @@ function TrackerDay(props) {
 }
 
 exports['default'] = TrackerDay;
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(2);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouterDom = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Login = function (_React$Component) {
+	_inherits(Login, _React$Component);
+
+	function Login(props) {
+		_classCallCheck(this, Login);
+
+		var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+
+		_this.state = {
+			username: "",
+			password: ""
+		};
+		return _this;
+	}
+
+	_createClass(Login, [{
+		key: 'render',
+		value: function () {
+			function render() {
+				return _react2['default'].createElement(
+					'div',
+					{ className: 'col-sm-10 p-0 main-col' },
+					_react2['default'].createElement(
+						'div',
+						{ className: 'container-fixed inset-container w-100 h-100' },
+						_react2['default'].createElement(
+							'div',
+							{ className: 'content-section w-50 m-1 p-4 header-bg' },
+							'Login'
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'content-section w-75 p-4' },
+							_react2['default'].createElement(
+								'form',
+								{ onSubmit: this.loginSubmit.bind(this) },
+								_react2['default'].createElement(
+									'div',
+									{ className: 'content-block' },
+									_react2['default'].createElement(
+										'div',
+										null,
+										_react2['default'].createElement(
+											'label',
+											{ className: 'pr-2 almost-white left' },
+											'Username'
+										),
+										_react2['default'].createElement('input', { className: 'right', type: 'text', value: this.state.username, onChange: this.usernameInputHandler.bind(this) })
+									),
+									_react2['default'].createElement(
+										'div',
+										null,
+										_react2['default'].createElement(
+											'label',
+											{ className: 'pr-2 almost-white left' },
+											'Password'
+										),
+										_react2['default'].createElement('input', { className: 'right', type: 'password', value: this.state.password, onChange: this.passwordInputHandler.bind(this) })
+									)
+								),
+								_react2['default'].createElement('div', { className: 'block-space-50' }),
+								_react2['default'].createElement(
+									'div',
+									{ className: 'text-center almost-white' },
+									this.state.message
+								),
+								_react2['default'].createElement('div', { className: 'block-space-50' }),
+								_react2['default'].createElement(
+									'button',
+									{ className: 'btn header-bg' },
+									'Log in'
+								)
+							)
+						)
+					)
+				);
+			}
+
+			return render;
+		}()
+	}, {
+		key: 'loginSubmit',
+		value: function () {
+			function loginSubmit(e) {
+				var _this2 = this;
+
+				console.log("LOGIN:", e);
+
+				e.preventDefault();
+
+				var data = {
+					username: this.state.username,
+					password: this.state.password
+				};
+
+				fetch('/users/login', {
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				}).then(function (response) {
+					return response.json();
+				}).then(function (res) {
+					console.log("LOGIN SUCCESSFUL:", res);
+					window.user = res.user;
+					_this2.props.loginSuccess(res.user);
+				})['catch'](function (err) {
+					console.log("Error posting login:", err);
+				});
+			}
+
+			return loginSubmit;
+		}()
+	}, {
+		key: 'usernameInputHandler',
+		value: function () {
+			function usernameInputHandler(e) {
+				this.setState({
+					username: e.target.value
+				});
+			}
+
+			return usernameInputHandler;
+		}()
+	}, {
+		key: 'passwordInputHandler',
+		value: function () {
+			function passwordInputHandler(e) {
+				this.setState({
+					password: e.target.value
+				});
+			}
+
+			return passwordInputHandler;
+		}()
+	}]);
+
+	return Login;
+}(_react2['default'].Component);
+
+exports['default'] = Login;
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(2);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouterDom = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Register = function (_React$Component) {
+	_inherits(Register, _React$Component);
+
+	function Register(props) {
+		_classCallCheck(this, Register);
+
+		var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
+
+		_this.state = {
+			username: "",
+			password: "",
+			message: "Enter username and password to create a new account"
+		};
+		return _this;
+	}
+
+	_createClass(Register, [{
+		key: 'render',
+		value: function () {
+			function render() {
+				return _react2['default'].createElement(
+					'div',
+					{ className: 'col-sm-10 p-0 main-col' },
+					_react2['default'].createElement(
+						'div',
+						{ className: 'container-fixed inset-container w-100 h-100' },
+						_react2['default'].createElement(
+							'div',
+							{ className: 'content-section w-50 m-1 p-4 header-bg' },
+							'Register'
+						),
+						_react2['default'].createElement(
+							'div',
+							{ className: 'content-section w-75 p-4' },
+							_react2['default'].createElement(
+								'label',
+								{ 'class': 'block-label almost-white' },
+								this.state.message
+							),
+							_react2['default'].createElement(
+								'form',
+								{ onSubmit: this.loginSubmit.bind(this) },
+								_react2['default'].createElement(
+									'div',
+									{ className: 'content-block' },
+									_react2['default'].createElement(
+										'div',
+										null,
+										_react2['default'].createElement(
+											'label',
+											{ className: 'pr-2 almost-white left' },
+											'Username'
+										),
+										_react2['default'].createElement('input', { className: 'right', type: 'text', value: this.state.username, onChange: this.usernameInputHandler.bind(this) })
+									),
+									_react2['default'].createElement(
+										'div',
+										null,
+										_react2['default'].createElement(
+											'label',
+											{ className: 'pr-2 almost-white left' },
+											'Password'
+										),
+										_react2['default'].createElement('input', { className: 'right', type: 'password', value: this.state.password, onChange: this.passwordInputHandler.bind(this) })
+									)
+								),
+								_react2['default'].createElement('div', { className: 'block-space-50' }),
+								_react2['default'].createElement('div', { className: 'block-space-50' }),
+								_react2['default'].createElement(
+									'button',
+									{ className: 'btn header-bg' },
+									'Register'
+								)
+							)
+						)
+					)
+				);
+			}
+
+			return render;
+		}()
+	}, {
+		key: 'loginSubmit',
+		value: function () {
+			function loginSubmit(e) {
+				var _this2 = this;
+
+				console.log("LOGIN:", e);
+
+				e.preventDefault();
+
+				var data = {
+					username: this.state.username,
+					password: this.state.password
+				};
+
+				fetch('/users/register', {
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				}).then(function (response) {
+					return response.json();
+				}).then(function (res) {
+					if (res.success) {
+						window.user = res.user;
+						_this2.registrationSuccess(res.user);
+					} else {
+						_this2.registrationFail("Registration unsuccessful: " + res.message);
+					}
+				})['catch'](function (err) {
+					console.log("Error posting registration:", err);
+					_this2.registrationFail("Account creation failed, please try again");
+				});
+			}
+
+			return loginSubmit;
+		}()
+	}, {
+		key: 'registrationSuccess',
+		value: function () {
+			function registrationSuccess(user) {
+				this.setState({
+					message: "Account created successfully! You may now login with username: " + user.username
+				});
+			}
+
+			return registrationSuccess;
+		}()
+	}, {
+		key: 'registrationFail',
+		value: function () {
+			function registrationFail(message) {
+				this.setState({
+					message: message
+				});
+			}
+
+			return registrationFail;
+		}()
+	}, {
+		key: 'usernameInputHandler',
+		value: function () {
+			function usernameInputHandler(e) {
+				this.setState({
+					username: e.target.value
+				});
+			}
+
+			return usernameInputHandler;
+		}()
+	}, {
+		key: 'passwordInputHandler',
+		value: function () {
+			function passwordInputHandler(e) {
+				this.setState({
+					password: e.target.value
+				});
+			}
+
+			return passwordInputHandler;
+		}()
+	}]);
+
+	return Register;
+}(_react2['default'].Component);
+
+exports['default'] = Register;
 
 /***/ })
 /******/ ]);

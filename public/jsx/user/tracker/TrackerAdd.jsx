@@ -74,7 +74,7 @@ class TrackerAdd extends React.Component {
 					
 						<button className={'btn header-bg ' + (this.state.isMealSelected ? '' : 'btn-disabled')} onClick={(this.state.isMealSelected ? this.trackMeal.bind(this) : null)}>
 							{
-								(this.type == "tracker") ? "Add To Tracker" : "Add To Planner"
+								(this.props.type == "tracker") ? "Add To Tracker" : "Add To Planner"
 							}
 						</button>
 						
