@@ -152,7 +152,7 @@ class UserApp extends React.Component {
 							
 							<Route path='/users/login' render={() => {
 								return (
-									<Login loginSuccess={this.loginSuccess.bind(this)} />
+									<Login loginSuccess={this.loginSuccess.bind(this)} history={this.props.history} />
 								)
 							}}
 							/>
@@ -339,15 +339,26 @@ class UserApp extends React.Component {
 	
 	
 	loginRedirect() {
-		this.props.history.push("/users/login");
+		console.log("oldpath:", this.props.history.location.pathname);
+		if (this.props.history.location.pathname == "/users/register") {
+			console.log("pushing /registration");
+			this.props.history.push("/users/login/registration");
+		} else {
+			console.log("pushing reg");
+			this.props.history.push("/users/login");
+		}
 	}
 	
-	loginSuccess(user) {
+	loginSuccess(user, redirect) {
 		console.log("loginSuccess route. user:", user);
 		this.setState({
 			user: user
 		});
-		this.props.history.goBack(2);
+		if (redirect == null) {
+			this.props.history.goBack(2);
+		} else {
+			this.props.history.push(redirect);
+		}
 	}
 	  
 	

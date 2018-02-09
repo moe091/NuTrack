@@ -12,13 +12,14 @@ import SideBar from './SideBar.jsx';
 import UserApp from './user/UserApp.jsx';
  
 
-class App extends React.Component {
+class Appp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			view: "home",
 			query: null
 		}
+		console.log("CONSTRUCT APP");
 	}
 	
 	
@@ -46,7 +47,7 @@ class App extends React.Component {
 
 
 ReactDOM.render((
-    <App />
+    <Appp />
 ),
 	document.getElementById('App')
 );

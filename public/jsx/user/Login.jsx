@@ -77,7 +77,11 @@ class Login extends React.Component {
 		.then((res) => {
 			console.log("LOGIN SUCCESSFUL:", res);
 			window.user = res.user;
-			this.props.loginSuccess(res.user);
+			if (this.props.history.location.pathname.split("/")[3] == "registration") {
+				this.props.loginSuccess(res.user, "/");
+			} else {
+				this.props.loginSuccess(res.user);
+			}
 		}).catch((err) => {
 			console.log("Error posting login:", err);
 		})

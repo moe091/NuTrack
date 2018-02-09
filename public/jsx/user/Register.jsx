@@ -24,7 +24,7 @@ class Register extends React.Component {
 						</div>
 
 						<div className="content-section w-75 p-4">
-						<label class="block-label almost-white">{this.state.message}</label>
+						<label className="block-label almost-white">{this.state.message}</label>
 						<form onSubmit={this.loginSubmit.bind(this)}>
 								<div className="content-block">
 									<div>

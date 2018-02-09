@@ -21298,22 +21298,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //can get rid of react imports in other imports, they'll all be combined into one file anyway
 
 
-var App = function (_React$Component) {
-	_inherits(App, _React$Component);
+var Appp = function (_React$Component) {
+	_inherits(Appp, _React$Component);
 
-	function App(props) {
-		_classCallCheck(this, App);
+	function Appp(props) {
+		_classCallCheck(this, Appp);
 
-		var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (Appp.__proto__ || Object.getPrototypeOf(Appp)).call(this, props));
 
 		_this.state = {
 			view: "home",
 			query: null
 		};
+		console.log("CONSTRUCT APP");
 		return _this;
 	}
 
-	_createClass(App, [{
+	_createClass(Appp, [{
 		key: 'render',
 		value: function () {
 			function render() {
@@ -21336,10 +21337,10 @@ var App = function (_React$Component) {
 		}()
 	}]);
 
-	return App;
+	return Appp;
 }(_react2['default'].Component);
 
-_reactDom2['default'].render(_react2['default'].createElement(App, null), document.getElementById('App'));
+_reactDom2['default'].render(_react2['default'].createElement(Appp, null), document.getElementById('App'));
 
 //App will return a div wrapping the whole page, with nav/sidebar/main areas. This will 
 //allow it to construct different layouts, e.g the homepage with no sidebar
@@ -53128,7 +53129,7 @@ var UserApp = function (_React$Component) {
 							}),
 							_react2['default'].createElement(_reactRouterDom.Route, { path: '/users/login', render: function () {
 									function render() {
-										return _react2['default'].createElement(_Login2['default'], { loginSuccess: _this2.loginSuccess.bind(_this2) });
+										return _react2['default'].createElement(_Login2['default'], { loginSuccess: _this2.loginSuccess.bind(_this2), history: _this2.props.history });
 									}
 
 									return render;
@@ -53362,7 +53363,14 @@ var UserApp = function (_React$Component) {
 		key: 'loginRedirect',
 		value: function () {
 			function loginRedirect() {
-				this.props.history.push("/users/login");
+				console.log("oldpath:", this.props.history.location.pathname);
+				if (this.props.history.location.pathname == "/users/register") {
+					console.log("pushing /registration");
+					this.props.history.push("/users/login/registration");
+				} else {
+					console.log("pushing reg");
+					this.props.history.push("/users/login");
+				}
 			}
 
 			return loginRedirect;
@@ -53370,12 +53378,16 @@ var UserApp = function (_React$Component) {
 	}, {
 		key: 'loginSuccess',
 		value: function () {
-			function loginSuccess(user) {
+			function loginSuccess(user, redirect) {
 				console.log("loginSuccess route. user:", user);
 				this.setState({
 					user: user
 				});
-				this.props.history.goBack(2);
+				if (redirect == null) {
+					this.props.history.goBack(2);
+				} else {
+					this.props.history.push(redirect);
+				}
 			}
 
 			return loginSuccess;
@@ -56985,7 +56997,11 @@ var Login = function (_React$Component) {
 				}).then(function (res) {
 					console.log("LOGIN SUCCESSFUL:", res);
 					window.user = res.user;
-					_this2.props.loginSuccess(res.user);
+					if (_this2.props.history.location.pathname.split("/")[3] == "registration") {
+						_this2.props.loginSuccess(res.user, "/");
+					} else {
+						_this2.props.loginSuccess(res.user);
+					}
 				})['catch'](function (err) {
 					console.log("Error posting login:", err);
 				});
@@ -57089,7 +57105,7 @@ var Register = function (_React$Component) {
 							{ className: 'content-section w-75 p-4' },
 							_react2['default'].createElement(
 								'label',
-								{ 'class': 'block-label almost-white' },
+								{ className: 'block-label almost-white' },
 								this.state.message
 							),
 							_react2['default'].createElement(
