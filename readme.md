@@ -1,6 +1,6 @@
-# Project Title
+# NuTrack
 
-## Overview
+### Overview
 
 NuTrack is a Single-Page Web Application that helps users plan their food/nutrient consumption and track their progress. It's full of features that make it super simple and fast to add food products and meals to your tracker/planner as well as find, creating, and organizing your most commonly used food products, recipes, and meals.
 Create an account for free to get started, NuTrack takes no time at all to set up and is dead simple to get started with. As you use the app and build up your tracker, planner, and meal/recipe library, it will become even easier and quicker to use while providing more valuable insights into your nutrition habits.
