@@ -5588,6 +5588,14 @@ var Nav = function (_React$Component) {
 		};
 		return _this;
 	}
+	/**
+ 	TODO: add this back in at top of first UL in renderUserNav after UserHome component is created:
+ 			<li className="nav-item active">
+ 				<a className="nav-link pointer-cursor" onClick={this.navToUserHome.bind(this)}>
+ 					<span className='bold-text'>{this.props.user.username}'s Home</span></a>
+ 			</li>
+ **/
+
 
 	_createClass(Nav, [{
 		key: 'renderUserNav',
@@ -5596,20 +5604,6 @@ var Nav = function (_React$Component) {
 				return _react2['default'].createElement(
 					'ul',
 					{ className: 'navbar-nav mr-auto mt-2 mt-md-0' },
-					_react2['default'].createElement(
-						'li',
-						{ className: 'nav-item active' },
-						_react2['default'].createElement(
-							'a',
-							{ className: 'nav-link pointer-cursor', onClick: this.navToUserHome.bind(this) },
-							_react2['default'].createElement(
-								'span',
-								{ className: 'bold-text' },
-								this.props.user.username,
-								'\'s Home'
-							)
-						)
-					),
 					_react2['default'].createElement(
 						'li',
 						{ className: 'nav-item' },
@@ -52963,6 +52957,39 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
+- (Web App Idea) -
+Crowdsourcing anecdotal information...
+e.g. Have many different sections, and for each section a bunch of different topics.
+	Section: Software Dev, Topic: What projects were in your portfolio when you got hired?
+	Tags: Development Job, First Development Job, Developer Portfolio, Developer Projects, etc.
+	users will all post responses, containing text, links, and images, giving their own anecdotal exeperiences, either for themselves or someone they know(and it will be noted in their post if it is about themselves or someone else). Responses can be up/down-voted and reported(for being fake, or whatever else).
+	
+	Users get some kind of points for posting experiences and getting upvotes. Posts should be backed up with whatever 'evidence' can be provided, and users are supposed to upvote based off of whether they think the experience is true and how helpful it was(as oppossed to whether or not it was what they want to hear, which could encourage fake reports for upvotes).
+	
+	Users could use the site to get an idea for different things that there isn't usually data for, that can only be based on anecdotal evidence. There will be a lot of evidence/anecdotes in one place and people can quickly gather a general impression of a topic.
+
+
+------------------
+TODO - Front End:
+	- Fix TrackerAdd/MealBuilder:  when date is changed on TrackerAdd and component updates, and items(instead of a meal) are selected - causing the MealBuilder to display - the Serving amounts for each item gets reset when component re-renders. The sliders stay in the same position but the # of servings displayed goes back to 1. 
+	- Add UserHome component: Display Nutrient Totals for past 7 days. Display Meals so far for current day. Display 3 most recently created meals in a row. Display A row of 'recent searches'(as links, clicking them takes you to search results for that query). Show Planner for the day
+	- Show Meal Options on hover in Tracker/Planner
+		- Remove Meal From Tracker button
+		- NutrientTable display
+		- Items List
+		- Items list is 2-or-3 by X grid on bottom left, remove meal button is on bottom right. Nutrient Table is across the top
+		- On Mobile, make tapping the item bring up the menu(since mobile can't hover), and tapping it again or tapping anywhere else on page closes menu.
+		
+	
+	- empty checkedItems after creating a new meal?
+	
+		
+	- View Item component, Display full info about item(Full list of nutrients, NutrientTable with info for just that item, ingredients list, manufacturer, etc).
+	- Edit Meal component - add/remove items. change serving amounts. Rename. When done, click 'Save(will overwrite old meal and replace it on Tracker)' or 'Create New(keep old meal and create a new one with changes)'
+	- Create custom items: for items not in database, add a create item component. Items created by user will be stored in that users model under 'custom items' - and all user created items will be stored in a new model 'CustomItems' that will be searched with each search query and combined with USDA search results. CustomItems will have a "User Created Item!" warning so users know it's not an 'official' item and data may be incorrect.
+	
+	
+	
 	::UserApp - Wraps the entire user area of website. Always displayes top bar, sidebar(which changes dynamically depending on state), and a main content area that represents the current page of the app and renders a different component depending on the route.
 	
 	TODO: in sidebar, render each checkedItem in a row(2 items per row) in a slightly lighter colored div and with a remove/X button to remove from selected items. So user can remove selected items at any point and so user feels the checkedItems persisting throughout the app, not just on the search page.

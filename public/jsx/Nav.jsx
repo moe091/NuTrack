@@ -13,14 +13,16 @@ class Nav extends React.Component {
 			searchQuery: ''
 		}
 	}
-	
-	renderUserNav() {
-		return (
-			<ul className="navbar-nav mr-auto mt-2 mt-md-0">
+	/**
+		TODO: add this back in at top of first UL in renderUserNav after UserHome component is created:
 				<li className="nav-item active">
 					<a className="nav-link pointer-cursor" onClick={this.navToUserHome.bind(this)}>
 						<span className='bold-text'>{this.props.user.username}'s Home</span></a>
 				</li>
+	**/
+	renderUserNav() {
+		return (
+			<ul className="navbar-nav mr-auto mt-2 mt-md-0">
 				<li className="nav-item">
 					<a className="nav-link pointer-cursor" onClick={this.navToTracker.bind(this)}>Tracker</a>
 				</li>
