@@ -9,6 +9,7 @@ class Login extends React.Component {
 		this.state = {
 			username: "",
 			password: "",
+			message: ""
 		}
 	}
 		
@@ -25,7 +26,8 @@ class Login extends React.Component {
 						<div className="content-section w-75 p-4">
 						
 						<form onSubmit={this.loginSubmit.bind(this)}>
-								<div className="content-block">
+								<div className="text-center warning-text">{this.state.message}</div>
+								<div className="content-block"> 
 									<div>
 										<label className="pr-2 almost-white left">Username</label>
 										<input className="right" type="text" value={this.state.username} onChange={this.usernameInputHandler.bind(this)} />
@@ -37,7 +39,6 @@ class Login extends React.Component {
 									</div>
 								</div>
 								<div className='block-space-50'></div>
-								<div className="text-center almost-white">{this.state.message}</div>
 								<div className='block-space-50'></div>
 
 
@@ -75,12 +76,19 @@ class Login extends React.Component {
 		})
 		.then((response) => response.json())
 		.then((res) => {
-			console.log("LOGIN SUCCESSFUL:", res);
 			window.user = res.user;
-			if (this.props.history.location.pathname.split("/")[3] == "registration") {
-				this.props.loginSuccess(res.user, "/");
+			if (res.success) {
+				console.log("LOGIN SUCCESSFUL:", res);
+				if (this.props.history.location.pathname.split("/")[3] == "registration") {
+					this.props.loginSuccess(res.user, "/");
+				} else {
+					this.props.loginSuccess(res.user);
+				}
 			} else {
-				this.props.loginSuccess(res.user);
+				console.log("login failed:", res);
+				this.setState({
+					message: res.message
+				});
 			}
 		}).catch((err) => {
 			console.log("Error posting login:", err);

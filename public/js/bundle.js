@@ -5691,7 +5691,7 @@ var Nav = function (_React$Component) {
 						),
 						_react2['default'].createElement(
 							'div',
-							{ className: 'col-sm-10 p-0' },
+							{ className: 'col-sm-10 p-0 nav-col' },
 							_react2['default'].createElement(
 								'nav',
 								{ className: 'navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap' },
@@ -5701,7 +5701,7 @@ var Nav = function (_React$Component) {
 									_react2['default'].createElement(
 										'span',
 										null,
-										_react2['default'].createElement('i', { className: 'fa fa-list nav-toggle-icon' })
+										_react2['default'].createElement('i', { className: 'fa fa-list nav-toggle-icon', id: 'nav-toggle-icon' })
 									)
 								),
 								_react2['default'].createElement(
@@ -5709,7 +5709,7 @@ var Nav = function (_React$Component) {
 									{ className: 'collapse navbar-collapse', id: 'navbarTogglerDemo02' },
 									this.props.user == null ? _react2['default'].createElement(
 										'ul',
-										{ className: 'navbar-nav mr-auto mt-2 mt-md-0' },
+										{ className: 'navbar-nav mr-auto mt-2 mt-md-0', id: 'left-nav' },
 										_react2['default'].createElement(
 											'li',
 											{ className: 'nav-item active faded-white' },
@@ -5718,7 +5718,7 @@ var Nav = function (_React$Component) {
 									) : this.renderUserNav(),
 									this.props.user == null ? _react2['default'].createElement(
 										'ul',
-										{ className: 'navbar-nav pull-right' },
+										{ className: 'navbar-nav pull-right', id: 'right-nav' },
 										_react2['default'].createElement(
 											'li',
 											{ className: 'nav-item' },
@@ -53067,7 +53067,7 @@ var UserApp = function (_React$Component) {
 
 				return _react2['default'].createElement(
 					'div',
-					{ className: 'app-wrapper' },
+					{ className: 'app-wrapper container-fixed' },
 					_react2['default'].createElement(_Nav2['default'], { user: this.state.user, history: this.props.history, setQueryHandler: this.setQuery.bind(this), loginRedirect: this.loginRedirect.bind(this) }),
 					_react2['default'].createElement(
 						'div',
@@ -56926,7 +56926,8 @@ var Login = function (_React$Component) {
 
 		_this.state = {
 			username: "",
-			password: ""
+			password: "",
+			message: ""
 		};
 		return _this;
 	}
@@ -56954,6 +56955,11 @@ var Login = function (_React$Component) {
 								{ onSubmit: this.loginSubmit.bind(this) },
 								_react2['default'].createElement(
 									'div',
+									{ className: 'text-center warning-text' },
+									this.state.message
+								),
+								_react2['default'].createElement(
+									'div',
 									{ className: 'content-block' },
 									_react2['default'].createElement(
 										'div',
@@ -56977,11 +56983,6 @@ var Login = function (_React$Component) {
 									)
 								),
 								_react2['default'].createElement('div', { className: 'block-space-50' }),
-								_react2['default'].createElement(
-									'div',
-									{ className: 'text-center almost-white' },
-									this.state.message
-								),
 								_react2['default'].createElement('div', { className: 'block-space-50' }),
 								_react2['default'].createElement(
 									'button',
@@ -57022,12 +57023,19 @@ var Login = function (_React$Component) {
 				}).then(function (response) {
 					return response.json();
 				}).then(function (res) {
-					console.log("LOGIN SUCCESSFUL:", res);
 					window.user = res.user;
-					if (_this2.props.history.location.pathname.split("/")[3] == "registration") {
-						_this2.props.loginSuccess(res.user, "/");
+					if (res.success) {
+						console.log("LOGIN SUCCESSFUL:", res);
+						if (_this2.props.history.location.pathname.split("/")[3] == "registration") {
+							_this2.props.loginSuccess(res.user, "/");
+						} else {
+							_this2.props.loginSuccess(res.user);
+						}
 					} else {
-						_this2.props.loginSuccess(res.user);
+						console.log("login failed:", res);
+						_this2.setState({
+							message: res.message
+						});
 					}
 				})['catch'](function (err) {
 					console.log("Error posting login:", err);

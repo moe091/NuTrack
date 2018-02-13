@@ -1,3 +1,7 @@
+
+
+
+
 .nav-opaque {
 	background-color: $sidebar-dark-col;
 	color: $col-lightest;
@@ -5,7 +9,7 @@
 
 nav {
 	background-color: $sidebar-dark-col !important;
-	
+	min-height: 56px;
 	a {
 		color: $col-lightest !important;
 		&:hover {
@@ -28,3 +32,98 @@ nav {
 	padding: $nav-logo-padding;
 	font-weight: bold;
 }
+
+
+
+@media (max-width: 991px) { 
+	nav {
+		min-height: 82px;
+	}
+	#nav-search-form {
+		width: 100%;
+		justify-content: center;
+	}
+	.navbar {
+		font-size: 2em;
+		text-align: center !important;
+		justify-content: center !important;
+		ul {
+			width: 100%;
+		}
+	}
+	#nav-toggle-icon {
+		font-size: 2em;
+	}
+	.nav-corner {
+		font-size: 40px;
+		line-height:48px;
+		padding:18px;
+	}
+}
+
+//testing out styles for a better mobile layout. I need to practice this first...
+/**
+@media (max-width: 991px) { 
+	nav {
+		min-height: 82px;
+	}
+	#nav-search-form {
+		width: 100%;
+		justify-content: center;
+	}
+	.navbar {
+		font-size: 2em;
+		text-align: center !important;
+		justify-content: center !important;
+		ul {
+			width: 100%;
+		}
+	}
+	#nav-toggle-icon {
+		font-size: 2em;
+	}
+	.nav-corner {
+		font-size: 40px;
+		line-height:48px;
+		padding:18px;
+	}
+	
+	
+	//global
+	.container-fixed .fill-height {
+		margin-top: -42px !important;
+		padding-top: 40px !important;
+	}
+	
+	//sidebar
+	.sidebar {
+		display: none;
+	}
+	
+	//search
+	.input-group {
+		max-width: 100% !important;
+		width: 100% !important;
+		text-align: center;
+		background-color: transparent !important;
+		border: none !important;
+		.search-input {
+			font-size: 13px !important;
+		}
+		.btn {
+			font-size: 13px !important;
+		}
+	}
+
+}
+**/
+
+
+
+
+
+
+
+
+
+

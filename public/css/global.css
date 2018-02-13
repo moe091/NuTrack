@@ -45,11 +45,15 @@
   color: #F2E9E4; }
 
 nav {
-  background-color: #002a47 !important; }
+  background-color: #002a47 !important;
+  height: 100% !important; }
   nav a {
     color: #F2E9E4 !important; }
     nav a:hover {
       color: #C9ADA7 !important; }
+
+.navbar {
+  height: 100%; }
 
 .nav-toggle-icon {
   color: #F2E9E4; }
@@ -63,6 +67,9 @@ nav {
   margin: 0;
   padding: 4px;
   font-weight: bold; }
+
+.nav-col {
+  height: 100%; }
 
 .sidebar {
   background-color: #0a1c29;

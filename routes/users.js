@@ -29,16 +29,19 @@ router.get('/login', function(req, res, next) {
     res.render('index', {user: req.user });
 });
 
+
+
 router.post('/login', passport.authenticate('local', {
-    
-	
 			successRedirect : '/users/login/success', // redirect to the secure profile section
-			failureRedirect : '/login', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
+			failureRedirect : '/users/login/fail', // redirect back to the signup page if there is an error
 }));
+
 
 router.get('/login/success', function(req, res, next) {
 	res.send({success: true, message: "Logged in Successfully: ", user: req.user})
+});
+router.get('/login/fail', function(req, res, next) {
+	res.send({success: false, message: "Incorrect username or password", user: req.user})
 });
 
 router.get('/logout', function(req, res) {

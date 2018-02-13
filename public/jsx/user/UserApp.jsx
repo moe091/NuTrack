@@ -103,7 +103,7 @@ class UserApp extends React.Component {
 	**/
 	render() {
 		return (
-			<div className="app-wrapper">
+			<div className="app-wrapper container-fixed">
 				<Nav user={this.state.user} history={this.props.history} setQueryHandler={this.setQuery.bind(this)} loginRedirect={this.loginRedirect.bind(this)} />
 				<div className="container-fixed fill-height no-gap">
 					<div className="row row-leftFix min-height-fill">

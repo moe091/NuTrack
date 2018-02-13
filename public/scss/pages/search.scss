@@ -9,12 +9,13 @@
 .search-area {
 	padding: 2px;
 	font-size: 0.9em;
-	max-width: 86%;
-	min-width: 72%;
+	
 	margin: 0 auto;
 	.table { 
 		border-collapse: separate;
 		border-spacing: 0 4px;
+		max-width: 90%;
+		margin: 0 auto;
 	}
 
 	.table td, .table tr { 

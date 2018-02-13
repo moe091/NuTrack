@@ -40,13 +40,13 @@
 @media (max-width: 576px) {
   .hide-img, .hide-img img {
     display: none; } }
-
 .nav-opaque {
   background-color: #002a47;
   color: #F2E9E4; }
 
 nav {
-  background-color: #002a47 !important; }
+  background-color: #002a47 !important;
+  min-height: 56px; }
   nav a {
     color: #F2E9E4 !important; }
     nav a:hover {
@@ -65,6 +65,83 @@ nav {
   padding: 4px;
   font-weight: bold; }
 
+@media (max-width: 991px) {
+  nav {
+    min-height: 82px; }
+
+  #nav-search-form {
+    width: 100%;
+    justify-content: center; }
+
+  .navbar {
+    font-size: 2em;
+    text-align: center !important;
+    justify-content: center !important; }
+    .navbar ul {
+      width: 100%; }
+
+  #nav-toggle-icon {
+    font-size: 2em; }
+
+  .nav-corner {
+    font-size: 40px;
+    line-height: 48px;
+    padding: 18px; } }
+/**
+@media (max-width: 991px) { 
+	nav {
+		min-height: 82px;
+	}
+	#nav-search-form {
+		width: 100%;
+		justify-content: center;
+	}
+	.navbar {
+		font-size: 2em;
+		text-align: center !important;
+		justify-content: center !important;
+		ul {
+			width: 100%;
+		}
+	}
+	#nav-toggle-icon {
+		font-size: 2em;
+	}
+	.nav-corner {
+		font-size: 40px;
+		line-height:48px;
+		padding:18px;
+	}
+	
+	
+	//global
+	.container-fixed .fill-height {
+		margin-top: -42px !important;
+		padding-top: 40px !important;
+	}
+	
+	//sidebar
+	.sidebar {
+		display: none;
+	}
+	
+	//search
+	.input-group {
+		max-width: 100% !important;
+		width: 100% !important;
+		text-align: center;
+		background-color: transparent !important;
+		border: none !important;
+		.search-input {
+			font-size: 13px !important;
+		}
+		.btn {
+			font-size: 13px !important;
+		}
+	}
+
+}
+**/
 .sidebar {
   background-color: #0a1c29;
   color: #ffffff;
@@ -303,12 +380,12 @@ $sidebar-inset-link-hover: #e7e3ea;
 .search-area {
   padding: 2px;
   font-size: 0.9em;
-  max-width: 86%;
-  min-width: 72%;
   margin: 0 auto; }
   .search-area .table {
     border-collapse: separate;
-    border-spacing: 0 4px; }
+    border-spacing: 0 4px;
+    max-width: 90%;
+    margin: 0 auto; }
   .search-area .table td, .search-area .table tr {
     padding: 6px 12px; }
   .search-area td {
@@ -463,45 +540,45 @@ $sidebar-inset-link-hover: #e7e3ea;
 
 .content-block {
   /**
-	min-height: 150px;
-	height: 100%;
-	max-height: 200px;
-	display: inline-block;  
-	width: 30%;
-	min-width: 250px;
-	margin: 1.5%; 
-	margin-top: 3.5%;
-	text-align: center;
-	padding: 4px;
-	border-radius: 4px;
-	background-color: #fff;
-	
-	-webkit-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
-	-moz-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
-	box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
-	
-	.newMeal-item-name {
-		width: 100%;
-		display: inline-block;
-		color: #fff;
-		background-color: $sidebar-header-col;
-		font-size: 14px;
-		min-height: 42px;
-		max-height: 42px;
-		border-radius: 4px;
-	}
-	
-	.newMeal-name-span {
-		min-height: 45px;
-		max-height: 45px;
-	}
-	
-	
-	.newMeal-item-amount {
-		margin: 0 auto;
-		width: 60%;
-	}
-	**/ }
+  min-height: 150px;
+  height: 100%;
+  max-height: 200px;
+  display: inline-block;  
+  width: 30%;
+  min-width: 250px;
+  margin: 1.5%; 
+  margin-top: 3.5%;
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px;
+  background-color: #fff;
+  
+  -webkit-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
+  -moz-box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
+  box-shadow: 2px 2px 13px 2px rgba(0,0,0,0.12);
+  
+  .newMeal-item-name {
+  	width: 100%;
+  	display: inline-block;
+  	color: #fff;
+  	background-color: $sidebar-header-col;
+  	font-size: 14px;
+  	min-height: 42px;
+  	max-height: 42px;
+  	border-radius: 4px;
+  }
+  
+  .newMeal-name-span {
+  	min-height: 45px;
+  	max-height: 45px;
+  }
+  
+  
+  .newMeal-item-amount {
+  	margin: 0 auto;
+  	width: 60%;
+  }
+  **/ }
 
 .newMeal-options {
   text-align: center;
@@ -554,7 +631,6 @@ $sidebar-inset-link-hover: #e7e3ea;
 @media (max-width: 768px) {
   .newMeal-item-row {
     padding-left: 10px; } }
-
 .meal-row {
   padding: 10px 20px;
   margin-right: 10px; }
@@ -1266,6 +1342,9 @@ html, body, #App, .app-wrapper, #App > div {
 .bold-text {
   font-weight: bold; }
 
+.warning-text {
+  color: #ED1b1a; }
+
 /**
 .rdt {
 	display: block;
@@ -1310,3 +1389,5 @@ html, body, #App, .app-wrapper, #App > div {
 	border-radius: 4px;
 }
 **/
+
+/*# sourceMappingURL=global.css.map */

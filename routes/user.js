@@ -111,8 +111,6 @@ router.get('/search/results/:q', (req, res, next) => {
 		
 		res.send({nutNames: nutrientNames, items: val.list, query: req.params.q});
 		
-		console.log('rendered index, items.length:', val.list.length);
-		console.log('\n\n');
 		
 	}).catch(function(err) {
 		

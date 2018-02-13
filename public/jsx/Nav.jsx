@@ -68,11 +68,11 @@ class Nav extends React.Component {
 						</a>
 					</div>
 					
-					<div className="col-sm-10 p-0">
+					<div className="col-sm-10 p-0 nav-col">
 						<nav className="navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap">
 							<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 								<span>
-									<i className="fa fa-list nav-toggle-icon"></i>
+									<i className="fa fa-list nav-toggle-icon" id="nav-toggle-icon"></i>
 								</span>
 							</button>
 
@@ -82,7 +82,7 @@ class Nav extends React.Component {
 								{
 									(this.props.user == null) 
 									? 
-										<ul className="navbar-nav mr-auto mt-2 mt-md-0">
+										<ul className="navbar-nav mr-auto mt-2 mt-md-0" id="left-nav">
 											<li className="nav-item active faded-white">not logged in</li> 
 										</ul>
 									:
@@ -93,7 +93,7 @@ class Nav extends React.Component {
 								{
 									(this.props.user == null) 
 									? 
-										<ul className="navbar-nav pull-right">
+										<ul className="navbar-nav pull-right" id="right-nav">
 											<li className="nav-item">
 												<a className="nav-link mx-2 pointer-cursor" onClick={this.navToLogin.bind(this)} >Login</a>
 											</li>
