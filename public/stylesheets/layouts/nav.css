@@ -1,21 +1,17 @@
 /*
-Error: Undefined variable: "$sidebar-dark-col".
-        on line 6 of public/scss/layouts/nav.scss
+Error: Undefined variable: "$darkblue".
+        on line 2 of public/scss/layouts/nav.scss
 
-1: 
-2: 
-3: 
-4: 
-5: .nav-opaque {
-6: 	background-color: $sidebar-dark-col;
-7: 	color: $col-lightest;
-8: }
-9: 
-10: nav {
-11: 	background-color: $sidebar-dark-col !important;
+1: nav {
+2: 	background-color: $darkblue;
+3: 	padding: 4px 8px;
+4: 	
+5: 	a {
+6: 		color: #fff !important;
+7: 		&:hover {
 
 Backtrace:
-public/scss/layouts/nav.scss:6
+public/scss/layouts/nav.scss:2
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/script/tree/node.rb:58:in `perform'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:398:in `visit_prop'
@@ -65,4 +61,4 @@ C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/vendor/listen/lib/listen/adap
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$sidebar-dark-col\".\A         on line 6 of public/scss/layouts/nav.scss\A \A 1: \A 2: \A 3: \A 4: \A 5: .nav-opaque {\A 6: 	background-color: $sidebar-dark-col;\A 7: 	color: $col-lightest;\A 8: }\A 9: \A 10: nav {\A 11: 	background-color: $sidebar-dark-col !important;"; }
+  content: "Error: Undefined variable: \"$darkblue\".\A         on line 2 of public/scss/layouts/nav.scss\A \A 1: nav {\A 2: 	background-color: $darkblue;\A 3: 	padding: 4px 8px;\A 4: 	\A 5: 	a {\A 6: 		color: #fff !important;\A 7: 		&:hover {"; }

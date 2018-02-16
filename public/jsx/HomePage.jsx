@@ -1,8 +1,7 @@
 //homepage only has to render the page and nav component. 
 //other components will have to render a sidebar/nav component as well as themselves
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Nav from "./Nav.jsx";
+import ReactDOM from 'react-dom'; 
 
 class HomePage extends React.Component {
 	constructor(props) {
@@ -19,47 +18,52 @@ class HomePage extends React.Component {
 	}
 	
 	
+	
+	
 	render() {
 		return (
-		
-			<section className="bottom-slant masthead">	
-			<Nav user={window.user} history={this.props.history} loginRedirect={this.loginRedirect.bind(this)} />
-				<div className="d-flex align-items-center justify-content-center my-5">
-					<div className="center-block d-flex justify-content-center flex-column align-self-center pb-3" id="home-searchdiv">
-						<div className="container">
-							<div className="row">
+			<div className="w-100 atleast-screen-height">
+				<header className="homepage-header">	
 
-								<div className="col-sm-8 mt-3 ml-3">
-									<div className="title" id="greeting">NuTrack</div>
-									<div className="tagline mb-3">Organize Your Nutrition</div>
-								</div>
-
-								<div className="col-sm-2 py-2 hide-img">
-									<img className="img-fluid" src="/images/carrot.png" width='70%'>
-									</img>
-								</div>
-
-
-							</div>
-							<div className="row">
-
-								<span className="searchbox mt-3">
-									<SearchBox  searchHandler={this.searchHandler.bind(this)} />	
-								</span>
-
-							</div> 
-						</div>
-
+					<div className="header-text">
+						<h1>
+							Step up Your <span>Nutrition</span> Game
+						</h1>
+						<input type="button" value="Learn More" />
+						<input type="button" value="Get Started" onClick={this.userHomeHandler.bind(this)} />
 					</div>
-				</div>
-		
-			</section>
+
+				</header>
+
+				<section id="about">
+					<h4>Valuable Insights Into Your Eating Habits</h4>
+
+					<div className="col-md-3 d-inline-block">
+					<i className="fas fa-utensils"></i>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae enim quod optio, amet itaque tenetur doloremque.</p>
+					</div>
+
+					<div className="col-md-3 d-inline-block">
+					<i className="fas fa-chart-line"></i>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae enim quod optio, amet itaque tenetur doloremque.</p>
+					</div>
+
+					<div className="col-md-3 d-inline-block">
+					<i className="fas fa-heartbeat"></i>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae enim quod optio, amet itaque tenetur doloremque.</p>
+					</div>
+				</section>
+			</div>
 		)
 	}
 	
 	
 	loginRedirect() { 
 		this.props.history.push("/users/login");
+	}
+	
+	userHomeHandler() {
+		this.props.history.push("/user/home");
 	}
 	
 }

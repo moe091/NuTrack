@@ -1,9 +1,0 @@
-
-//storing these here because they effect height of page(body,html{height: 100%}, .app-wrapper{height: 100%}), because app wrapper is under nav, the screen will end up adding up to be bigger than the actual window, causing scrollbars. Setting margin: -(total navbar height) on app-wrapper to make up for this, and padding: -(total navbar height) so that top of app-wrapper doesn't get cut off
-$nav-logo-fontsize: 32px;
-$nav-logo-lineheight: 24px;
-$nav-logo-padding: 4px;
-$nav-logo-margin: 0;
-
-$total-nav-height: $nav-logo-lineheight + $nav-logo-padding * 2 + $nav-logo-margin * 2;
-

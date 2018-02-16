@@ -11,6 +11,7 @@ import Tracker from './tracker/Tracker.jsx';
 
 import Login from './Login.jsx';
 import Register from './Register.jsx';
+import UserHome from './UserHome.jsx';
 
 /**
 - (Web App Idea) -
@@ -105,10 +106,11 @@ class UserApp extends React.Component {
 		return (
 			<div className="app-wrapper container-fixed">
 				<Nav user={this.state.user} history={this.props.history} setQueryHandler={this.setQuery.bind(this)} loginRedirect={this.loginRedirect.bind(this)} />
+				
 				<div className="container-fixed fill-height no-gap">
 					<div className="row row-leftFix min-height-fill">
-
-						<div className="col-sm-2 p-0">
+ 
+						<div className="col-sm-3 p-0"> 
 							<SideBar 
 							 	query={this.state.query} 
 							 	setQueryHandler={this.setQuery.bind(this)}
@@ -123,6 +125,14 @@ class UserApp extends React.Component {
 							/>
 						</div>
 							
+							
+							<Route path="/user/home" render={() => {
+								return (
+									<UserHome />
+								)
+							}}
+							/>
+							
 							<Route path="/user/meals" render={() => {
 								return (
 									<Meal 
@@ -131,7 +141,8 @@ class UserApp extends React.Component {
 										trackerAddHandler={this.trackerAddHandler.bind(this)} plannerAddHandler={this.plannerAddHandler.bind(this)} 
 									/>
 								)
-							}} /> 
+							}}
+							/> 
 							
 							<Route path='/user/search' render={() => {
 								return (

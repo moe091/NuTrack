@@ -11,7 +11,7 @@ class Nav extends React.Component {
 		super(props);
 		this.state = {
 			searchQuery: ''
-		}
+		} 
 	}
 	/**
 		TODO: add this back in at top of first UL in renderUserNav after UserHome component is created:
@@ -19,6 +19,7 @@ class Nav extends React.Component {
 					<a className="nav-link pointer-cursor" onClick={this.navToUserHome.bind(this)}>
 						<span className='bold-text'>{this.props.user.username}'s Home</span></a>
 				</li>
+				//nav-link, pointer-cursor, nav-item
 	**/
 	renderUserNav() {
 		return (
@@ -56,6 +57,7 @@ class Nav extends React.Component {
 	}
 	
 	render() {
+		console.warn("rendering nav");
 		return (
 			<div className="container-fixed no-gap">
 				<div className="row row-leftFix">
@@ -69,7 +71,7 @@ class Nav extends React.Component {
 					</div>
 					
 					<div className="col-sm-10 p-0 nav-col">
-						<nav className="navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap">
+						<nav className="navbar navbar-expand-lg sticky-top">
 							<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 								<span>
 									<i className="fa fa-list nav-toggle-icon" id="nav-toggle-icon"></i>
@@ -80,7 +82,7 @@ class Nav extends React.Component {
 								
 									
 								{
-									(this.props.user == null) 
+									(this.props.user == null && false) 
 									? 
 										<ul className="navbar-nav mr-auto mt-2 mt-md-0" id="left-nav">
 											<li className="nav-item active faded-white">not logged in</li> 
@@ -91,7 +93,7 @@ class Nav extends React.Component {
 									
 
 								{
-									(this.props.user == null) 
+									(this.props.user == null && false) 
 									? 
 										<ul className="navbar-nav pull-right" id="right-nav">
 											<li className="nav-item">

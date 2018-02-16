@@ -5,14 +5,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import reactTest from './reactTest.jsx';  
 import {HomePage, SearchBox} from './HomePage.jsx'; 
 import {SearchArea, SearchTable} from './SearchArea.jsx';
-import Search from './Search.jsx';
-import Nav from './Nav.jsx';
+import Search from './Search.jsx'; 
 import SideBar from './SideBar.jsx';
 
 import UserApp from './user/UserApp.jsx';
  
 
-class Appp extends React.Component {
+class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -47,7 +46,7 @@ class Appp extends React.Component {
 
 
 ReactDOM.render((
-    <Appp />
+    <App />
 ),
 	document.getElementById('App')
 );

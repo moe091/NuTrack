@@ -1,294 +1,36 @@
-//______ NEW SIDEBAR _______\\
+//.sidebar { sidebar-rowGroup { sidebar-link { sidebar-segment { i} -or- {i 'Planner" }
 
 .sidebar {
-	background-color: $sidebar-bg;
-	color: $white;
-	height: 100%;
-	min-width: 140px;
-	font-size: 18px; 
+	font-siz: 16px;
+	background-color: $darkblue; 
+	padding-left: 10px;
 	
-	.sidebar-main-group {
-		border-top: 1px $sidebar-main-border solid;
-	}
-	.sidebar-main-section {	
-	}
-	
-	a {
-		transition: background-color .2s ease-in;
+	a { //default for all links
+		color: #fff !important;;
 		cursor: pointer;
-		&:hover {
-			transition: background-color .2s ease-in;
+		.sidebar-segment {
+
 		}
 	}
 	
-	
-	label {
-		color: $sidebar-label;
-		display: block;
-		border-bottom: 2px $sidebar-highlight solid;
-		margin-bottom: 0;
-		padding: 16px 0 2px 0;
-		text-align: center;
-		background-color: $sidebar-label-bg;
-	}
-	
-	
-	.sidebar-search-label {
-	}
-	.sidebar-search-section {
+	.sidebar-rowGroup {
 		display: flex;
 		flex-direction: row;
-		button {
-			min-width: 40px;
-			display: inline-block;
-			margin: 0;
-			flex-grow: 2;
-			height: 2em;
-			background-color: $sidebar-main-link;
-			color: #fff;
-		}
-		input[type="text"] {
-			min-width: 100px;
-			display: inline-block;
-			margin: 0;
-			flex-grow: 8;
-			height: 2em;
-		}  
-	}
-
-	
-	.sidebar-section {
-	
-		.sidebar-item-main {
-			background-color: $sidebar-main-link;
-			border-bottom: 1px $sidebar-main-border solid;
-			text-align: center;
-			padding: 3px 1px;
-			
-			&:hover {
-				background-color: $sidebar-main-highlight;
-			}
+		line-height: 2em;
+		
+		.sidebar-link { 
+			width: 70%;
 		}
 		
-		.sidebar-item-right {
-			background-color: $sidebar-right-bg;
-			text-align: center;
-			transition: border .2s ease-in;
-
-			&:hover {
-				background-color: $sidebar-right-highlight;
-				border-right: 1px $sidebar-right-border-highlight solid;
-				transition: border .2s ease-in;
-			}
-		}
-		
-	}
-	
-	
-	
-
-	
-	
-	
-	.sidebar-list-section {	
-		
-		color: $faded-white;
-		.sidebar-list-item {
-			font-size: 13px;
-			line-height: 1.4em;
-			max-height: 2em;
-			
-			
-			.sidebar-list-item-main {
-				background-color: $sidebar-list-main;
-				text-transform: lowercase;
-				overflow: hidden;
-				border: none;
-				padding: 0;
-				
-				&:hover {
-					background-color: $sidebar-list-highlight;
-				}
-			}
-			
-			
-			.sidebar-list-item-right {
-				text-align: center;
-				background-color: $sidebar-right;
-				
-				&:hover {
-					background-color: $sidebar-right-highlight;
-				}
-			}
-			
-			
-		}
-		
-		
-	}
-	
-}
-
-
-/**
-COLORS:
-$white: #ffffff;
-$sidebar-bg: #071733;
-$sidebar-right-bg: #040f23;
-$sidebar-highlight: #1e2f4f;
-
-$sidebar-link: #eae8e5;
-$sidebar-link-hover: #fffbf7;
-
-$sidebar-inset-section: #495568;
-$sidebar-inset-link: #d5d2d8;
-$sidebar-inset-link-hover: #e7e3ea;
-
-
-
-			__________ OLD SIDEBAR  __________
-.sidebar {
-	background-color: $sidebar-dark-col;
-	height: 100%;
-	min-height: 100vh;
-	width: 100%; 
-	min-width: 140px; 
-	padding: 16% 0 12% 0;
-	border-right: 2px $sidebar-hover-col solid; 
-	.sidebar-link {
-		
-		&:hover {
-			text-decoration: none;
-			color: $col-lightest;
-			div {
-				background-color: $sidebar-hover-col;
-			}
-}
-		
-		i {
-			color: $col-lighter;
-		}
-		.icon-disabled {
-			color: $col-dark;
-		}
-	}
-	.sidebar-faded {
-		color: $col-dark-link;
-	}
-	.sidebar-mid {
-		color: $col-mid;
-	}
-	
-}
-
-
-
-.sidebar-segment {
-	width: 100%;   
-	min-width: 106px;
-	background-color: $sidebar-dark-col;
-	color: $col-lightest;
-	font-size: 1.2em;
-	padding: 6px 0 6px 18%;
-} 
-.segment-head {
-	padding-left: 12%;
-	color: $col-light;
-	background-color: $sidebar-header-col; 
-	i {
-		color: $col-light;
-	}
-}
-.sidebar-section {
-	margin-top: 8px; 
-	.segment-item { 
-		color: $col-lightest;
-	} 
-	a {
-		&:hover {
-			text-decoration: none;
-			.sidebar-segment {
-				background-color: $sidebar-hover-col;
-			}
+		.right-link {
+			width: 30%;
+			background-color: $darkestblue; 
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px #0C2D59 solid;
+			border-right: none;
 		}
 	}
 }
-
-.sidebar-icon {
-	margin-right: 10px;	
-}
-
-
-
-
-.sidebar-rowGroup {
-	position: relative;
-	display: flex; 
-	width: 100%; 
-	justify-content: flex-end;
-	.sidebar-link {
-		display: inline-block;
-		height: 100%;
-		flex-grow: 4;
-		justify-self: flex-start;
-		.sidebar-segment {
-			padding-left: 15%;
-		}
-	}
-	.right-segment { 
-		min-width: 0; 
-		display: inline-block;
-		background-color: $sidebar-dark-col;
-		padding-left: 0;
-	}
-	.right-link { 
-		flex-grow: 1;
-		max-width: 25%;
-		text-align: center;
-		padding-right: 0;
-		float: right; 
-	}  
-	.right-icon {
-		margin-right: 0;
-	}
-}
-
-
-
-	
-
-
-.sidebar-spacer {
-	height: 2%;
-}
-	
-.sidebar-head { 
-	background-color: $col-dark;
-	padding: 10px 6px;
-	text-align: center;
-	font-size: 1.6em;
-}
-
-.icon-disabled {
-	color: $col-dark;
-}
-
-//NEED BREAKPOINT AT 576, switch to top-bar.
-@media (max-width:576px){
-
-}
-
-@media (max-width:768px){
-	.sidebar {
-		font-size: 0.8em;
-		min-width: 110px;
-	}
-}
-
-**/
-
-
-
-
-
-
