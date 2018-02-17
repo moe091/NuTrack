@@ -57,10 +57,9 @@ class Nav extends React.Component {
 	
 	render() {
 		return (
-			<div className="container-fixed no-gap">
-				<div className="row row-leftFix">
+			<div className="nav-wrapper"> 
 
-					<div className="col-sm-2 p-3 nav-corner d-flex align-content-center justify-content-center">
+					<div className="hide-tablet nav-corner">
 						<a className="pointer-cursor" onClick={this.navToHome.bind(this)}>
 							<span className="nav-title align-self-center justify-self-center">
 								NuTrack
@@ -68,7 +67,7 @@ class Nav extends React.Component {
 						</a>
 					</div>
 					
-					<div className="col-sm-10 p-0 nav-col">
+					<div className="nav-area">
 						<nav className="navbar navbar-expand-lg sticky-top navbar-light gap-fix-bottom no-gap">
 							<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 								<span>
@@ -114,8 +113,7 @@ class Nav extends React.Component {
 								</form>
 							</div>
 						</nav>
-					</div>
-				</div>
+					</div> 
 			</div>
 		)
 	}

@@ -34,9 +34,8 @@ class SearchArea extends React.Component {
 	}
 	
 	render() {
-		return(
-			<div className="col-sm-10 p-0 search-col">
-				<div className="search-area">
+		return( 
+				<div className="main-area search">
 					<div className="search-head">
 						
 						<div className="input-group">
@@ -50,8 +49,7 @@ class SearchArea extends React.Component {
 						</div>
 					</div>
 					<SearchTable nutNames={this.props.searchNutNames} items={this.props.searchItems} nutrients={this.props.searchNutrients} checkedItems={this.props.checkedItems} checkItemHandler={this.props.checkItemHandler}/>
-				</div>
-			</div>
+				</div> 
 		)
 	}
 	
@@ -277,8 +275,8 @@ class SearchTable extends React.Component {
 				<td>
 					<label className="fancy-checkbox">
 						<input type="checkbox" className="search-result-chk" id={"item-chk-" + item.ndb}  name="item-chk-1" onChange={this.createCheckHandler(item)} num="1" checked={this.getCheckedVal(item.ndb)} ></input>
-						<i aria-hidden="true" className="chk-icon fa fa-square-o unchecked"></i>
-						<i aria-hidden="true" className="chk-icon fa fa-check-square-o checked"></i>
+						<i aria-hidden="true" className="chk-icon far fa-circle unchecked"></i>
+						<i aria-hidden="true" className="chk-icon fas fa-check-circle checked"></i>
 					</label>	
 				</td>
 				<td>

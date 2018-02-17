@@ -1,8 +1,16 @@
+ 
+
+$darkestblue: #123574;
+$darkblue: #264790;
+$blue: #5590DD;
+$lightblue: #BBE2FC;
+$lightestblue: #E4F5FF;
+
 @import "colors";
 @import "values";
-@import "layouts/masthead";
 @import "layouts/nav";
 @import "layouts/sidebar";
+@import "layouts/homepage";
 @import "pages/search";
 @import "pages/newMeal";
 @import "pages/showMeal";
@@ -10,6 +18,7 @@
 @import "components/slider"; 
 @import "vendor/datetime";
 @import "elements";
+@import "classes";
  
 	
 
@@ -17,16 +26,16 @@
 
  
 html {
-	background-color: #85d8ce;
-}
-body {
+	background-color: #fff;
+} 
+
+html, body, #App, .app-wrapper, #App>div, .content-wrapper {
 	height: 100%;
 }
 
-html, body, #App, .app-wrapper, #App>div {
-	height: 100%;
+.content-wrapper {
+	display: flex;
 }
-
 
 .fill-height{
 	height: 100% !important;
@@ -120,6 +129,42 @@ html, body, #App, .app-wrapper, #App>div {
 .warning-text {
 	color: #ED1b1a;
 }
+
+
+//PC's and laptops will apply these rules
+@media only screen and (min-width: 1026px) {
+	.only-tablet {
+		display: none;
+	}
+	.only-portable {
+		display: none;
+	}
+}
+
+//any device bigger than most smartphones will apply these rules
+@media only screen and (min-width: 768px) {
+	.only-mobile {
+		display: none;
+	}
+}
+
+//only smartphone-sized devices will apply these rules
+@media only screen and (max-width: 767px) {
+	.only-tablet {
+		display: none;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 //fix for react-datetime 
 /**

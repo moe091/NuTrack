@@ -1,20 +1,35 @@
 /*
-Error: Undefined variable: "$sidebar-dark-col".
-        on line 2 of public/scss/layouts/nav.scss
+Error: Undefined variable: "$nav-logo-fontsize".
+        on line 8 of public/scss/layouts/nav.scss
 
-1: .nav-opaque {
-2: 	background-color: $sidebar-dark-col;
-3: 	color: $col-lightest;
-4: }
-5: 
-6: nav {
-7: 	background-color: $sidebar-dark-col !important;
+3: 	display: flex;
+4: 	.nav-corner {
+5: 		color: #fff;
+6: 		font-family: 'Lobster', cursive;
+7: 		background-color: #6893AF;
+8: 		font-size: $nav-logo-fontsize;
+9: 		line-height: $nav-logo-lineheight;
+10: 		margin: $nav-logo-margin;
+11: 		padding: $nav-logo-padding;
+12: 		font-weight: bold;
+13: 		display: flex;
 
 Backtrace:
-public/scss/layouts/nav.scss:2
+public/scss/layouts/nav.scss:8
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/script/tree/node.rb:58:in `perform'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:398:in `visit_prop'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `visit'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `block (2 levels) in visit_rule'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `map'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:434:in `block in visit_rule'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:432:in `visit_rule'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/base.rb:36:in `visit'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/stack.rb:79:in `block in with_base'
@@ -61,4 +76,4 @@ C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/vendor/listen/lib/listen/adap
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$sidebar-dark-col\".\A         on line 2 of public/scss/layouts/nav.scss\A \A 1: .nav-opaque {\A 2: 	background-color: $sidebar-dark-col;\A 3: 	color: $col-lightest;\A 4: }\A 5: \A 6: nav {\A 7: 	background-color: $sidebar-dark-col !important;"; }
+  content: "Error: Undefined variable: \"$nav-logo-fontsize\".\A         on line 8 of public/scss/layouts/nav.scss\A \A 3: 	display: flex;\A 4: 	.nav-corner {\A 5: 		color: #fff;\A 6: 		font-family: 'Lobster', cursive;\A 7: 		background-color: #6893AF;\A 8: 		font-size: $nav-logo-fontsize;\A 9: 		line-height: $nav-logo-lineheight;\A 10: 		margin: $nav-logo-margin;\A 11: 		padding: $nav-logo-padding;\A 12: 		font-weight: bold;\A 13: 		display: flex;"; }

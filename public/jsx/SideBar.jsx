@@ -51,25 +51,25 @@ class SideBar extends React.Component {
 	render() {
 		return (
 			
-			<div className="sidebar w-100 h-100">
+			<div className="sidebar">
 				
-				<label className="sidebar-search-label">Search</label>	
+				<label className="sidebar-search-label hide-tablet">Search</label>	
 				<div className="sidebar-section sidebar-search-section">
-					<input type="text" className="sidebar-search-text sidebar-input" value={this.state.searchText} onChange={this.searchTextInput.bind(this)} ></input>
+					<input type="text" className="sidebar-search-text sidebar-input hide-tablet" value={this.state.searchText} onChange={this.searchTextInput.bind(this)} ></input>
 					<button className="sidebar-search-btn sidebar-input" onClick={this.searchBtnClick.bind(this)} >
 						<i className="fa fa-search sidebar-icon"></i>
 					</button>
 				</div>
 				
-					<div className="sidebar-section sidebar-main-section row m-0">
-						<a onClick={this.backToSearchHandler.bind(this)} className="col-sm-12 sidebar-item-main p-1">
+					<div className="sidebar-section sidebar-main-section hide-tablet">
+						<a onClick={this.backToSearchHandler.bind(this)} className="col-sm-12 sidebar-item-main">
 							Results For {this.props.query}
 						</a>
 					</div>
 					
 				
-				<label>{this.props.checkedItems.length} Selected Items:</label>
-				<div className="sidebar-section container-fixed sidebar-list-section">
+				<label className="hide-tablet">{this.props.checkedItems.length} Selected Items:</label>
+				<div className="sidebar-section container-fixed sidebar-list-section hide-tablet">
 					{
 						this.props.checkedItems.map((item) => {
 							return this.renderSelectedItem(item);
@@ -77,24 +77,43 @@ class SideBar extends React.Component {
 					}
 				</div>
 				
+				<div className="only-portable">
+					Items: {this.props.checkedItems.length}
+				</div>
+				
 				<div className="sidebar-main-group container-fixed">
 					<div className="sidebar-section sidebar-main-section row m-0">
-						<a onClick={this.trackerShowHandler.bind(this)} className="col-sm-9 sidebar-item-main p-1">Tracker</a>
-						<a onClick={this.props.trackerAddHandler}className="col-sm-3 sidebar-item-right p-1">
+						<a onClick={this.trackerShowHandler.bind(this)} className="sidebar-item-main">
+							<i class="far fa-calendar-alt"></i>
+							<span>
+								Tracker
+							</span>
+						</a>
+						<a onClick={this.props.trackerAddHandler}className="sidebar-item-right">
 							<i className="fa fa-plus sidebar-icon"></i>
 						</a>
 					</div>
 				
 					<div className="sidebar-section sidebar-main-section row m-0">
-						<a onClick={this.plannerShowHandler.bind(this)} className="col-sm-9 sidebar-item-main p-1">Planner</a>
-						<a onClick={this.props.plannerAddHandler} className="col-sm-3 sidebar-item-right p-1">
+						<a onClick={this.plannerShowHandler.bind(this)} className="sidebar-item-main">
+							<i class="fas fa-chart-line"></i>
+							<span>
+								Planner
+							</span>
+						</a>
+						<a onClick={this.props.plannerAddHandler} className="sidebar-item-right">
 							<i className="fa fa-plus sidebar-icon"></i>
 						</a>
 					</div>
 				
 					<div className="sidebar-section sidebar-main-section row m-0">
-						<a onClick={this.showMealHandler.bind(this)} className="col-sm-9 sidebar-item-main p-1">Meals</a>
-						<a onClick={this.newMealHandler.bind(this)} className="col-sm-3 sidebar-item-right p-1">
+						<a onClick={this.showMealHandler.bind(this)} className="sidebar-item-main">
+							<i class="fas fa-utensils"></i>
+							<span>
+								Meals
+							</span>
+						</a>
+						<a onClick={this.newMealHandler.bind(this)} className="sidebar-item-right">
 							<i className="fa fa-plus sidebar-icon"></i>
 						</a>
 					</div>
@@ -111,10 +130,10 @@ class SideBar extends React.Component {
 		return (
 		
 			<div key={item.ndb} className="row sidebar-list-item m-0">
-				<a className="col-sm-9 sidebar-list-item-main sidebar-item-main p-1">
+				<a className="sidebar-list-item-main sidebar-item-main">
 					{item.name}
 				</a>
-				<a onClick={this.createDeselectHandler(item)}className="col-sm-3 sidebar-list-item-right sidebar-item-right p-1">
+				<a onClick={this.createDeselectHandler(item)}className="sidebar-list-item-right sidebar-item-right">
 					<i className="fa fa-times sidebar-icon sidebar-list-icon"></i>
 				</a>
 			</div>

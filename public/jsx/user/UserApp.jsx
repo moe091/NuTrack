@@ -103,12 +103,9 @@ class UserApp extends React.Component {
 	**/
 	render() {
 		return (
-			<div className="app-wrapper container-fixed">
+			<div className="app-wrapper">
 				<Nav user={this.state.user} history={this.props.history} setQueryHandler={this.setQuery.bind(this)} loginRedirect={this.loginRedirect.bind(this)} />
-				<div className="container-fixed fill-height no-gap">
-					<div className="row row-leftFix min-height-fill">
-
-						<div className="col-sm-2 p-0">
+					<div className="content-wrapper">
 							<SideBar 
 							 	query={this.state.query} 
 							 	setQueryHandler={this.setQuery.bind(this)}
@@ -120,8 +117,7 @@ class UserApp extends React.Component {
 								
 								trackerAddHandler={this.trackerAddItemsHandler.bind(this)} 
 								plannerAddHandler={this.plannerAddItemsHandler.bind(this)} 
-							/>
-						</div>
+							/> 
 							
 							<Route path="/user/meals" render={() => {
 								return (
@@ -200,8 +196,7 @@ class UserApp extends React.Component {
 
 					</div>
 				</div>
-
-			</div>
+ 
 		) 
 	}
 	

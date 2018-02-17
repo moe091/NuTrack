@@ -1,0 +1,17 @@
+.main-area {
+  display: inline-block;
+  height: 100%;
+  max-width: 80%;
+  min-width: 80%; }
+
+@media only screen and (max-width: 1025px) {
+  .hide-tablet {
+    display: none !important; } }
+@media only screen and (max-width: 767px) {
+  .hide-tablet {
+    display: none !important; }
+
+  .hide-mobile {
+    display: none !important; } }
+
+/*# sourceMappingURL=classes.css.map */

@@ -72,9 +72,9 @@ C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/exec/sass_scss.rb:36
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/exec/sass_scss.rb:51:in `process_result'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/exec/base.rb:52:in `parse'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/lib/sass/exec/base.rb:19:in `parse!'
-C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/bin/scss:13:in `<top (required)>'
-C:/Ruby25-x64/bin/scss:23:in `load'
-C:/Ruby25-x64/bin/scss:23:in `<main>'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.4.25/bin/sass:13:in `<top (required)>'
+C:/Ruby25-x64/bin/sass:23:in `load'
+C:/Ruby25-x64/bin/sass:23:in `<main>'
 */
 body:before {
   white-space: pre;
