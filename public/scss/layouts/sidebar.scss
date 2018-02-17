@@ -166,10 +166,20 @@
 		max-width: 72px;
 		min-width: 72px;
 		
-		.sidebar-search-btn {
-			height: 64px;
+		.item-count-mobile {
+			text-align: center !important;
+			padding: 8px 0;
+			border-bottom: 2px #2f394b solid;
 		}
-		
+		.sidebar-search-btn { 
+			height: 52px !important;
+			padding: 12px 0;
+			background-color: #374a66 !important;
+			border: 1px #a2a2a2 solid;
+			border-left: none;
+			border-right: none;
+		}
+		 
 		.sidebar-item-main {
 			text-align: center;
 			width: 100%;

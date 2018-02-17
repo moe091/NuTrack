@@ -6061,7 +6061,7 @@ var SideBar = function (_React$Component) {
 					),
 					_react2['default'].createElement(
 						'div',
-						{ className: 'only-portable' },
+						{ className: 'only-portable item-count-mobile' },
 						'Items: ',
 						this.props.checkedItems.length
 					),
@@ -7515,7 +7515,7 @@ var SearchTable = function (_React$Component2) {
 					{ className: 'table' },
 					_react2['default'].createElement(
 						'thead',
-						{ className: 'thead-inverse' },
+						{ className: 'thead-inverse hide-tablet' },
 						_react2['default'].createElement(
 							'tr',
 							null,
@@ -7588,7 +7588,7 @@ var SearchTable = function (_React$Component2) {
 					{ key: item.ndb },
 					_react2['default'].createElement(
 						'td',
-						null,
+						{ className: 'search-check-cell' },
 						_react2['default'].createElement(
 							'label',
 							{ className: 'fancy-checkbox' },
@@ -7599,7 +7599,7 @@ var SearchTable = function (_React$Component2) {
 					),
 					_react2['default'].createElement(
 						'td',
-						null,
+						{ className: 'search-name-cell' },
 						_react2['default'].createElement(
 							'a',
 							{ href: '#', className: 'food-item-link' },
@@ -7615,8 +7615,17 @@ var SearchTable = function (_React$Component2) {
 						return _react2['default'].createElement(
 							'td',
 							{ key: item.ndb + '-' + n.id },
-							n.value,
-							n.unit
+							_react2['default'].createElement(
+								'span',
+								{ className: 'search-nutrient-name' },
+								n.name
+							),
+							_react2['default'].createElement(
+								'span',
+								{ className: 'search-nutrient-val' },
+								n.value,
+								n.unit
+							)
 						);
 					})
 				);

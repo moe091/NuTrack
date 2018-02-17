@@ -129,8 +129,7 @@ html, body, #App, .app-wrapper, #App>div, .content-wrapper {
 .warning-text {
 	color: #ED1b1a;
 }
-
-
+ 
 //PC's and laptops will apply these rules
 @media only screen and (min-width: 1026px) {
 	.only-tablet {
@@ -164,7 +163,7 @@ html, body, #App, .app-wrapper, #App>div, .content-wrapper {
 
 
 
-
+  
 
 //fix for react-datetime 
 /**

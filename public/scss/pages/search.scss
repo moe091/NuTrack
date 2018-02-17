@@ -169,6 +169,78 @@ th {
 
 
 @media only screen and (max-width: 1025px) {
+	td {
+		display: inline-block;
+		width: 100%;
+		text-align: center;
+		font-size: 11px;
+		padding: 4px !important;
+		border-top: none !important;
+	}
+	
+	.search-head {
+		width: 100%;
+		text-align: center;
+		overflow:hidden;
+		.input-group {
+			min-width: 92%;
+			margin-left: 3%;
+			display: flex;
+			input[type="text"] {
+				flex-grow: 4;
+				min-width: 0 !important;
+				max-width: 75%;
+			}
+			button {
+				flex-grow: 1;
+				min-width: 0;
+				max-width: 25%;
+			}
+		}
+	}
+	.search {
+		max-width: 100% !important; 
+	}
+	table {
+		display: flex;
+		flex-direction: column;
+		max-width: 100%;
+		overflow: hidden;
+		
+		.search-check-cell {
+			color: #fff;
+			float: left;
+			width: 15%;
+			padding: 0.5em 0 0 16px;
+			max-height: 3.2em;
+		}
+		
+		.search-name-cell {
+			color: #fff;
+			float: right;
+			width: 85%;
+			padding: 0 0 0 16px;
+			max-height: 3.2em;
+			overflow: hidden;
+			text-align: left;
+			font-size: 13px;
+		}
+		
+		.search-nutrient-name {
+			display: inline-block;
+			width: 50%;
+			text-align: right;
+			padding-right: 10%;
+			font-weight: bold;
+		}
+		.search-nutrient-val {
+			display: inline-block;
+			width: 50%;
+			text-align: left;
+			padding-left: 10%;
+			font-style: italic;
+		}
+	}
 }
 
 

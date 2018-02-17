@@ -212,8 +212,17 @@ nav {
   .sidebar {
     max-width: 72px;
     min-width: 72px; }
+    .sidebar .item-count-mobile {
+      text-align: center !important;
+      padding: 8px 0;
+      border-bottom: 2px #2f394b solid; }
     .sidebar .sidebar-search-btn {
-      height: 64px; }
+      height: 52px !important;
+      padding: 12px 0;
+      background-color: #374a66 !important;
+      border: 1px #a2a2a2 solid;
+      border-left: none;
+      border-right: none; }
     .sidebar .sidebar-item-main {
       text-align: center;
       width: 100%;
@@ -601,6 +610,67 @@ th {
 .fancy-checkbox input[type="checkbox"]:checked ~ .unchecked {
   display: none; }
 
+@media only screen and (max-width: 1025px) {
+  td {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    padding: 4px !important;
+    border-top: none !important; }
+
+  .search-head {
+    width: 100%;
+    text-align: center;
+    overflow: hidden; }
+    .search-head .input-group {
+      min-width: 92%;
+      margin-left: 3%;
+      display: flex; }
+      .search-head .input-group input[type="text"] {
+        flex-grow: 4;
+        min-width: 0 !important;
+        max-width: 75%; }
+      .search-head .input-group button {
+        flex-grow: 1;
+        min-width: 0;
+        max-width: 25%; }
+
+  .search {
+    max-width: 100% !important; }
+
+  table {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    overflow: hidden; }
+    table .search-check-cell {
+      color: #fff;
+      float: left;
+      width: 15%;
+      padding: 0.5em 0 0 16px;
+      max-height: 3.2em; }
+    table .search-name-cell {
+      color: #fff;
+      float: right;
+      width: 85%;
+      padding: 0 0 0 16px;
+      max-height: 3.2em;
+      overflow: hidden;
+      text-align: left;
+      font-size: 13px; }
+    table .search-nutrient-name {
+      display: inline-block;
+      width: 50%;
+      text-align: right;
+      padding-right: 10%;
+      font-weight: bold; }
+    table .search-nutrient-val {
+      display: inline-block;
+      width: 50%;
+      text-align: left;
+      padding-left: 10%;
+      font-style: italic; } }
 .newMeal-item-row {
   margin: 0;
   min-height: 460px;

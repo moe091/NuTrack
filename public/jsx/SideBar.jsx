@@ -77,7 +77,7 @@ class SideBar extends React.Component {
 					}
 				</div>
 				
-				<div className="only-portable">
+				<div className="only-portable item-count-mobile">
 					Items: {this.props.checkedItems.length}
 				</div>
 				

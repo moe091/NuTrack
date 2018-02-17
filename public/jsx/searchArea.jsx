@@ -197,7 +197,7 @@ class SearchTable extends React.Component {
 	render() {
 		return (
 			<table className="table">
-				<thead className="thead-inverse">
+				<thead className="thead-inverse hide-tablet">
 					<tr>
 						<th>Select</th>
 						<th>Name</th>
@@ -272,14 +272,14 @@ class SearchTable extends React.Component {
 		}
 		return (
 			<tr key={item.ndb}>
-				<td>
+				<td className="search-check-cell">
 					<label className="fancy-checkbox">
 						<input type="checkbox" className="search-result-chk" id={"item-chk-" + item.ndb}  name="item-chk-1" onChange={this.createCheckHandler(item)} num="1" checked={this.getCheckedVal(item.ndb)} ></input>
 						<i aria-hidden="true" className="chk-icon far fa-circle unchecked"></i>
 						<i aria-hidden="true" className="chk-icon fas fa-check-circle checked"></i>
 					</label>	
 				</td>
-				<td>
+				<td className="search-name-cell">
 					<a href="#" className="food-item-link">
 						{item.name}
 					</a>
@@ -287,7 +287,7 @@ class SearchTable extends React.Component {
 				<td>{item.manu}</td>
 				{
 					item.nutrients.map((n) => {
-						return <td key={(item.ndb + '-' + n.id)}>{n.value}{n.unit}</td>
+						return <td key={(item.ndb + '-' + n.id)}><span className="search-nutrient-name">{n.name}</span><span className="search-nutrient-val">{n.value}{n.unit}</span></td>
 					})
 				}  
 			
